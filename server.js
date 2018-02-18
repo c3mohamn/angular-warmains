@@ -4,7 +4,7 @@ const express = require('express'),
       http = require('http'),
       app = express();
 
-// API files 
+// API files
 const api = require('./server/routes/api');
 
 // Parsers
@@ -28,4 +28,4 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-server.listen(port, () => console.log(`Running on localhost:${port}.`));
+server.listen(port, () => console.log(`Running on localhost: ${port}.`));

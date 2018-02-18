@@ -10,7 +10,9 @@ import { HeaderTitleComponent } from './header-title/header-title.component';
     HeaderComponent,
     HeaderTitleComponent
   ],
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   exports: [
     HeaderComponent
   ]

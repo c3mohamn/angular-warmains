@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
@@ -11,6 +12,7 @@ import { HeaderModule } from './header/header.module';
 import { BodyModule } from './body/body.module';
 import { FooterModule } from './footer/footer.module';
 
+import { ApiUserService } from './services/users/api-user.service';
 
 import { AppComponent } from './app.component';
 
@@ -21,14 +23,14 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     AngularMaterialModule,
     HeaderModule,
     BodyModule,
     FooterModule
   ],
-  providers: [],
+  providers: [ApiUserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

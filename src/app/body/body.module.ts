@@ -8,7 +8,9 @@ import { BodyComponent } from './body.component';
   declarations: [
     BodyComponent
   ],
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   exports: [
     BodyComponent
   ]
