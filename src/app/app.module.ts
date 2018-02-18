@@ -4,7 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
+// TODO: Add routing in body
 // import { AppRoutingModule } from './app-routing.module';
+
+import { HeaderModule } from './header/header.module';
+import { BodyModule } from './body/body.module';
+import { FooterModule } from './footer/footer.module';
+
 
 import { AppComponent } from './app.component';
 
@@ -17,7 +23,10 @@ import { AppComponent } from './app.component';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    HeaderModule,
+    BodyModule,
+    FooterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

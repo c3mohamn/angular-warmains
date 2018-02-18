@@ -1,0 +1,11 @@
+@import "~assets/scss/variables";
+
+.header-container {
+  position: static;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: $wm-primary;
+  color: $wm-secondary-verylight;
+}

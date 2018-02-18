@@ -1,5 +1,4 @@
 import { NgModule, Type } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   MatSidenavModule,
   MatToolbarModule,
@@ -36,7 +35,6 @@ const materialDesignComponents: ReadonlyArray<Type<any>> = [
 
 @NgModule({
   imports: [
-    CommonModule,
     ...materialDesignComponents
   ],
   exports: [

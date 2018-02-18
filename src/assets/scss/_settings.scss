@@ -68,7 +68,7 @@
 $global-font-size: 100%;
 $global-width: rem-calc(1400);
 $global-lineheight: 1.5;
-$foundation-palette: ( primary: $primary, secondary: #767676, success: #3adb76, warning: #ffae00, alert: #cc4b37, );
+$foundation-palette: ( primary: $wm-primary, secondary: #767676, success: #3adb76, warning: #ffae00, alert: #cc4b37, );
 $light-gray: #e6e6e6;
 $medium-gray: #cacaca;
 $dark-gray: #8a8a8a;
@@ -76,7 +76,7 @@ $black: #0a0a0a;
 $white: #fefefe;
 $body-background: $white;
 $body-font-color: $black;
-$body-font-family: Roboto, Arial, sans-serif;
+$body-font-family: 'Roboto Condensed', Roboto, Arial, sans-serif;
 $body-antialiased: true;
 $global-margin: 1rem;
 $global-padding: 1rem;
@@ -115,11 +115,11 @@ $block-grid-max: 8;
 // 4. Base Typography
 // ------------------
 
-$header-font-family: Roboto, Arial, sans-serif;
+$header-font-family: 'Roboto Condensed', Roboto, Arial, sans-serif;
 $header-font-weight: 700;
 $header-font-style: normal;
 $font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace;
-$header-color: $src-black;
+$header-color: $wm-black;
 $header-lineheight: 1.1;
 $header-margin-bottom: 0.5rem;
 $header-styles: ( 
@@ -425,7 +425,7 @@ $menu-margin: 0;
 $menu-nested-margin: $global-menu-nested-margin;
 $menu-items-padding: $global-menu-padding;
 $menu-simple-margin: 1rem;
-$menu-item-color-active: $primary;
+$menu-item-color-active: $wm-primary;
 $menu-item-background-active: $white;
 $menu-icon-spacing: 0.25rem;
 $menu-item-background-hover: $light-gray;
