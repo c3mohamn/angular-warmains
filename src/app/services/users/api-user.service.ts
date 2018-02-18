@@ -11,7 +11,7 @@ export class ApiUserService {
   constructor(private _http: Http) { }
 
   getUsers() {
-    return this._http.get('/api/users')
+    return this._http.get('/api/user/getAll')
       .map(result => this.result = result.json().data);
   }
 

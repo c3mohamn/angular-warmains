@@ -1,33 +1,18 @@
 const express = require('express'),
       router = express.Router(),
-      mongojs = require('mongojs'),
-      db = mongojs('mongodb://admin:password@ds239968.mlab.com:39968/angular-warmains-test');
+      mongoose = require('mongoose');
 
-// Error handling
-const sendError = (err, res) => {
-  response.status = 501;
-  response.message = typeof err == 'object' ? err.message : err;
-  res.status(501).json(response);
-};
+mongoose.connect('mongodb://admin:password@ds239968.mlab.com:39968/angular-warmains-test');
+const db = mongoose.connection;
 
-// Response handling
-let response = {
-  status: 200,
-  data: [],
-  message: null
-};
+const talent = require('./talent'),
+      user = require('./user'),
+      char = require('./char'),
+      raid = require('./raid');
 
-// Get users
-router.get('/users', (req, res) => {
-  db.collection('users')
-    .find((err, users) => {
-      if (err) {
-        sendError(err, res);
-      } else {
-        response.data = users;
-        res.json(response);
-      }
-    });
-});
+router.use('/talent', talent);
+router.use('/user', user);
+router.use('/char', char);
+router.use('/raid', raid);
 
 module.exports = router;
