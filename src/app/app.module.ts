@@ -12,7 +12,8 @@ import { HeaderModule } from './header/header.module';
 import { BodyModule } from './body/body.module';
 import { FooterModule } from './footer/footer.module';
 
-import { ApiUserService } from './services/users/api-user.service';
+import { ApiUserService } from './services/user/api-user.service';
+import { ApiTalentService } from './services/talent/api-talent.service';
 
 import { AppComponent } from './app.component';
 
@@ -30,7 +31,10 @@ import { AppComponent } from './app.component';
     BodyModule,
     FooterModule
   ],
-  providers: [ApiUserService],
+  providers: [
+    ApiUserService,
+    ApiTalentService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
