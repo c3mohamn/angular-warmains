@@ -3,6 +3,7 @@ import { ApiUserService } from '../services/user/api-user.service';
 import { ApiTalentService } from '../services/talent/api-talent.service';
 import { User } from '../models/user.model';
 import { Talent } from '../models/talent.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-body',
@@ -14,20 +15,21 @@ export class BodyComponent implements OnInit {
   talents: Talent[];
 
   constructor(
+    private router: Router,
     private _apiUserService: ApiUserService,
     private _apiTalentService: ApiTalentService
   ) {
-    this._apiUserService.getUsers()
-      .subscribe(res => {
-        this.users = res;
-        console.log(this.users);
-      });
+    // this._apiUserService.getUsers()
+    //   .subscribe(res => {
+    //     this.users = res;
+    //     console.log(this.users);
+    //   });
 
-    this._apiTalentService.getTalents()
-      .subscribe(res => {
-        this.talents = res;
-        console.log(this.talents);
-      });
+    // this._apiTalentService.getTalents()
+    //   .subscribe(res => {
+    //     this.talents = res;
+    //     console.log(this.talents);
+    //   });
   }
 
   ngOnInit() {

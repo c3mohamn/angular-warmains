@@ -1,3 +1,15 @@
 <div class="header-container flex-container align-middle">
-  <app-header-title></app-header-title>
+  <div class="flex-child-shrink">
+    <app-header-title></app-header-title>
+  </div>
+  <div class="flex-child-shrink header-current-state">
+    <h5><small>{{ currentState() }}</small></h5>
+  </div>
+  <div class="flex-child-grow"></div>
+  <div class="flex-child-shrink header-nav-links" [routerLink]="['/login']">
+    Login
+  </div>
+  <div class="flex-child-shrink header-nav-links" [routerLink]="['/register']">
+    Register
+  </div>
 </div>

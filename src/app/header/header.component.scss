@@ -6,6 +6,34 @@
   left: 0;
   right: 0;
   height: 50px;
-  background: $wm-primary;
-  color: $wm-secondary-verylight;
+  padding: 0 1rem;
+  background: $wm-secondary-dark;
+  color: $wm-primary-light;
+  box-shadow: $wm-boxshadow-black-2;
+
+  .header-current-state {
+    cursor: default;
+    opacity: .5;
+
+    h5 {
+      margin: 0 .5rem;
+      font-weight: 100;
+      text-transform: uppercase;
+    }
+  }
+
+  .header-nav-links {
+    margin: 0 .5rem;
+    transition: all ease .2s;
+    cursor: pointer;
+
+    &:hover {
+      color: $wm-secondary-verylight;
+    }
+
+    &:active, &:focus {
+      outline: 2px solid $wm-black;
+      outline-offset: 3px;
+    }
+  }
 }

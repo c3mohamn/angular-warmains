@@ -1,34 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-
+import { RoutingModule } from './app.routing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularMaterialModule } from './angular-material.module';
-// TODO: Add routing in body
-// import { AppRoutingModule } from './app-routing.module';
+import { AngularMaterialModule } from './modules/angular-material.module';
 
 import { HeaderModule } from './header/header.module';
-import { BodyModule } from './body/body.module';
 import { FooterModule } from './footer/footer.module';
 
 import { ApiUserService } from './services/user/api-user.service';
 import { ApiTalentService } from './services/talent/api-talent.service';
 
 import { AppComponent } from './app.component';
+import { BodyComponent } from './body/body.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BodyComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    RoutingModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
     HeaderModule,
-    BodyModule,
     FooterModule
   ],
   providers: [

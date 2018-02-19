@@ -1,0 +1,18 @@
+@import "~assets/scss/variables";
+
+.header-title {
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all ease .2s;
+  margin: 0 .5rem;
+  font-weight: 400;
+
+  &:hover {
+    color: $wm-primary;
+  }
+
+  &:active, &:focus {
+    outline: 2px solid $wm-black;
+  outline-offset: 3px;
+  }
+}
