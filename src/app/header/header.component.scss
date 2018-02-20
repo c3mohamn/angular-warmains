@@ -32,7 +32,8 @@
     }
 
     &:active, &:focus {
-      outline: 2px solid $wm-black;
+      outline: 1px solid $wm-black;
+      color: $wm-secondary-verylight;
       outline-offset: 3px;
     }
   }
