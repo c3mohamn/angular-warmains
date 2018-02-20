@@ -19,17 +19,17 @@ export class BodyComponent implements OnInit {
     private _apiUserService: ApiUserService,
     private _apiTalentService: ApiTalentService
   ) {
-    // this._apiUserService.getUsers()
-    //   .subscribe(res => {
-    //     this.users = res;
-    //     console.log(this.users);
-    //   });
+    this._apiUserService.getUsers()
+      .subscribe(res => {
+        this.users = res;
+        console.log(this.users);
+      });
 
-    // this._apiTalentService.getTalents()
-    //   .subscribe(res => {
-    //     this.talents = res;
-    //     console.log(this.talents);
-    //   });
+    this._apiTalentService.getTalents()
+      .subscribe(res => {
+        this.talents = res;
+        console.log(this.talents);
+      });
   }
 
   ngOnInit() {
