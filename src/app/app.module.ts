@@ -4,7 +4,6 @@ import { HttpModule } from '@angular/http';
 import { RoutingModule } from './app.routing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularMaterialModule } from './modules/angular-material.module';
 
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
@@ -26,7 +25,6 @@ import { BodyComponent } from './body/body.component';
     HttpModule,
     RoutingModule,
     BrowserAnimationsModule,
-    AngularMaterialModule,
     HeaderModule,
     FooterModule
   ],

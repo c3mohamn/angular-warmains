@@ -1,5 +1,19 @@
 <div class="login-container flex-container align-middle align-center">
   <div class="auth-container">
-
+    <div class="grid-x">
+        <div class="small-12 cell">
+          <!-- Username -->
+          <mat-form-field hintLabel="Max 20 characters">
+              <input matInput #inputUserName maxlength="20" placeholder="Username">
+              <mat-hint align="end">{{inputUserName.value?.length || 0}}/20</mat-hint>
+          </mat-form-field>
+          <!-- Password -->
+          <mat-form-field hintLabel="Max 10 characters">
+              <input matInput #inputPassword placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'">
+              <mat-icon class="mat-icon-hide-password" matSuffix (click)="hidePassword = !hidePassword">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+              <mat-hint align="end">{{inputPassword.value?.length || 0}}/10</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
   </div>
 </div>

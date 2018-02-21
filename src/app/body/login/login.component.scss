@@ -13,4 +13,13 @@
     background: $wm-gray;
     box-shadow: $wm-boxshadow-2;
   }
+
+  .mat-icon-hide-password {
+    cursor: pointer;
+  }
+
+  mat-form-field {
+    margin: .25rem 0;
+    width: 100%;
+  }
 }
