@@ -10,7 +10,7 @@
           <!-- Password -->
           <mat-form-field hintLabel="Max 10 characters">
               <input matInput #inputPassword placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'">
-              <mat-icon class="mat-icon-hide-password" matSuffix (click)="hidePassword = !hidePassword">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+              <mat-icon class="mat-icon-hide-password" matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
               <mat-hint align="end">{{inputPassword.value?.length || 0}}/10</mat-hint>
           </mat-form-field>
         </div>
