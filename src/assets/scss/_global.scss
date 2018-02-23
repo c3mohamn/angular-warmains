@@ -1,0 +1,170 @@
+// Global
+
+.no-padding {
+  padding: 0;
+}
+
+.no-padding-left {
+  padding-left: 0;
+}
+
+.no-padding-right {
+  padding-right: 0;
+}
+
+.no-padding-sides {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.inactive {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  transition: all $wm-transition-medium;
+}
+
+// Container style
+.dark-container {
+  background-color: $wm-secondary-dark;
+  color: $wm-primary-light;
+  box-shadow: $wm-boxshadow-1;
+  position: relative;
+
+  &.hoverable {
+    &:hover {
+      box-shadow: $wm-boxshadow-2;
+      background-color: lighten($wm-secondary-dark, 10%);
+    }
+
+    &:active {
+      box-shadow: $wm-boxshadow-1;
+    }
+
+    &:focus {
+      outline: 0;
+    }
+
+    &.disabled {
+      opacity: .7;
+
+      &:hover {
+        box-shadow: $wm-boxshadow-1;
+        background-color: $wm-secondary-dark;
+      }
+
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+}
+
+// Class Icons
+.class-icons, .spec-icons {
+  width: 48px;
+  height: 48px;
+
+  &.small {
+    width: 32px;
+    height: 32px;
+  }
+
+  &.large {
+    width: 64px;
+    height: 64px;
+  }
+
+  &.hoverable {
+    cursor: pointer;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+}
+
+// Custom scroll bar
+.wm-scrollbar {
+  overflow: auto;
+  transition: all $wm-transition-medium;
+
+  &:hover {
+    transition: all $wm-transition-medium;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  	background-color: inherit;
+  }
+
+  &::-webkit-scrollbar {
+    width: .5rem;
+  	background-color: $wm-secondary-light;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  	background-color: $wm-secondary-verylight;
+
+    &:hover {
+      background-color: darken($wm-secondary-verylight, 5);
+    }
+  }
+
+  &.small {
+    &::-webkit-scrollbar {
+      width: .3rem;
+    	background-color: $wm-secondary-light;
+    }
+  }
+}
+
+// Buttons
+// ---------------
+.button {
+  padding: .8rem 1.5rem;
+  box-shadow: $wm-boxshadow-2;
+  margin: 0 .5rem;
+
+  &.clear {
+    box-shadow: none;
+    font-weight: bold;
+
+    &.clear-lift {
+      &:hover {
+        transition: all $wm-transition-fast;
+        box-shadow: $wm-boxshadow-black-2;
+      }
+
+      &:focus {
+        box-shadow: $wm-boxshadow-black-2;
+      }
+
+      &:active {
+        box-shadow: $wm-boxshadow-black-1;
+      }
+    }
+
+    &:active {
+      box-shadow: none;
+    }
+  }
+
+  &:active {
+    box-shadow: $wm-boxshadow-1;
+  }
+
+  &.dark-bg {
+    box-shadow: $wm-boxshadow-black-2;
+
+    &:active {
+      box-shadow: none;
+    }
+  }
+}

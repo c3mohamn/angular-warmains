@@ -6,12 +6,16 @@
   padding: 3rem 1rem 1rem 1rem;
 
   .auth-container {
-    height: 500px;
-    width: 350px;
+    width: 400px;
     min-width: 250px;
     padding: 2rem;
     background: $wm-gray;
-    box-shadow: $wm-boxshadow-2;
+    box-shadow: $wm-boxshadow-1;
+    font-size: 14px;
+
+    .form-container {
+      margin-bottom: 2rem;
+    }
   }
 
   .mat-icon-hide-password {

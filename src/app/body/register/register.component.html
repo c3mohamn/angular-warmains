@@ -1,25 +1,37 @@
-<div class="register-container flex-container align-middle align-center">
-  <div class="auth-container">
-    <div class="grid-x">
-      <div class="small-12 cell">
-        <!-- Username -->
-        <mat-form-field hintLabel="Max 20 characters">
-            <input matInput #inputUserName maxlength="20" placeholder="Username">
-            <mat-hint align="end">{{inputUserName.value?.length || 0}}/20</mat-hint>
-        </mat-form-field>
-        <!-- Email -->
-        <mat-form-field>
-            <input matInput #input placeholder="Enter your email" [formControl]="email" required>
-            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-        <!-- Password -->
-        <mat-form-field hintLabel="Max 10 characters">
-            <input matInput #inputPassword placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'">
-            <mat-icon class="mat-icon-hide-password" matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
-            <mat-hint align="end">{{inputPassword.value?.length || 0}}/10</mat-hint>
-        </mat-form-field>
-        <!-- Password Confirm -->
+<div class="register-container flex-container align-center align-middle">
+  <div class="auth-container flex-container align-center flex-dir-column">
+    <!-- Header -->
+    <h3 class="register-header">Register</h3>
+    <div class="flex-child-shrink form-container">
+      <!-- Username -->
+      <mat-form-field>
+        <input matInput #inputUserName maxlength="20" placeholder="Username" [formControl]="username" required>
+        <mat-hint align="end">{{inputUserName.value?.length || 0}}/20</mat-hint>
+        <mat-error *ngIf="username.invalid">{{getUsernameErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <!-- Email -->
+      <mat-form-field>
+        <input matInput #inputEmail placeholder="Enter your email" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <!-- Password -->
+      <mat-form-field>
+        <input matInput #inputPassword maxlength="20" placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'"  [formControl]="password" required>
+        <mat-icon class="mat-icon-hide-password" matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-hint align="end">{{inputPassword.value?.length || 0}}/20</mat-hint>
+        <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <!-- Password Confirm -->
+      <mat-form-field>
+        <input matInput #inputPasswordConfirm placeholder="Confirm password" [type]="hidePassword ? 'password' : 'text'" required>
+      </mat-form-field>
+      <div class="error-mismatch" *ngIf="inputPassword.value !== inputPasswordConfirm.value">
+        Passwords do not match.
       </div>
+    </div>
+    <!-- Submit Button -->
+    <div class="flex-child-shrink flex-container align-right">
+      <button class="button success">Register</button>
     </div>
   </div>
 </div>

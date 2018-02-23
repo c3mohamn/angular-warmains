@@ -1,19 +1,22 @@
-<div class="login-container flex-container align-middle align-center">
-  <div class="auth-container">
-    <div class="grid-x">
-        <div class="small-12 cell">
-          <!-- Username -->
-          <mat-form-field hintLabel="Max 20 characters">
-              <input matInput #inputUserName maxlength="20" placeholder="Username">
-              <mat-hint align="end">{{inputUserName.value?.length || 0}}/20</mat-hint>
-          </mat-form-field>
-          <!-- Password -->
-          <mat-form-field hintLabel="Max 10 characters">
-              <input matInput #inputPassword placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'">
-              <mat-icon class="mat-icon-hide-password" matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
-              <mat-hint align="end">{{inputPassword.value?.length || 0}}/10</mat-hint>
-          </mat-form-field>
-        </div>
-      </div>
+<div class="login-container flex-container align-center align-middle">
+  <div class="auth-container flex-container align-center flex-dir-column">
+    <h3 class="login-header">Login</h3>
+    <div class="flex-child-shrink form-container">
+      <!-- Username -->
+      <mat-form-field>
+        <input matInput #inputUserName placeholder="Username" [formControl]="username" required>
+        <mat-error *ngIf="username.invalid">{{getUsernameErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <!-- Password -->
+      <mat-form-field>
+        <input matInput #inputPassword placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'" [formControl]="password" required>
+        <mat-icon class="mat-icon-hide-password" matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Button -->
+    <div class="flex-child-shrink flex-container align-right">
+        <button class="button success">Login</button>
+    </div>
   </div>
 </div>
