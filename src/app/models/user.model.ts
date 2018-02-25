@@ -1,9 +1,15 @@
 export interface User {
   id: string;
-  user_name: string;
+  username: string;
   email: string;
   created: Date;
   last_seen: Date;
-  rank: number;
+  role: number;
   favorites: any[];
+}
+
+export interface NewUser {
+  username: string;
+  email: string;
+  password: string;
 }

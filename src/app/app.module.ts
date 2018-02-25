@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './app.routing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,7 +27,8 @@ import { BodyComponent } from './body/body.component';
     RoutingModule,
     BrowserAnimationsModule,
     HeaderModule,
-    FooterModule
+    FooterModule,
+    HttpClientModule
   ],
   providers: [
     ApiUserService,

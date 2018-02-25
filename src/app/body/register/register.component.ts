@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { NewUser } from '../../models/user.model';
+import { ApiUserService } from '../../services/user/api-user.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -8,36 +11,84 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  email = new FormControl('', [Validators.required, Validators.email]);
-  username = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]);
-  password = new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]);
-  confirmPassword = new FormControl('', [Validators.required]);
   hidePassword = true;
+  userRegistered = false;
+  user: NewUser;
+  userForm: FormGroup;
+  apiErrorMsg: string;
 
-  constructor() {
+  constructor(
+    private _apiUserService: ApiUserService,
+    private fb: FormBuilder
+  ) {
+    this.createForm();
+    this.apiErrorMsg = '';
+    this.user = {
+      email: '',
+      username: '',
+      password: ''
+    };
   }
 
+  createForm() {
+    this.userForm = this.fb.group({
+      username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)])
+    });
+  }
+
+  registerUser() {
+    if (this.userForm.invalid) {
+      this.apiErrorMsg = 'Invalid form.';
+      return;
+    }
+
+    this.user.email = this.userForm.get('email').value;
+    this.user.username = this.userForm.get('username').value;
+    this.user.password = this.userForm.get('password').value;
+
+    this._apiUserService.registerUser(this.user)
+      .subscribe(
+        data => {
+          console.log('user registered! ', data);
+          this.userRegistered = true;
+        },
+        error => {
+          console.log('error ', error);
+          this.apiErrorMsg = error.error;
+        }
+      );
+  }
+
+  // Form error messages
+  // --------------------
   getEmailErrorMessage() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-      this.email.hasError('email') ? 'Not a valid email' :
+    const email = this.userForm.get('email');
+
+    return this.userForm.get('email').hasError('required') ? 'You must enter a value' :
+      email.hasError('email') ? 'Not a valid email' :
         '';
   }
 
   getUsernameErrorMessage() {
-    return this.username.hasError('minlength') ? 'Username be greater than 2 characters' :
-      this.username.hasError('maxlength') ? 'Username be less than 21 characters' :
-        this.username.hasError('required') ? 'You must enter a value' :
+    const username = this.userForm.get('username');
+
+    return username.hasError('minlength') ? 'Username be greater than 2 characters' :
+      username.hasError('maxlength') ? 'Username be less than 21 characters' :
+        username.hasError('required') ? 'You must enter a value' :
           '';
   }
 
   getPasswordErrorMessage() {
-    return this.password.hasError('minlength') ? 'Password be greater than 4 characters' :
-      this.password.hasError('maxlength') ? 'Password must be less than 21 characters' :
-        this.password.hasError('required') ? 'You must enter a value' :
+    const password = this.userForm.get('password');
+
+    return password.hasError('minlength') ? 'Password be greater than 4 characters' :
+      password.hasError('maxlength') ? 'Password must be less than 21 characters' :
+        password.hasError('required') ? 'You must enter a value' :
           '';
   }
 
   ngOnInit() {
   }
-
 }

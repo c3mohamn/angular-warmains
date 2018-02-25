@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class BodyComponent implements OnInit {
   users: User[];
   talents: Talent[];
+  error: any;
 
   constructor(
     private router: Router,
@@ -20,10 +21,16 @@ export class BodyComponent implements OnInit {
     private _apiTalentService: ApiTalentService
   ) {
     this._apiUserService.getUsers()
-      .subscribe(res => {
-        this.users = res;
-        console.log(this.users);
-      });
+      .subscribe(
+        data =>  {
+          this.users = { ...data};
+          console.log(this.users);
+        },
+        error => {
+          this.error = error;
+          console.log(this.error);
+        }
+      );
 
     this._apiTalentService.getTalents()
       .subscribe(res => {

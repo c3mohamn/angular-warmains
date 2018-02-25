@@ -14,7 +14,29 @@
     font-size: 14px;
 
     .form-container {
+      margin-top: 1rem;
       margin-bottom: 2rem;
+    }
+
+    .register-error-msg {
+      color: $wm-red;
+    }
+
+    .register-response-container {
+      .register-success-msg {
+        color: $wm-green;
+      }
+
+      .login-redirect {
+        margin-top: 1rem;
+        cursor: pointer;
+        transition: all .1 ease;
+        color: $wm-primary-dark;
+
+        &:hover {
+          color: darken($wm-primary-dark, 20);
+        }
+      }
     }
   }
 
