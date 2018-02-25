@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { User, NewUser } from '../../models/user.model';
-import { HttpResponse } from 'selenium-webdriver/http';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
