@@ -6,7 +6,7 @@ var UserSchema = mongoose.Schema({
     username: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     email: {type: String, unique: true},
-    reset_password_token: {type: String},
+    token: {type: String},
     role: {type: Number},
     created: { type: Date },
     last_seen: { type: Date }
@@ -40,7 +40,6 @@ module.exports.getUserByEmail = function(email, callback) {
 }
 
 module.exports.getUserByEmailOrUsername = function (username, email, callback) {
-  console.log('getUserbyemail or username');
   var query = {$or: [{username: username}, {email: email}]};
   User.findOne({$or: [{username: username}, {email: email}]}, callback);
 }

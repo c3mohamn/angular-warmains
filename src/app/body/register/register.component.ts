@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { NewUser } from '../../models/user.model';
+import { UserForm } from '../../models/user.model';
 import { ApiUserService } from '../../services/user/api-user.service';
 import { Router } from '@angular/router';
 
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   hidePassword = true;
   userRegistered = false;
-  user: NewUser;
+  user: UserForm;
   userForm: FormGroup;
   apiErrorMsg: string;
 
@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
     this.user.username = this.userForm.get('username').value;
     this.user.password = this.userForm.get('password').value;
 
-    this._apiUserService.registerUser(this.user)
+    this._apiUserService.createUser(this.user)
       .subscribe(
         data => {
           console.log('user registered! ', data);

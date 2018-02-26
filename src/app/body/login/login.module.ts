@@ -3,15 +3,19 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
 import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from '../../modules/material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/user/auth.service';
 
 @NgModule({
   imports: [
     RouterModule.forChild([{path: '', component: LoginComponent}]),
     CommonModule,
     AngularMaterialModule,
-    FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
+  ],
+  providers: [
+    AuthService
   ],
   declarations: [
     LoginComponent

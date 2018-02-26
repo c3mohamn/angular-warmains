@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { UserForm } from '../../models/user.model';
+import { Router } from '@angular/router';
+import { ApiUserService } from '../../services/user/api-user.service';
+import { AuthService } from '../../services/user/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,21 +11,67 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  username = new FormControl('', [Validators.required]);
-  password = new FormControl('', [Validators.required]);
   hidePassword = true;
+  user: UserForm;
+  userForm: FormGroup;
+  errorMsg: string;
 
-  constructor() { }
+  constructor(
+    private _apiUserService: ApiUserService,
+    private _authService: AuthService,
+    private fb: FormBuilder
+  ) {
+    this.createForm();
+    this.errorMsg = '';
+    this.user = {
+      email: '',
+      username: '',
+      password: ''
+    };
+  }
 
-  ngOnInit() {
+  createForm() {
+    this.userForm = this.fb.group({
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
+    });
+  }
+
+  loginUser() {
+    console.log('login clicked!');
+
+    if (this.userForm.invalid) {
+      this.errorMsg = 'Please enter values for username and password';
+      return;
+    }
+    this.errorMsg = '';
+
+    this.user.email = this.userForm.get('username').value;
+    this.user.username = this.userForm.get('username').value;
+    this.user.password = this.userForm.get('password').value;
+
+    this._apiUserService.getUserToken(this.user)
+      .subscribe(
+        data => {
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+          this.errorMsg = error.error;
+        }
+      );
   }
 
   getUsernameErrorMessage() {
-    return this.username.hasError('required') ? 'You must enter a value' : '';
+    const username = this.userForm.get('username');
+    return username.hasError('required') ? 'You must enter a value' : '';
   }
 
   getPasswordErrorMessage() {
-    return this.password.hasError('required') ? 'You must enter a value' : '';
+    const password = this.userForm.get('password');
+    return password.hasError('required') ? 'You must enter a value' : '';
   }
 
+  ngOnInit() {
+  }
 }

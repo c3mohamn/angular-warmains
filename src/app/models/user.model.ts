@@ -8,7 +8,7 @@ export interface User {
   favorites: any[];
 }
 
-export interface NewUser {
+export interface UserForm {
   username: string;
   email: string;
   password: string;

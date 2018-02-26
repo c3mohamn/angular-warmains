@@ -14,4 +14,10 @@ export class ApiTalentService {
     return this._http.get('/api/talent/getAll')
       .map(result => this.result = result.json().data);
   }
+
+  createTalent() {
+  }
+
+  deleteTalent() {
+  }
 }

@@ -72,9 +72,10 @@ router.post('/register', (req, res) => {
 // Login User
 router.post('/login', function(req, res, next) {
   var username = req.body.username.toLowerCase();
+  var email = req.body.email.toLowerCase();
   var password = req.body.password.toLowerCase();
 
-  User.getUserByEmailOrUsername(username, username, (err, user) => {
+  User.getUserByEmailOrUsername(username, email, (err, user) => {
     if(err) throw err;
     if(!user) {
         res.status(400).send('This username or email does not exist.');
@@ -83,11 +84,19 @@ router.post('/login', function(req, res, next) {
       User.comparePassword(password, user.password, (err, isMatch) => {
           if(err) throw err;
           if(isMatch) {
-              console.log("Logged in as " + user.username + ".");
+              console.log("Logging in as " + user.username + ".");
               // Get a access token for user & send to front-end
               var token = jwt.sign({username: username, role: user.role}, jwtSecret, {
                 expiresIn: 60*60*24*7
               });
+
+              // Save token in db
+              user.token = token;
+              user.save(err => {
+                if (err) throw err;
+                console.log(user);
+              });
+
               res.status(200).send({token: token});
           } else {
               console.log("Invalid Password");
