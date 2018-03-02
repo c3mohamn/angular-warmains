@@ -13,3 +13,10 @@ export interface UserForm {
   email: string;
   password: string;
 }
+
+export interface UserTokenInfo {
+  username: string;
+  role: number;
+  iat: number;
+  exp: number;
+}

@@ -4,7 +4,6 @@ import { LoginComponent } from './login.component';
 import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from '../../modules/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../services/user/auth.service';
 
 @NgModule({
   imports: [
@@ -15,7 +14,6 @@ import { AuthService } from '../../services/user/auth.service';
     RouterModule
   ],
   providers: [
-    AuthService
   ],
   declarations: [
     LoginComponent

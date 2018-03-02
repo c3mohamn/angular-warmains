@@ -1,5 +1,6 @@
 import { Component, OnInit, HostBinding  } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/user/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,15 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private _authService: AuthService
+  ) {
+    console.log(_authService.user);
+  }
+
+  logoutUser() {
+    this._authService.logout();
   }
 
   currentState() {

@@ -54,6 +54,9 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
+          this._authService.login(data);
+          // TODO: redirect to home page
+          // Disallow access to login & register page
         },
         error => {
           console.log(error);

@@ -10,6 +10,7 @@ import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 
 import { ApiUserService } from './services/user/api-user.service';
+import { AuthService } from './services/user/auth.service';
 import { ApiTalentService } from './services/talent/api-talent.service';
 
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import { BodyComponent } from './body/body.component';
   ],
   providers: [
     ApiUserService,
+    AuthService,
     ApiTalentService
   ],
   bootstrap: [AppComponent]
