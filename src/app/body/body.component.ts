@@ -20,18 +20,6 @@ export class BodyComponent implements OnInit {
     private _apiUserService: ApiUserService,
     private _apiTalentService: ApiTalentService
   ) {
-    this._apiUserService.getUsers()
-      .subscribe(
-        data =>  {
-          this.users = { ...data};
-          console.log(this.users);
-        },
-        error => {
-          this.error = error;
-          console.log(this.error);
-        }
-      );
-
     this._apiTalentService.getTalents()
       .subscribe(res => {
         this.talents = res;

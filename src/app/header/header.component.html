@@ -6,13 +6,13 @@
     <h5><small>{{ currentState() }}</small></h5>
   </div>
   <div class="flex-child-grow"></div>
-  <div *ngIf="!_authService.isLoggedIn()" class="flex-child-shrink header-nav-links" [routerLink]="['/login']">
+  <div *ngIf="!isUserLoggedIn()" class="flex-child-shrink header-nav-links" [routerLink]="['/login']">
     Login
   </div>
-  <div *ngIf="!_authService.isLoggedIn()" class="flex-child-shrink header-nav-links" [routerLink]="['/register']">
+  <div *ngIf="!isUserLoggedIn()" class="flex-child-shrink header-nav-links" [routerLink]="['/register']">
     Register
   </div>
-  <div *ngIf="_authService.isLoggedIn()" class="flex-child-shrink header-nav-links" (click)="logoutUser()">
+  <div *ngIf="isUserLoggedIn()" class="flex-child-shrink header-nav-links" (click)="logoutUser()">
     Logout
   </div>
 </div>

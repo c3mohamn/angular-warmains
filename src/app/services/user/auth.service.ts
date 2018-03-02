@@ -1,17 +1,25 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, Inject } from '@angular/core';
+import { ApiUserService } from './api-user.service';
 import { User, UserForm, UserTokenInfo } from '../../models/user.model';
 import { Observable } from 'rxjs/Observable';
-import { Token } from '../../models/token.model';
+
+import * as Redux from 'redux';
+import * as UserActions from '../../states/user/user.actions';
+import { AppStore } from '../../app.store';
+import { AppState } from '../../app.reducer';
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private _apiUserService: ApiUserService,
+    @Inject(AppStore) private store: Redux.Store<AppState>
+  ) { }
   user: UserTokenInfo;
 
-  login(token: Token) {
-    localStorage.setItem('token', token.token);
-    this.user = this.decryptToken(token.token);
+  login(user: User) {
+    localStorage.setItem('token', user.token);
+    this.user = this.decryptToken(user.token);
+    this.store.dispatch(UserActions.setCurrentUser(user));
     console.log('User logged in: ', this.user.username);
   }
 
@@ -19,7 +27,16 @@ export class AuthService {
     // Removes localStorage token
     // Removes user's token in db
     localStorage.removeItem('token');
+    if (this.user && this.user.username) {
+      this._apiUserService.removeUserToken(this.user.username)
+      .subscribe(
+        data => console.log(data),
+        error => console.log(error.error)
+      );
+    }
+    this.store.dispatch(UserActions.unsetCurrentUser());
     this.user = null;
+
     console.log('Logging user out');
   }
 
@@ -43,6 +60,24 @@ export class AuthService {
     return null;
   }
 
+  validateToken() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this._apiUserService.validateToken(token)
+        .subscribe(
+          data => {
+            console.log(data);
+            this.login(data);
+          },
+          error => {
+            console.log(error.error);
+            this.logout();
+          }
+        );
+    }
+  }
+
   // decrypts the token in localStorage and returns result to be used for currentUser
   decryptToken(token: string):  UserTokenInfo {
     const base64Url = token.split('.')[1];
@@ -50,19 +85,4 @@ export class AuthService {
     const currentUser = <UserTokenInfo>JSON.parse(window.atob(base64));
     return currentUser;
   }
-
-  refreshToken(): void {
-    // Refresh current users token expiry date
-    // Post refresh token in db
-    // Set new token in localStorage
-  }
-
-  validateToken(token: Token) {
-    console.log('validating token', token);
-    // TODO:
-    // Check if token is expired
-    // Check if valid creds stored in token
-    // Either logout user OR refresh token & set token
-  }
-
 }

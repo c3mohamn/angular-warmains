@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './app.routing';
+import { LoggedInGuard } from './body/logged-in.guard';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,6 +16,9 @@ import { ApiTalentService } from './services/talent/api-talent.service';
 
 import { AppComponent } from './app.component';
 import { BodyComponent } from './body/body.component';
+
+import { AppState, default as reducer } from './app.reducer';
+import { AppStore, appStoreProviders } from './app.store';
 
 
 @NgModule({
@@ -34,7 +38,9 @@ import { BodyComponent } from './body/body.component';
   providers: [
     ApiUserService,
     AuthService,
-    ApiTalentService
+    ApiTalentService,
+    LoggedInGuard,
+    appStoreProviders
   ],
   bootstrap: [AppComponent]
 })

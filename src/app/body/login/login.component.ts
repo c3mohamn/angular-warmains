@@ -15,10 +15,12 @@ export class LoginComponent implements OnInit {
   user: UserForm;
   userForm: FormGroup;
   errorMsg: string;
+  successMsg: string;
 
   constructor(
     private _apiUserService: ApiUserService,
     private _authService: AuthService,
+    private router: Router,
     private fb: FormBuilder
   ) {
     this.createForm();
@@ -38,8 +40,6 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
-    console.log('login clicked!');
-
     if (this.userForm.invalid) {
       this.errorMsg = 'Please enter values for username and password';
       return;
@@ -50,13 +50,16 @@ export class LoginComponent implements OnInit {
     this.user.username = this.userForm.get('username').value;
     this.user.password = this.userForm.get('password').value;
 
-    this._apiUserService.getUserToken(this.user)
+    this._apiUserService.setUserToken(this.user)
       .subscribe(
         data => {
           console.log(data);
           this._authService.login(data);
-          // TODO: redirect to home page
-          // Disallow access to login & register page
+          this.errorMsg = '';
+          this.successMsg = `Successfully logged in as ${this.user.username}.`;
+          setTimeout(() => {
+            this.router.navigate(['./home']);
+          }, 1500);
         },
         error => {
           console.log(error);

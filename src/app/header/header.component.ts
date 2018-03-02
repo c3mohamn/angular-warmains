@@ -13,11 +13,14 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private _authService: AuthService
   ) {
-    console.log(_authService.user);
   }
 
   logoutUser() {
     this._authService.logout();
+  }
+
+  isUserLoggedIn(): boolean {
+    return this._authService.isLoggedIn();
   }
 
   currentState() {

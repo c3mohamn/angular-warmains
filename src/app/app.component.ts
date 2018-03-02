@@ -8,7 +8,6 @@ import { AuthService } from './services/user/auth.service';
 })
 export class AppComponent {
   constructor(private _authService: AuthService) {
-    _authService.getCurrentUser();
-    // TODO: validateToken instead of getCurrentUser
+    _authService.validateToken();
    }
 }
