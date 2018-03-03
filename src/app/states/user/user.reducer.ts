@@ -7,18 +7,8 @@ export interface UserState extends User {
   talents: any[];
 }
 
-const initialState: UserState = {
-  id: '',
-  username: '',
-  email: '',
-  role: 0,
-  favorites: [],
-  talents: [],
-  token: ''
-};
-
 export const UserReducer =
-  function(state: UserState = initialState, action: Action): UserState {
+  function(state: UserState = null, action: Action): UserState {
   switch (action.type) {
     case UserActions.SET_CURRENT_USER:
       const user: User = (<UserActions.SetCurrentUserAction>action).user;

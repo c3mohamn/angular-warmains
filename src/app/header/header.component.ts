@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding  } from '@angular/core';
+import { Component, OnInit, HostBinding   } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/user/auth.service';
 
@@ -8,6 +8,7 @@ import { AuthService } from '../services/user/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  accountOptionsActive = false;
 
   constructor(
     private router: Router,
@@ -27,7 +28,10 @@ export class HeaderComponent implements OnInit {
     return window.location.pathname.slice(1);
   }
 
-  ngOnInit() {
+  toggleOptionsActive($event) {
+    this.accountOptionsActive = $event;
   }
 
+  ngOnInit() {
+  }
 }

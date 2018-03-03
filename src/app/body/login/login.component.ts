@@ -53,13 +53,12 @@ export class LoginComponent implements OnInit {
     this._apiUserService.setUserToken(this.user)
       .subscribe(
         data => {
-          console.log(data);
           this._authService.login(data);
           this.errorMsg = '';
           this.successMsg = `Successfully logged in as ${this.user.username}.`;
           setTimeout(() => {
             this.router.navigate(['./home']);
-          }, 1500);
+          }, 500);
         },
         error => {
           console.log(error);

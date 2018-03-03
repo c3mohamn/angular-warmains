@@ -1,14 +1,14 @@
 @import "~assets/scss/variables";
 
 .header-container {
-  position: static;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 50px;
   padding: 0 1rem;
   background: $wm-secondary-dark;
-  color: $wm-primary-light;
+  color: $wm-secondary-verylight;
   box-shadow: $wm-boxshadow-black-2;
 
   .header-current-state {
@@ -23,17 +23,26 @@
   }
 
   .header-nav-links {
+    position: relative;
     margin: 0 .5rem;
     transition: all ease .2s;
     cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 
     &:hover {
-      color: $wm-secondary-verylight;
+      color: $wm-primary-light;
+    }
+
+    &.active {
+      color: $wm-primary-light;
     }
 
     &:active, &:focus {
       outline: 1px solid $wm-black;
-      color: $wm-secondary-verylight;
+      color: $wm-primary-light;
       outline-offset: 3px;
     }
   }

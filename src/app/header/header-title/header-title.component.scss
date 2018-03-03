@@ -6,6 +6,10 @@
   transition: all ease .2s;
   margin: 0 .5rem;
   font-weight: 400;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 
   &:hover {
     color: $wm-primary;

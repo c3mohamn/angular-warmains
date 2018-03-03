@@ -1,0 +1,31 @@
+@import "~assets/scss/variables";
+
+.account-options {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: 150px;
+  background: $wm-secondary-dark;
+  box-shadow: $wm-boxshadow-black-2;
+
+  .option {
+    width: 100%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    color: $wm-secondary-verylight;
+
+    &.static {
+      background: lighten($wm-secondary-dark, 10);
+
+      &:hover {
+        color: $wm-secondary-verylight;
+      }
+    }
+
+    &:hover {
+      color: $wm-primary-light;
+      background: lighten($wm-secondary-dark, 10);
+    }
+  }
+}
