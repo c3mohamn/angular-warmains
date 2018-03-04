@@ -13,7 +13,7 @@ export class AccountOptionsComponent implements OnInit {
   @Output() toggleEvent = new EventEmitter<boolean>();
 
   constructor(private _authService: AuthService) {
-    this.username = this._authService.user.username;
+    this.username = this._authService.getUsername();
   }
 
   ngOnInit() {

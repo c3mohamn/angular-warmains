@@ -14,9 +14,9 @@
   .header-current-state {
     cursor: default;
     opacity: .5;
+    margin: 0 .5rem;
 
-    h5 {
-      margin: 0 .5rem;
+    small {
       font-weight: 100;
       text-transform: uppercase;
     }

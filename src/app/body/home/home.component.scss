@@ -1,4 +1,22 @@
+@import "~assets/scss/variables";
+
 .home-container {
-  margin: 5rem;
-  background: gray;
+  .planner-container {
+    width: 100%;
+    padding: 1rem;
+    align-items: flex-start;
+  }
+
+  .planner-routes {
+    min-width: 100px;
+    width: 200px;
+    padding: 1rem;
+    margin: 1rem;
+    cursor: pointer;
+    transition: $wm-transition-slow;
+
+    p {
+      font-size: 12px;
+    }
+  }
 }

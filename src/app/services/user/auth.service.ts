@@ -60,6 +60,14 @@ export class AuthService {
     return null;
   }
 
+  getUsername(): string {
+    if (this.user) {
+      return this.user.username;
+    } else {
+      return '';
+    }
+  }
+
   validateToken() {
     const token = localStorage.getItem('token');
 
