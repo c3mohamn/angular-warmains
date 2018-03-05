@@ -3,7 +3,7 @@
       (clickOutside)="closeDropdown()"
       [exclude]="'.account-icon'">
   <div class="flex-child-shrink option static">
-    {{ username }}
+    {{ getCurrentUsername() }}
   </div>
   <div class="flex-child-shrink option" (click)="logoutUser()">
     Logout

@@ -7,16 +7,18 @@ import { AuthService } from '../../services/user/auth.service';
   styleUrls: ['./account-options.component.scss']
 })
 export class AccountOptionsComponent implements OnInit {
-  username: string;
 
   @Input() accountOptionsActive: boolean;
   @Output() toggleEvent = new EventEmitter<boolean>();
 
   constructor(private _authService: AuthService) {
-    this.username = this._authService.getUsername();
   }
 
   ngOnInit() {
+  }
+
+  getCurrentUsername() {
+    return this._authService.getUsername();
   }
 
   logoutUser() {
