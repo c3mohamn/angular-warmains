@@ -38,7 +38,7 @@ app.use('/api', api);
 
 // Send all other requests to Angular app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
 // Set Port
