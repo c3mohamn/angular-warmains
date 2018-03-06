@@ -10,6 +10,7 @@
   background: $wm-secondary-dark;
   color: $wm-secondary-verylight;
   box-shadow: $wm-boxshadow-black-2;
+  z-index: 10;
 
   .header-current-state {
     cursor: default;

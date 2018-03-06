@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: 'home', loadChildren: './body/home/home.module#HomeModule' },
   { path: 'about', loadChildren: './body/about/about.module#AboutModule' },
   { path: 'login', loadChildren: './body/login/login.module#LoginModule', canActivate: [ LoggedInGuard ] },
-  { path: 'register', loadChildren: './body/register/register.module#RegisterModule', canActivate: [ LoggedInGuard ] }
+  { path: 'register', loadChildren: './body/register/register.module#RegisterModule', canActivate: [ LoggedInGuard ] },
+  { path: 'talent', loadChildren: './body/talent-calculator/talent-calculator.module#TalentCalculatorModule' }
 ];
 
 @NgModule({
