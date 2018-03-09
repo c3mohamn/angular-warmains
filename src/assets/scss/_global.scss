@@ -35,6 +35,8 @@
   position: relative;
 
   &.hoverable {
+    cursor: pointer;
+
     &:hover {
       box-shadow: $wm-boxshadow-2;
       background-color: lighten($wm-secondary-dark, 10%);
@@ -50,6 +52,7 @@
 
     &.disabled {
       opacity: .7;
+      cursor: default;
 
       &:hover {
         box-shadow: $wm-boxshadow-1;

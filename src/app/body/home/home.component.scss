@@ -3,7 +3,6 @@
 .home-container {
   .planner-container {
     width: 100%;
-    padding: 1rem;
     align-items: flex-start;
   }
 
@@ -11,8 +10,7 @@
     min-width: 100px;
     width: 200px;
     padding: 1rem;
-    margin: 1rem;
-    cursor: pointer;
+    margin: 0 1rem 1rem 1rem;
     transition: $wm-transition-slow;
 
     p {
