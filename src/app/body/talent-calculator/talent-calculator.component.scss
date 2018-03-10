@@ -1,12 +1,17 @@
 .talent-calculator-container-outer {
   height: 100%;
   width: 100%;
+  padding: 0 1rem;
 
   .talent-calculator-container {
     height: 600px;
-    width: 90%;
+    width: 100%;
     min-width: 600px;
     max-width: 1000px;
-    background: lightcoral;
+    background: rgb(157, 183, 189);
+
+    .component-container {
+      padding: 1rem;
+    }
   }
 }

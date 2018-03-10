@@ -1,14 +1,27 @@
 <div class="talent-calculator-container-outer flex-container align-middle align-center">
   <div class="talent-calculator-container flex-container flex-dir-column">
-    <div class="flex-child-shrink talent-calculator-header">
-      Header
-    </div>
-    <div class="flex-child-grow talent-calculator-body grid-x">
-      <div class="cell small-8 large-9">
-        small-8
+    <div class="flex-child-shrink component-container">
+      <div class="dark-container">
+        <app-talent-header></app-talent-header>
       </div>
-      <div class="cell small-4 large-3">
-        small-4
+    </div>
+    <div class="flex-child-grow grid-x">
+      <div class="cell small-8 large-9 component-container">
+        <div class="dark-container">
+          <app-talent-tree></app-talent-tree>
+        </div>
+      </div>
+      <div class="cell small-4 large-3 grid-y">
+        <div class="cell small-6 component-container">
+          <div class="dark-container">
+            <app-talent-glyphs></app-talent-glyphs>
+          </div>
+        </div>
+        <div class="cell small-6 component-container">
+          <div class="dark-container">
+            <app-talent-saved></app-talent-saved>
+          </div>
+        </div>
       </div>
     </div>
   </div>

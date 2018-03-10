@@ -3,6 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { TalentCalculatorComponent } from './talent-calculator.component';
+import { TalentHeaderComponent } from './talent-header/talent-header.component';
+import { TalentTreeComponent } from './talent-tree/talent-tree.component';
+import { TalentGlyphsComponent } from './talent-glyphs/talent-glyphs.component';
+import { TalentSavedComponent } from './talent-saved/talent-saved.component';
+import { GlyphComponent } from './glyph/glyph.component';
+import { TalentComponent } from './talent/talent.component';
 
 @NgModule({
   imports: [
@@ -10,7 +16,13 @@ import { TalentCalculatorComponent } from './talent-calculator.component';
     CommonModule
   ],
   declarations: [
-    TalentCalculatorComponent
+    TalentCalculatorComponent,
+    TalentHeaderComponent,
+    TalentTreeComponent,
+    TalentGlyphsComponent,
+    TalentSavedComponent,
+    GlyphComponent,
+    TalentComponent
   ]
 })
 export class TalentCalculatorModule { }
