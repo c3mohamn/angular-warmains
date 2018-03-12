@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { UserForm } from '../../models/user.model';
-import { ApiUserService } from '../../services/user/api-user.service';
+import { UserForm } from '../../_models/user.model';
+import { ApiUserService } from '../../_services/user/api-user.service';
 import { Router } from '@angular/router';
 
 

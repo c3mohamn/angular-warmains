@@ -1,5 +1,5 @@
 import { Action, ActionCreator } from 'redux';
-import { User } from '../../models/user.model';
+import { User } from '../../_models/user.model';
 
 export const SET_CURRENT_USER = '[User] logged in';
 export const UNSET_CURRENT_USER = '[User] logged out';

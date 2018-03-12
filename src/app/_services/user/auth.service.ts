@@ -1,10 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { ApiUserService } from './api-user.service';
-import { User, UserForm, UserTokenInfo } from '../../models/user.model';
+import { User, UserForm, UserTokenInfo } from '../../_models/user.model';
 import { Observable } from 'rxjs/Observable';
 
 import * as Redux from 'redux';
-import * as UserActions from '../../states/user/user.actions';
+import * as UserActions from '../../_states/user/user.actions';
 import { AppStore } from '../../app.store';
 import { AppState } from '../../app.reducer';
 

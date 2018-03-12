@@ -10,9 +10,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 
-import { ApiUserService } from './services/user/api-user.service';
-import { AuthService } from './services/user/auth.service';
-import { ApiTalentService } from './services/talent/api-talent.service';
+import { ApiUserService } from './_services/user/api-user.service';
+import { AuthService } from './_services/user/auth.service';
+import { ApiTalentService } from './_services/talent/api-talent.service';
 
 import { AppComponent } from './app.component';
 import { BodyComponent } from './body/body.component';

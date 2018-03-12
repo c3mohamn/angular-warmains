@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiUserService } from '../services/user/api-user.service';
-import { ApiTalentService } from '../services/talent/api-talent.service';
-import { User } from '../models/user.model';
-import { Talent } from '../models/talent.model';
+import { ApiUserService } from '../_services/user/api-user.service';
+import { ApiTalentService } from '../_services/talent/api-talent.service';
+import { User } from '../_models/user.model';
+import { Talent } from '../_models/talent.model';
 import { Router } from '@angular/router';
 
 @Component({

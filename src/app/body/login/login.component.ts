@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { UserForm } from '../../models/user.model';
+import { UserForm } from '../../_models/user.model';
 import { Router } from '@angular/router';
-import { ApiUserService } from '../../services/user/api-user.service';
-import { AuthService } from '../../services/user/auth.service';
+import { ApiUserService } from '../../_services/user/api-user.service';
+import { AuthService } from '../../_services/user/auth.service';
+
+import { fadeInAnimation } from '../../_animations/components';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   hidePassword = true;

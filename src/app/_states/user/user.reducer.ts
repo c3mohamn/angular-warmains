@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { User } from '../../models/user.model';
+import { User } from '../../_models/user.model';
 import * as UserActions from './user.actions';
 import { createSelector } from 'reselect';
 

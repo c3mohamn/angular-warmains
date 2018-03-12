@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RegisterComponent } from './register.component';
 import { RouterModule } from '@angular/router';
-import { AngularMaterialModule } from '../../modules/material.module';
+import { AngularMaterialModule } from '../../_modules/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
