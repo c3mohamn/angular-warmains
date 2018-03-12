@@ -5,12 +5,10 @@ import { Router } from '@angular/router';
 import { ApiUserService } from '../../_services/user/api-user.service';
 import { AuthService } from '../../_services/user/auth.service';
 
-import { fadeInAnimation } from '../../_animations/components';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   hidePassword = true;

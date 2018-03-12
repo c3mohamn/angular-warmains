@@ -23,4 +23,3 @@ export const unsetCurrentUser: ActionCreator<UnsetCurrentUserAction> =
     type: UNSET_CURRENT_USER,
     user: null
   });
-

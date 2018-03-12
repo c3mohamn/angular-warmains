@@ -10,6 +10,8 @@ import { TalentSavedComponent } from './talent-saved/talent-saved.component';
 import { GlyphComponent } from './glyph/glyph.component';
 import { TalentComponent } from './talent/talent.component';
 
+import { TalentCalculatorService } from './talent-calculator.service';
+
 @NgModule({
   imports: [
     RouterModule.forChild([{path: '', component: TalentCalculatorComponent}]),
@@ -23,6 +25,9 @@ import { TalentComponent } from './talent/talent.component';
     TalentSavedComponent,
     GlyphComponent,
     TalentComponent
+  ],
+  providers: [
+    TalentCalculatorService
   ]
 })
 export class TalentCalculatorModule { }
