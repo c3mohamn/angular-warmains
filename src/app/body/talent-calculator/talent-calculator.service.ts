@@ -56,14 +56,35 @@ export class TalentCalculatorService {
 
     console.log(details);
 
-    // for (let key in details) {
-    //   const talent = details[key];
+    Object.keys(details).forEach(key => {
+      const talent = details[key];
 
-    //   if (talent.tree == 0) {
+      const newTalent: Talent = {
+        name: talent.name,
+        id: key,
+        row: talent.row,
+        col: talent.col,
+        curRank: 0,
+        maxRank: talent.maxRank,
+        tree: talent.tree,
+        tooltip: '',
+        allows: talent.allows,
+        requires: talent.requires,
+        arrows: talent.arrows
+      };
 
-    //   }
-    //   console.log(details[key]);
-    // }
+      if (newTalent.tree === 0) {
+        tree1.talents.push(newTalent);
+      } else if (newTalent.tree === 1) {
+        tree2.talents.push(newTalent);
+      } else {
+        tree3.talents.push(newTalent);
+      }
+    });
+
+    state.talents.push(tree1);
+    state.talents.push(tree2);
+    state.talents.push(tree3);
 
     this.store.dispatch(TalentActions.loadTalentDetails(state));
   }

@@ -16,7 +16,7 @@ export interface TalentTree {
 
 export interface Talent {
   name: string;
-  id: number;
+  id: string;
   row: number;
   col: number;
   curRank: number;
@@ -29,6 +29,6 @@ export interface Talent {
 }
 
 export interface TalentTreeArrow {
-  filename: string;
+  url: string;
   type: string;
 }
