@@ -26,6 +26,7 @@ export class TalentCalculatorComponent implements OnInit {
         data => {
           console.log(data);
           this.talentDetails = data;
+          this._talentCalculatorService.loadTalentDetailsState(data, 1);
         },
         error => console.log(error)
       );

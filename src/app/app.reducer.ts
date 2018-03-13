@@ -1,15 +1,15 @@
 import { Reducer, combineReducers } from 'redux';
 import { UserState, UserReducer } from './_states/user/user.reducer';
-// import { TalentState, TalentReducer } from './_states/talent';
+import { TalentCalculatorState, TalentReducer } from './_states/talent/talent.reducer';
 
 export interface AppState {
   user: UserState;
-  // talents: TalentState;
+  talentCalculator: TalentCalculatorState;
 }
 
 const rootReducer: Reducer<AppState> = combineReducers<AppState>({
-  user: UserReducer
-  // talents: TalentReducer,
+  user: UserReducer,
+  talentCalculator: TalentReducer,
 });
 
 export default rootReducer;
