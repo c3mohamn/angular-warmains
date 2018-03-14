@@ -14,31 +14,7 @@ export class TalentCalculatorComponent implements OnInit {
     private _talentCalculatorService: TalentCalculatorService,
     private router: Router
   ) {
-    this.classId = this.getClassIdFromUrl(this.router.url);
-    this.getTalentDetails(this.classId);
-  }
-
-  getTalentDetails(classId: number) {
-    this._talentCalculatorService.getTalentDetails()
-      .subscribe(
-        data => {
-          this._talentCalculatorService.loadTalentDetailsState(data[classId], classId);
-        },
-        error => console.log(error)
-      );
-  }
-
-  // converts path to url
-  getClassIdFromUrl(path): number {
-    const classId = Number(path.slice(path.indexOf('/', 2) + 1));
-
-    if (isNaN(classId) || classId === 10 || classId > 11 || classId < 1) {
-      // not a number, redirect to base class
-      this.router.navigate(['/talent/1']);
-      return 1;
-    }
-
-    return classId;
+    this._talentCalculatorService.init();
   }
 
   ngOnInit() {

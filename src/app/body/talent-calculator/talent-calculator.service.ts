@@ -8,25 +8,96 @@ import * as Redux from 'redux';
 import * as TalentActions from '../../_states/talent/talent.actions';
 import { AppStore } from '../../app.store';
 import { AppState } from '../../app.reducer';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class TalentCalculatorService {
-  state: TalentCalculatorState;
+  talentDetails: any;
+  talentTooltips: any;
+  classId: number;
 
   constructor(
     private http: HttpClient,
+    private router: Router,
     @Inject(AppStore) private store: Redux.Store<AppState>
-  ) { }
-
-  getTalentDetails(): Observable<any> {
-    console.log('getting talent details');
-    return this.http.get('./assets/data/talents/talent-details.json');
+  ) {
+    this.classId = this.getClassId();
   }
 
-  loadTalentDetailsState(details: any, classId: number) {
-    console.log(details);
+  // initialize talent calculator base
+  init() {
+    console.log('initializing talent calculator...');
+
+    this.getTalentTooltips().subscribe(
+      data => this.talentTooltips = data,
+      error => console.log(error)
+    );
+
+    if (this.talentDetails) {
+      this.loadTalentDetailsState(this.talentDetails[this.classId]);
+    } else {
+      this.getTalentDetails().subscribe(
+        data => {
+          this.talentDetails = data;
+          this.loadTalentDetailsState(data[this.classId]);
+        },
+        error => console.log(error)
+      );
+    }
+  }
+
+  addPoint(talentId: number, count: number = 1) {
+    console.log(`Adding ${count} points to talent ${talentId}.`);
+    const talent: Talent = this.getTalentState(talentId);
+    talent.curRank += count;
+    this.store.dispatch(TalentActions.addTalentPoint(talent));
+  }
+
+  removePoint(talentId: number, count: number = 1) {
+    console.log(`Removing ${count} points from talent ${talentId}.`);
+    const talent: Talent = this.getTalentState(talentId);
+    talent.curRank -= count;
+    this.store.dispatch(TalentActions.removeTalentPoint(talent));
+  }
+
+  resetTalentPoints(tree: number = null) {
+    console.log('Resetting talent points');
+    const talents: Talent[] = this.store.getState().talentCalculator.talents;
+
+    if (tree) {
+      talents.forEach(val => {
+        if (val.tree === tree) {
+          val.curRank = 0;
+        }
+      });
+    } else {
+      talents.forEach(val => val.curRank = 0 );
+    }
+
+    this.store.dispatch(TalentActions.resetTalentPoints(talents));
+  }
+
+  // converts path to url
+  getClassId(): number {
+    const path = this.router.url;
+    const classId = Number(path.slice(path.indexOf('/', 2) + 1));
+
+    if (isNaN(classId) || classId === 10 || classId > 11 || classId < 1) {
+      // not a number, redirect to base class
+      this.router.navigate(['/talent/1']);
+      return 1;
+    }
+
+    return classId;
+  }
+
+  ///////////////////////////////
+  ////// PRIVATE FUNCTIONS //////
+  ///////////////////////////////
+
+  private loadTalentDetailsState(details: any) {
     const state: TalentCalculatorState = {
-      classId: classId,
+      classId: this.classId,
       name: '',
       description: '',
       talentUrl: '',
@@ -42,13 +113,13 @@ export class TalentCalculatorService {
 
       const newTalent: Talent = {
         name: talent.name,
-        id: key,
+        id: +key,
         row: talent.row,
         col: talent.col,
         curRank: 0,
         maxRank: talent.maxRank,
         tree: talent.tree,
-        tooltip: '',
+        tooltip: [],
         allows: talent.allows,
         requires: talent.requires,
         arrows: talent.arrows
@@ -58,5 +129,21 @@ export class TalentCalculatorService {
     });
 
     this.store.dispatch(TalentActions.loadTalentDetails(state));
+    this.addPoint(0, 1);
+    this.removePoint(1, 3);
+    this.resetTalentPoints(0);
+  }
+
+  // gets talent information from state
+  private getTalentState(talentId: number): Talent {
+    return this.store.getState().talentCalculator.talents[talentId];
+  }
+
+  private getTalentDetails() {
+    return this.http.get('./assets/data/talents/talent-details.json');
+  }
+
+  private getTalentTooltips() {
+    return this.http.get('./assets/data/talents/tooltips/' + this.classId + '.json');
   }
 }

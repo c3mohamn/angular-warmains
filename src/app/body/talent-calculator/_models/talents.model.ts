@@ -10,13 +10,13 @@ export interface TalentCalculator {
 
 export interface Talent {
   name: string;
-  id: string;
+  id: number;
   row: number;
   col: number;
   curRank: number;
   maxRank: number;
   tree: number;
-  tooltip: string;
+  tooltip: string[];
   allows: number[];
   requires: number;
   arrows: TalentTreeArrow[];

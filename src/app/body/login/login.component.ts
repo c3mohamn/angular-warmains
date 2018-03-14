@@ -50,21 +50,20 @@ export class LoginComponent implements OnInit {
     this.user.username = this.userForm.get('username').value;
     this.user.password = this.userForm.get('password').value;
 
-    this._apiUserService.setUserToken(this.user)
-      .subscribe(
-        data => {
-          this._authService.login(data);
-          this.errorMsg = '';
-          this.successMsg = `Successfully logged in as ${this.user.username}.`;
-          setTimeout(() => {
-            this.router.navigate(['./home']);
-          }, 500);
-        },
-        error => {
-          console.log(error);
-          this.errorMsg = error.error;
-        }
-      );
+    this._apiUserService.setUserToken(this.user).subscribe(
+      data => {
+        this._authService.login(data);
+        this.errorMsg = '';
+        this.successMsg = `Successfully logged in as ${this.user.username}.`;
+        setTimeout(() => {
+          this.router.navigate(['./home']);
+        }, 500);
+      },
+      error => {
+        console.log(error);
+        this.errorMsg = error.error;
+      }
+    );
   }
 
   getUsernameErrorMessage() {

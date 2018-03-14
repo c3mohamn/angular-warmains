@@ -12,16 +12,28 @@ export const TalentReducer =
   switch (action.type) {
     case TalentActions.LOAD_TALENT_DETAILS:
       const calculator: TalentCalculatorState = (<TalentActions.LoadTalentDetailsAction>action).calculator;
-        return {
-          name: calculator.name,
-          classId: calculator.classId,
-          description: calculator.description,
-          glyphUrl: calculator.glyphUrl,
-          talentUrl: calculator.talentUrl,
-          spec: calculator.spec,
-          preview: calculator.preview,
-          talents: calculator.talents
-        };
+      return {
+        name: calculator.name,
+        classId: calculator.classId,
+        description: calculator.description,
+        glyphUrl: calculator.glyphUrl,
+        talentUrl: calculator.talentUrl,
+        spec: calculator.spec,
+        preview: calculator.preview,
+        talents: calculator.talents
+      };
+    case TalentActions.ADD_TALENT_POINT:
+      let talent: Talent = (<TalentActions.AddTalentPointAction>action).talent;
+      state.talents[talent.id] = talent;
+      return state;
+    case TalentActions.REMOVE_TALENT_POINT:
+      talent = (<TalentActions.RemoveTalentPointAction>action).talent;
+      state.talents[talent.id] = talent;
+      return state;
+    case TalentActions.RESET_TALENT_POINTS:
+      const talents: Talent[] = (<TalentActions.ResetTalentPointsAction>action).talents;
+      state.talents = talents;
+      return state;
     default:
       return state;
   }

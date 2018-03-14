@@ -28,8 +28,7 @@ export class AuthService {
     // Removes user's token in db
     localStorage.removeItem('token');
     if (this.user && this.user.username) {
-      this._apiUserService.removeUserToken(this.user.username)
-      .subscribe(
+      this._apiUserService.removeUserToken(this.user.username).subscribe(
         data => console.log(data),
         error => console.log(error.error)
       );
@@ -72,17 +71,16 @@ export class AuthService {
     const token = localStorage.getItem('token');
 
     if (token) {
-      this._apiUserService.validateToken(token)
-        .subscribe(
-          data => {
-            console.log(data);
-            this.login(data);
-          },
-          error => {
-            console.log(error.error);
-            this.logout();
-          }
-        );
+      this._apiUserService.validateToken(token).subscribe(
+        data => {
+          console.log(data);
+          this.login(data);
+        },
+        error => {
+          console.log(error.error);
+          this.logout();
+        }
+      );
     }
   }
 

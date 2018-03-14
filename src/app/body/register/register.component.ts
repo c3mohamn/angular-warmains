@@ -48,17 +48,16 @@ export class RegisterComponent implements OnInit {
     this.user.username = this.userForm.get('username').value;
     this.user.password = this.userForm.get('password').value;
 
-    this._apiUserService.createUser(this.user)
-      .subscribe(
-        data => {
-          console.log('user registered! ', data);
-          this.userRegistered = true;
-        },
-        error => {
-          console.log('error ', error);
-          this.apiErrorMsg = error.error;
-        }
-      );
+    this._apiUserService.createUser(this.user).subscribe(
+      data => {
+        console.log('user registered! ', data);
+        this.userRegistered = true;
+      },
+      error => {
+        console.log('error ', error);
+        this.apiErrorMsg = error.error;
+      }
+    );
   }
 
   // Form error messages
