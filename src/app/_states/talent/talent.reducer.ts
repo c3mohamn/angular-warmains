@@ -1,10 +1,10 @@
 import { Action } from 'redux';
-import { TalentCalculator, TalentTree, Talent } from '../../body/talent-calculator/_models/talents.model';
+import { TalentCalculator, Talent } from '../../body/talent-calculator/_models/talents.model';
 import * as TalentActions from './talent.actions';
 import { createSelector } from 'reselect';
 
 export interface TalentCalculatorState extends TalentCalculator {
-  talents: TalentTree[];
+  talents: Talent[];
 }
 
 export const TalentReducer =

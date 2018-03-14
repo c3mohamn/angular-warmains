@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { TalentTree, Talent } from './_models/talents.model';
+import { Talent } from './_models/talents.model';
 import { TalentCalculatorState } from '../../_states/talent/talent.reducer';
 
 import * as Redux from 'redux';
@@ -23,8 +23,8 @@ export class TalentCalculatorService {
     return this.http.get('./assets/data/talents/talent-details.json');
   }
 
-  loadTalentDetailsState(rawDetails: any, classId: number) {
-    const details = rawDetails[classId];
+  loadTalentDetailsState(details: any, classId: number) {
+    console.log(details);
     const state: TalentCalculatorState = {
       classId: classId,
       name: '',
@@ -36,26 +36,7 @@ export class TalentCalculatorService {
       talents: []
     };
 
-    const tree1: TalentTree = {
-      name: '',
-      key: 0,
-      talents: []
-    };
-
-    const tree2: TalentTree = {
-      name: '',
-      key: 1,
-      talents: []
-    };
-
-    const tree3: TalentTree = {
-      name: '',
-      key: 2,
-      talents: []
-    };
-
-    console.log(details);
-
+    // Add talent details to list of talents in state
     Object.keys(details).forEach(key => {
       const talent = details[key];
 
@@ -73,18 +54,8 @@ export class TalentCalculatorService {
         arrows: talent.arrows
       };
 
-      if (newTalent.tree === 0) {
-        tree1.talents.push(newTalent);
-      } else if (newTalent.tree === 1) {
-        tree2.talents.push(newTalent);
-      } else {
-        tree3.talents.push(newTalent);
-      }
+      state.talents.push(newTalent);
     });
-
-    state.talents.push(tree1);
-    state.talents.push(tree2);
-    state.talents.push(tree3);
 
     this.store.dispatch(TalentActions.loadTalentDetails(state));
   }

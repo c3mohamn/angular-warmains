@@ -8,12 +8,6 @@ export interface TalentCalculator {
   spec: string;
 }
 
-export interface TalentTree {
-  name: string;
-  key: number;
-  talents: Talent[];
-}
-
 export interface Talent {
   name: string;
   id: string;
@@ -29,6 +23,6 @@ export interface Talent {
 }
 
 export interface TalentTreeArrow {
-  url: string;
+  filename: string;
   type: string;
 }
