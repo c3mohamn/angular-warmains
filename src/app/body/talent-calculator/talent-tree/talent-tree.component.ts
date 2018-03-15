@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TalentCalculatorService } from '../talent-calculator.service';
 
 @Component({
   selector: 'app-talent-tree',
@@ -7,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TalentTreeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _talentCalculatorService: TalentCalculatorService) { }
+
+  getSpecBg(treeId: number): string {
+    const spec = this._talentCalculatorService.getClassSpec(treeId);
+    const classId = this._talentCalculatorService.classId;
+
+    return 'url(assets/images/talent-icons/' + classId + '/' + spec + '/background.jpg)';
+  }
 
   ngOnInit() {
   }

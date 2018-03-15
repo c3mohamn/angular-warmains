@@ -1,0 +1,22 @@
+.talent-header-container {
+  padding: 1rem;
+
+  .current-class-name {
+    margin: 0 0 0 1rem;
+  }
+
+  .class-icons {
+    width: 35px;
+    height: 35px;
+    margin: .25rem;
+    cursor: pointer;
+    transition: all .1 ease;
+    filter: grayscale(100);
+    opacity: .6;
+
+    &:hover, &.selected {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+  }
+}

@@ -1,11 +1,3 @@
-<div>
-  Talent Tree
-  <div class="flex-container align-middle align-center">
-    <div class="flex-child-shrink">
-
-    </div>
-    <div class="flex-child-shrink">
-
-    </div>
-  </div>
+<div class="talent-tree-container flex-container align-middle align-center">
+  <div *ngFor="let tree of [0, 1, 2]" [style.background]="getSpecBg(tree)" class="flex-child-shrink tree"></div>
 </div>

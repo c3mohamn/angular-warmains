@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Talent } from './_models/talents.model';
 import { TalentCalculatorState } from '../../_states/talent/talent.reducer';
+import { Classes, ClassesColors, ClassesSpecs } from '../../_models/classes.enum';
 
 import * as Redux from 'redux';
 import * as TalentActions from '../../_states/talent/talent.actions';
@@ -15,6 +16,8 @@ export class TalentCalculatorService {
   talentDetails: any;
   talentTooltips: any;
   classId: number;
+  className: string;
+  classColor: string;
 
   constructor(
     private http: HttpClient,
@@ -25,8 +28,12 @@ export class TalentCalculatorService {
   }
 
   // initialize talent calculator base
-  init() {
-    console.log('initializing talent calculator...');
+  init(classId: number = null) {
+    this.classId = classId ? classId : this.classId;
+    this.className = this.getClassName();
+    this.classColor = this.getClassColor();
+
+    console.log(`initializing talent calculator for ${this.classId}...`);
 
     this.getTalentTooltips().subscribe(
       data => this.talentTooltips = data,
@@ -83,12 +90,26 @@ export class TalentCalculatorService {
     const classId = Number(path.slice(path.indexOf('/', 2) + 1));
 
     if (isNaN(classId) || classId === 10 || classId > 11 || classId < 1) {
-      // not a number, redirect to base class
+      // not valid a number, redirect to base class
+      console.log('redirecting... to warrior');
       this.router.navigate(['/talent/1']);
       return 1;
     }
 
     return classId;
+  }
+
+  getClassName(classId: number = this.classId): string {
+    return Classes[classId];
+  }
+
+  getClassColor(classId: number = this.classId): string {
+    return ClassesColors[Classes[classId]];
+  }
+
+  getClassSpec(treeId: number, classId: number = this.classId): string {
+    const specs = new ClassesSpecs();
+    return specs.getClassSpec(classId, treeId);
   }
 
   ///////////////////////////////
@@ -129,9 +150,6 @@ export class TalentCalculatorService {
     });
 
     this.store.dispatch(TalentActions.loadTalentDetails(state));
-    this.addPoint(0, 1);
-    this.removePoint(1, 3);
-    this.resetTalentPoints(0);
   }
 
   // gets talent information from state

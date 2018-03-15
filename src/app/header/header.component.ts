@@ -25,9 +25,8 @@ export class HeaderComponent implements OnInit {
   }
 
   currentState() {
-    // TODO: convert numbers to class names
     const path = this.router.url;
-    return path.indexOf('talent') > -1 ? path.slice(path.indexOf('/', 2) + 1) : path.slice(1);
+    return path.indexOf('talent') > -1 ? 'talent' : path.slice(1);
   }
 
   toggleOptionsActive($event) {

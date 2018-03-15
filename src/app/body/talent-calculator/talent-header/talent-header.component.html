@@ -1,3 +1,11 @@
-<p>
-  talent-header works!
-</p>
+
+<div class="talent-header-container flex-container align-middle align-center">
+  <div class="flex-child-shrink">
+    <h4 [style.color]="getClassColor()" class="current-class-name">{{ getClassName() }}</h4>
+  </div>
+  <div class="flex-child-grow"></div>
+  <div class="flex-child-shrink">
+    <img *ngFor="let classId of classIds" (click)="changeClass(classId)" [ngClass]="{selected: classId === curClassId}" title="{{ getClassName(classId) }}"
+    class="class-icons" src="assets/images/class-icons/{{classId}}.png" alt="">
+  </div>
+</div>
