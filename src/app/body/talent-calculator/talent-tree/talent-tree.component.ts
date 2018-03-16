@@ -7,6 +7,9 @@ import { TalentCalculatorService } from '../talent-calculator.service';
   styleUrls: ['./talent-tree.component.scss']
 })
 export class TalentTreeComponent implements OnInit {
+  trees = [0, 1, 2];
+  rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  cols = [0, 1, 2, 3];
 
   constructor(private _talentCalculatorService: TalentCalculatorService) { }
 

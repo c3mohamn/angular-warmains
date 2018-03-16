@@ -1,3 +1,9 @@
 <div class="talent-tree-container flex-container align-middle align-center">
-  <div *ngFor="let tree of [0, 1, 2]" [style.background]="getSpecBg(tree)" class="flex-child-shrink tree"></div>
+  <div *ngFor="let tree of trees" [style.background]="getSpecBg(tree)" class="flex-child-shrink tree">
+    <div *ngFor="let row of rows" class="talent-row flex-container align-middle align-center">
+      <div *ngFor="let col of cols" class="col-row">
+        <app-talent [row]="row" [col]="col" [tree]="tree"></app-talent>
+      </div>
+    </div>
+  </div>
 </div>

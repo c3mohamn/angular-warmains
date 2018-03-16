@@ -55,14 +55,14 @@ export class TalentCalculatorService {
 
   addPoint(talentId: number, count: number = 1) {
     console.log(`Adding ${count} points to talent ${talentId}.`);
-    const talent: Talent = this.getTalentState(talentId);
+    const talent: Talent = this.getTalentStateById(talentId);
     talent.curRank += count;
     this.store.dispatch(TalentActions.addTalentPoint(talent));
   }
 
   removePoint(talentId: number, count: number = 1) {
     console.log(`Removing ${count} points from talent ${talentId}.`);
-    const talent: Talent = this.getTalentState(talentId);
+    const talent: Talent = this.getTalentStateById(talentId);
     talent.curRank -= count;
     this.store.dispatch(TalentActions.removeTalentPoint(talent));
   }
@@ -112,6 +112,16 @@ export class TalentCalculatorService {
     return specs.getClassSpec(classId, treeId);
   }
 
+  getTalentState(tree: number, row: number, col: number) {
+    const talents = this.store.getState().talentCalculator.talents;
+    Object.keys(talents).forEach(key => {
+      const talent = talents[key];
+      if (talent.tree === tree && talent.row === row && talent.col === col) {
+        return talents[key];
+      }
+    });
+  }
+
   ///////////////////////////////
   ////// PRIVATE FUNCTIONS //////
   ///////////////////////////////
@@ -152,8 +162,7 @@ export class TalentCalculatorService {
     this.store.dispatch(TalentActions.loadTalentDetails(state));
   }
 
-  // gets talent information from state
-  private getTalentState(talentId: number): Talent {
+  private getTalentStateById(talentId: number): Talent {
     return this.store.getState().talentCalculator.talents[talentId];
   }
 
