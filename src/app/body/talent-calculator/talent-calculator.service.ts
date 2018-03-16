@@ -54,17 +54,11 @@ export class TalentCalculatorService {
   }
 
   addPoint(talentId: number, count: number = 1) {
-    console.log(`Adding ${count} points to talent ${talentId}.`);
-    const talent: Talent = this.getTalentStateById(talentId);
-    talent.curRank += count;
-    this.store.dispatch(TalentActions.addTalentPoint(talent));
+    this.store.dispatch(TalentActions.addTalentPoint(talentId));
   }
 
   removePoint(talentId: number, count: number = 1) {
-    console.log(`Removing ${count} points from talent ${talentId}.`);
-    const talent: Talent = this.getTalentStateById(talentId);
-    talent.curRank -= count;
-    this.store.dispatch(TalentActions.removeTalentPoint(talent));
+    this.store.dispatch(TalentActions.removeTalentPoint(talentId));
   }
 
   resetTalentPoints(tree: number = null) {
@@ -112,14 +106,19 @@ export class TalentCalculatorService {
     return specs.getClassSpec(classId, treeId);
   }
 
-  getTalentState(tree: number, row: number, col: number) {
+  getTalentState(tree: number, row: number, col: number): Talent {
+    if (!this.talentDetails) {
+      return null;
+    }
+
     const talents = this.store.getState().talentCalculator.talents;
-    Object.keys(talents).forEach(key => {
-      const talent = talents[key];
-      if (talent.tree === tree && talent.row === row && talent.col === col) {
-        return talents[key];
-      }
-    });
+
+    // Get index of matching talent
+    const index = Object.keys(talents).find(key =>
+      talents[key].row === row && talents[key].col === col && talents[key].tree === tree
+    );
+
+    return talents[index];
   }
 
   ///////////////////////////////
@@ -135,7 +134,8 @@ export class TalentCalculatorService {
       glyphUrl: '',
       preview: [0, 0, 0],
       spec: '',
-      talents: []
+      talents: [],
+      totalPoints: 0
     };
 
     // Add talent details to list of talents in state
@@ -160,6 +160,8 @@ export class TalentCalculatorService {
     });
 
     this.store.dispatch(TalentActions.loadTalentDetails(state));
+
+    // this.getTalentState(2, 0, 0);
   }
 
   private getTalentStateById(talentId: number): Talent {

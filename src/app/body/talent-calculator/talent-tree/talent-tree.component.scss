@@ -4,8 +4,9 @@
   .tree {
     width: 192px;
     height: 500px;
+    background-size: 192px 500px;
+    background-repeat: no-repeat;
     margin: .25rem;
     padding-top: 4px;
-    background: rgba(lightblue, .5);
   }
 }

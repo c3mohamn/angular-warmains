@@ -10,6 +10,8 @@ import { TalentSavedComponent } from './talent-saved/talent-saved.component';
 import { GlyphComponent } from './glyph/glyph.component';
 import { TalentComponent } from './talent/talent.component';
 
+import { MouseWheelDirective } from '../../_directives/mousewheel.directive';
+
 import { TalentCalculatorService } from './talent-calculator.service';
 
 @NgModule({
@@ -24,7 +26,8 @@ import { TalentCalculatorService } from './talent-calculator.service';
     TalentGlyphsComponent,
     TalentSavedComponent,
     GlyphComponent,
-    TalentComponent
+    TalentComponent,
+    MouseWheelDirective
   ],
   providers: [
     TalentCalculatorService

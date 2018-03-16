@@ -11,10 +11,10 @@ export class TalentCalculatorComponent implements OnInit {
   classId: number;
 
   constructor(
-    private _talentCalculatorService: TalentCalculatorService,
+    private talentService: TalentCalculatorService,
     private router: Router
   ) {
-    this._talentCalculatorService.init();
+    this.talentService.init();
   }
 
   ngOnInit() {

@@ -20,7 +20,6 @@ import { BodyComponent } from './body/body.component';
 import { AppState, default as reducer } from './app.reducer';
 import { AppStore, appStoreProviders } from './app.store';
 
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -4,8 +4,8 @@ import { Talent } from '../../body/talent-calculator/_models/talents.model';
 
 
 export const LOAD_TALENT_DETAILS = 'Talents Details loaded';
-export const ADD_TALENT_POINT = 'Added a talent point to [talent]';
-export const REMOVE_TALENT_POINT = 'Removed a talent point from [talent]';
+export const ADD_TALENT_POINT = 'Added a talent point to [talentId]';
+export const REMOVE_TALENT_POINT = 'Removed a talent point from [talentId]';
 export const RESET_TALENT_POINTS = 'Reset talent points';
 
 export interface LoadTalentDetailsAction extends Action {
@@ -13,11 +13,11 @@ export interface LoadTalentDetailsAction extends Action {
 }
 
 export interface AddTalentPointAction extends Action {
-  talent: Talent;
+  talentId: number;
 }
 
 export interface RemoveTalentPointAction extends Action {
-  talent: Talent;
+  talentId: number;
 }
 
 export interface ResetTalentPointsAction extends Action {
@@ -31,15 +31,15 @@ export const loadTalentDetails: ActionCreator<LoadTalentDetailsAction> =
   });
 
 export const addTalentPoint: ActionCreator<AddTalentPointAction> =
-  (talent) => ({
+  (talentId) => ({
     type: ADD_TALENT_POINT,
-    talent: talent
+    talentId: talentId
   });
 
 export const removeTalentPoint: ActionCreator<RemoveTalentPointAction> =
-  (talent) => ({
+  (talentId) => ({
     type: REMOVE_TALENT_POINT,
-    talent: talent
+    talentId: talentId
   });
 
 export const resetTalentPoints: ActionCreator<ResetTalentPointsAction> =

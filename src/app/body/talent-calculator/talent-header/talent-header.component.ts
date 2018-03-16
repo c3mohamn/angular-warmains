@@ -13,10 +13,10 @@ export class TalentHeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private _talentCalculatorService: TalentCalculatorService
+    private talentService: TalentCalculatorService
   ) {
     this.classIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11];
-    this.curClassId = _talentCalculatorService.getClassId();
+    this.curClassId = talentService.getClassId();
   }
 
   // reinitialize talent details to new classes
@@ -24,16 +24,16 @@ export class TalentHeaderComponent implements OnInit {
     if (this.curClassId !== classId) {
       this.curClassId = classId;
       this.router.navigate(['/talent/' + classId]);
-      this._talentCalculatorService.init(classId);
+      this.talentService.init(classId);
     }
   }
 
   getClassColor(classId: number = this.curClassId): string {
-    return this._talentCalculatorService.getClassColor(classId);
+    return this.talentService.getClassColor(classId);
   }
 
   getClassName(classId: number = this.curClassId): string {
-    return this._talentCalculatorService.getClassName(classId);
+    return this.talentService.getClassName(classId);
   }
 
   ngOnInit() {
