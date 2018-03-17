@@ -18,6 +18,13 @@ export class TalentTreeComponent implements OnInit {
     return this.talentService.getTalentState(tree, row, col);
   }
 
+  isInitialized(): boolean {
+    if (this.talentService.talentDetails) {
+      return true;
+    }
+    return false;
+  }
+
   getSpecBg(treeId: number): string {
     const spec = this.talentService.getClassSpec(treeId);
     const classId = this.talentService.classId;

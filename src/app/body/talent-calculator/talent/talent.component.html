@@ -1,9 +1,10 @@
 <div class="talent-container-outer flex-container align-middle align-center">
-  <div *ngIf="talent" [style.background-image]="iconUrl" class="talent-container-inner"
+  <div *ngIf="talent" [style.background-image]="iconUrl" class="talent-container-inner" [ngClass]="{disabled: isInactive()}"
   (click)="addTalentPoint()" (contextmenu)="removeTalentPoint()"
   appMouseWheel (mouseWheelUp)="addTalentPoint()" (mouseWheelDown)="removeTalentPoint()">
     <!-- Talent Counter -->
-    <div class="talent-points" [ngClass]="{'maxed': talent.curRank === talent.maxRank, 'min': talent.curRank === 0}">
+    <div [hidden]="isInactive()" class="talent-points"
+    [ngClass]="{'maxed': talent.curRank === talent.maxRank, 'min': talent.curRank === 0}">
       <span>{{talent.curRank}}</span>
     </div>
   </div>

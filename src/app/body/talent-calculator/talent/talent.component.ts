@@ -11,6 +11,8 @@ export class TalentComponent implements OnInit, OnChanges {
   iconUrl: string;
   classId: number;
   spec: string;
+  lastActiveRow: number;
+  pointsInTree: number[];
 
   @Input() talent: Talent;
 
@@ -28,15 +30,15 @@ export class TalentComponent implements OnInit, OnChanges {
     }
   }
 
+  isInactive(): boolean {
+    return this.talentService.isTalentActive(this.talent.id);
+  }
+
   addTalentPoint() {
     this.talentService.addPoint(this.talent.id, 1);
   }
 
   removeTalentPoint() {
-    // if (this.talent.curRank === 0) {
-    //   return false;
-    // }
-
     this.talentService.removePoint(this.talent.id, 1);
     return false;
   }

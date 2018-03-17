@@ -85,12 +85,31 @@ export class TalentCalculatorService {
 
     if (isNaN(classId) || classId === 10 || classId > 11 || classId < 1) {
       // not valid a number, redirect to base class
-      console.log('redirecting... to warrior');
       this.router.navigate(['/talent/1']);
       return 1;
     }
 
     return classId;
+  }
+
+  isTalentActive(talentId: number): boolean {
+    const talent = this.getTalentStateById(talentId);
+    const pointsInTree = this.store.getState().talentCalculator.preview[talent.tree];
+    const totalPoints = this.store.getState().talentCalculator.totalPoints;
+
+    if (talent.requires) {
+      const requiredTalent = this.getTalentStateById(talent.requires);
+      if (requiredTalent.curRank !== requiredTalent.maxRank) {
+        return true;
+      }
+    }
+
+    return talent.row * 5 > pointsInTree ||
+      talent.curRank === 0 && totalPoints === 71;
+  }
+
+  getLastActiveRow(tree: number): number {
+    return this.store.getState().talentCalculator.lastActiveRow[tree];
   }
 
   getClassName(classId: number = this.classId): string {
@@ -133,9 +152,11 @@ export class TalentCalculatorService {
       talentUrl: '',
       glyphUrl: '',
       preview: [0, 0, 0],
+      treeRows: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
       spec: '',
       talents: [],
-      totalPoints: 0
+      totalPoints: 0,
+      lastActiveRow: [0, 0, 0]
     };
 
     // Add talent details to list of talents in state
@@ -160,8 +181,6 @@ export class TalentCalculatorService {
     });
 
     this.store.dispatch(TalentActions.loadTalentDetails(state));
-
-    // this.getTalentState(2, 0, 0);
   }
 
   private getTalentStateById(talentId: number): Talent {

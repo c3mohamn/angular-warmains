@@ -18,6 +18,10 @@
       box-shadow: $wm-inset-boxshadow-white;
     }
 
+    &.disabled {
+      filter: grayscale(100);
+    }
+
     .talent-points {
       position: absolute;
       right: -6px;
