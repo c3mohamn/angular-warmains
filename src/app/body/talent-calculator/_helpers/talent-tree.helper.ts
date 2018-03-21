@@ -1,5 +1,5 @@
-import { TalentCalculatorState } from './talent.reducer';
-import { Talent } from '../../body/talent-calculator/_models/talents.model';
+import { TalentCalculatorState } from '../../../_states/talent/talent.reducer';
+import { Talent } from '../../../body/talent-calculator/_models/talents.model';
 
 export function canAddPoint(state: TalentCalculatorState, talentId: number) {
   const talent = state.talents[talentId];

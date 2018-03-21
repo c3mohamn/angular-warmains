@@ -2,7 +2,6 @@ import { Action } from 'redux';
 import { TalentCalculator, Talent } from '../../body/talent-calculator/_models/talents.model';
 import * as TalentActions from './talent.actions';
 import { createSelector } from 'reselect';
-import { canAddPoint, canRemovePoint } from './talent-reducer.helper';
 
 export interface TalentCalculatorState extends TalentCalculator {
   talents: Talent[];
@@ -32,31 +31,27 @@ export const TalentReducer =
 
     case TalentActions.ADD_TALENT_POINT:
       let talentId: number = (<TalentActions.AddTalentPointAction>action).talentId;
-      if (canAddPoint(state, talentId)) {
         console.log(`Adding 1 points to talent ${talentId}.`);
-        const tree = state.talents[talentId].tree;
+        let tree = state.talents[talentId].tree;
         state.preview[tree]++;
         state.talents[talentId].curRank++;
         state.treeRows[tree][state.talents[talentId].row]++;
         state.totalPoints++;
         state.lastActiveRow[tree] =
           state.talents[talentId].row > state.lastActiveRow[tree] ? state.talents[talentId].row : state.lastActiveRow[tree];
-      }
 
       return state;
 
     case TalentActions.REMOVE_TALENT_POINT:
       talentId = (<TalentActions.RemoveTalentPointAction>action).talentId;
-      if (canRemovePoint(state, talentId)) {
         console.log(`Removing 1 points from talent ${talentId}.`);
-        const tree = state.talents[talentId].tree;
+        tree = state.talents[talentId].tree;
         state.preview[tree]--;
         state.talents[talentId].curRank--;
         state.treeRows[tree][state.talents[talentId].row]--;
         state.totalPoints--;
         if (state.talents[talentId].row === state.lastActiveRow[tree] && state.treeRows[tree][state.talents[talentId].row] === 0) {
           state.lastActiveRow[tree]--;
-        }
       }
 
       return state;

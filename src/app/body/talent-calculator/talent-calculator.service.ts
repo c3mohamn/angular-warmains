@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Talent } from './_models/talents.model';
 import { TalentCalculatorState } from '../../_states/talent/talent.reducer';
 import { Classes, ClassesColors, ClassesSpecs } from '../../_models/classes.enum';
+import { canAddPoint, canRemovePoint } from './_helpers/talent-tree.helper';
 
 import * as Redux from 'redux';
 import * as TalentActions from '../../_states/talent/talent.actions';
@@ -54,11 +55,15 @@ export class TalentCalculatorService {
   }
 
   addPoint(talentId: number, count: number = 1) {
-    this.store.dispatch(TalentActions.addTalentPoint(talentId));
+    if (canAddPoint(this.store.getState().talentCalculator, talentId)) {
+      this.store.dispatch(TalentActions.addTalentPoint(talentId));
+    }
   }
 
   removePoint(talentId: number, count: number = 1) {
-    this.store.dispatch(TalentActions.removeTalentPoint(talentId));
+    if (canRemovePoint(this.store.getState().talentCalculator, talentId)) {
+      this.store.dispatch(TalentActions.removeTalentPoint(talentId));
+    }
   }
 
   resetTalentPoints(tree: number = null) {
