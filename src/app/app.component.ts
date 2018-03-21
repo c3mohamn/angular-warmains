@@ -7,7 +7,9 @@ import { AuthService } from './_services/user/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private _authService: AuthService) {
+  constructor(
+    private _authService: AuthService
+  ) {
     _authService.validateToken();
    }
 }
