@@ -1,3 +1,22 @@
-<p>
-  home works!
-</p>
+<div class="home-container">
+  <div class="planner-container flex-container align-middle align-center grid-x">
+    <!-- Raid Planner -->
+    <div class="planner-routes raids dark-container hoverable disabled">
+      <h5>Raids</h5>
+      <hr>
+      <p>At least you can make your raid comp with 25 Druids here.</p>
+      <p style="color: red;">Currently unavailable.</p>
+    </div>
+    <div class="planner-routes talents dark-container hoverable" [routerLink]="['/talent/1']">
+      <h5>Talents</h5>
+      <hr>
+      <p>Preview and save talents in this online talent calculator.</p>
+    </div>
+    <div class="planner-routes characters dark-container hoverable disabled">
+      <h5>Characters</h5>
+      <hr>
+      <p>Customize and create a character from scratch.</p>
+      <p style="color: red;">Currently unavailable.</p>
+    </div>
+  </div>
+</div>
