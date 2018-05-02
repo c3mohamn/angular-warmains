@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ApiUserService } from '../../services/user/api-user.service';
-import { ApiTalentService } from '../../services/talent/api-talent.service';
 import { User } from '../../models/user.model';
 import { Talent } from '../../models/talent.model';
+import { UserService } from '../../modules/api/services/user.service';
+import { TalentService } from '../../modules/api/services/talent.service';
 
 @Component({
   selector: 'app-body',
@@ -18,10 +18,10 @@ export class BodyComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private _apiUserService: ApiUserService,
-    private _apiTalentService: ApiTalentService
+    // private userService: UserService,
+    private talentService: TalentService
   ) {
-    this._apiTalentService.getTalents().subscribe(res => {
+    this.talentService.getTalents().subscribe(res => {
       this.talents = res;
       console.log(this.talents);
     });

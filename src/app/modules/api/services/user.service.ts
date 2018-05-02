@@ -6,10 +6,10 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { User, UserForm } from '../../models/user.model';
+import { User, UserForm } from '../../../models/user.model';
 
 @Injectable()
-export class ApiUserService {
+export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<User[]> {

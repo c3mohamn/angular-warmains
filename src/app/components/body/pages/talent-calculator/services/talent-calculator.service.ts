@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Talent } from '../models/talents.model';
-import { TalentCalculatorState } from '../../../../../_states/talent/talent.reducer';
+import { TalentCalculatorState } from '../../../../../states/talent/talent.reducer';
 import {
   Classes,
   ClassesColors,
@@ -11,9 +11,9 @@ import {
 import { canAddPoint, canRemovePoint } from '../helpers/talent-tree.helper';
 
 import * as Redux from 'redux';
-import * as TalentActions from '../../../../../_states/talent/talent.actions';
-import { AppStore } from '../../../../../app.store';
-import { AppState } from '../../../../../app.reducer';
+import * as TalentActions from '../../../../../states/talent/talent.actions';
+import { AppStore } from '../../../../../states/app.store';
+import { AppState } from '../../../../../states/app.reducer';
 import { Router } from '@angular/router';
 
 @Injectable()

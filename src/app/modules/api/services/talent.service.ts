@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Talent } from '../../models/talent.model';
+import { Talent } from '../../../models/talent.model';
 
 @Injectable()
-export class ApiTalentService {
+export class TalentService {
   result: Talent[];
 
   constructor(private _http: Http) {}

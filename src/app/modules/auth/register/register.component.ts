@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserForm } from '../../../models/user.model';
-import { ApiUserService } from '../../../services/user/api-user.service';
+import { UserService } from '../../api/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
   apiErrorMsg: string;
 
   constructor(
-    private _apiUserService: ApiUserService,
+    private userService: UserService,
     private fb: FormBuilder
   ) {
     this.createForm();
@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
     this.user.username = this.userForm.get('username').value;
     this.user.password = this.userForm.get('password').value;
 
-    this._apiUserService.createUser(this.user).subscribe(
+    this.userService.createUser(this.user).subscribe(
       data => {
         console.log('user registered! ', data);
         this.userRegistered = true;

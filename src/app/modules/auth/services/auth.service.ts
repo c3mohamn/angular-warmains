@@ -1,16 +1,16 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import * as Redux from 'redux';
-import * as UserActions from '../../../_states/user/user.actions';
-import { ApiUserService } from '../../../services/user/api-user.service';
+import * as UserActions from '../../../states/user/user.actions';
 import { UserTokenInfo, User } from '../../../models/user.model';
-import { AppStore } from '../../../app.store';
-import { AppState } from '../../../app.reducer';
+import { AppStore } from '../../../states/app.store';
+import { AppState } from '../../../states/app.reducer';
+import { UserService } from '../../api/services/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private _apiUserService: ApiUserService,
+    private userService: UserService,
     @Inject(AppStore) private store: Redux.Store<AppState>
   ) {}
   user: UserTokenInfo;
@@ -27,7 +27,7 @@ export class AuthService {
     // Removes user's token in db
     localStorage.removeItem('token');
     if (this.user && this.user.username) {
-      this._apiUserService
+      this.userService
         .removeUserToken(this.user.username)
         .subscribe(
           data => console.log(data),
@@ -72,7 +72,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
 
     if (token) {
-      this._apiUserService.validateToken(token).subscribe(
+      this.userService.validateToken(token).subscribe(
         data => {
           console.log(data);
           this.login(data);

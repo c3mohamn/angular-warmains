@@ -7,8 +7,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserForm } from '../../../models/user.model';
-import { ApiUserService } from '../../../services/user/api-user.service';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../../api/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
   successMsg: string;
 
   constructor(
-    private _apiUserService: ApiUserService,
-    private _authService: AuthService,
+    private userService: UserService,
+    private authService: AuthService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -55,9 +55,9 @@ export class LoginComponent implements OnInit {
     this.user.username = this.userForm.get('username').value;
     this.user.password = this.userForm.get('password').value;
 
-    this._apiUserService.setUserToken(this.user).subscribe(
+    this.userService.setUserToken(this.user).subscribe(
       data => {
-        this._authService.login(data);
+        this.authService.login(data);
         this.errorMsg = '';
         this.successMsg = `Successfully logged in as ${this.user.username}.`;
         setTimeout(() => {

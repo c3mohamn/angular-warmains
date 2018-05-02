@@ -1,9 +1,9 @@
 import { Reducer, combineReducers } from 'redux';
-import { UserState, UserReducer } from './_states/user/user.reducer';
+import { UserState, UserReducer } from './user/user.reducer';
 import {
   TalentCalculatorState,
   TalentReducer
-} from './_states/talent/talent.reducer';
+} from './talent/talent.reducer';
 
 export interface AppState {
   user: UserState;
