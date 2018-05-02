@@ -1,7 +1,7 @@
 import { Action } from 'redux';
-import { TalentCalculator, Talent } from '../../body/talent-calculator/_models/talents.model';
 import * as TalentActions from './talent.actions';
 import { createSelector } from 'reselect';
+import { TalentCalculator, Talent } from '../../components/body/pages/talent-calculator/models/talents.model';
 
 export interface TalentCalculatorState extends TalentCalculator {
   talents: Talent[];

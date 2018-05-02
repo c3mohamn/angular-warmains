@@ -1,0 +1,36 @@
+@import '~assets/scss/variables';
+
+.login-container {
+  height: 100%;
+  width: 100%;
+
+  .auth-container {
+    width: 400px;
+    min-width: 250px;
+    padding: 2rem;
+    background: $wm-gray;
+    box-shadow: $wm-boxshadow-1;
+    font-size: 14px;
+
+    .form-container {
+      margin-bottom: 2rem;
+    }
+
+    .login-error-msg {
+      color: $wm-red;
+    }
+
+    .login-success-msg {
+      color: $wm-green;
+    }
+  }
+
+  .mat-icon-hide-password {
+    cursor: pointer;
+  }
+
+  mat-form-field {
+    margin: 0.25rem 0;
+    width: 100%;
+  }
+}

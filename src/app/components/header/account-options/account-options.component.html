@@ -1,0 +1,9 @@
+<div *ngIf="accountOptionsActive" class="account-options flex-container align-middle align-center flex-dir-column" (clickOutside)="closeDropdown()"
+  [exclude]="'.account-icon'">
+  <div class="flex-child-shrink option static">
+    {{ getCurrentUsername() }}
+  </div>
+  <div class="flex-child-shrink option" (click)="logoutUser()">
+    Logout
+  </div>
+</div>
