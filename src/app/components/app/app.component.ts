@@ -8,6 +8,6 @@ import { AuthService } from '../../modules/auth/services/auth.service';
 })
 export class AppComponent {
   constructor(private _authService: AuthService) {
-    // _authService.validateToken();
+    _authService.validateToken();
   }
 }
