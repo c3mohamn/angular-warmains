@@ -10,13 +10,16 @@ import { TalentSavedComponent } from './containers/talent-saved/talent-saved.com
 import { GlyphComponent } from './components/glyph/glyph.component';
 import { TalentComponent } from './components/talent/talent.component';
 
-import { MouseWheelDirective } from '../../../../directives/mousewheel.directive';
 import { TalentCalculatorService } from './services/talent-calculator.service';
+import { MouseWheelDirective } from '../../../../directives/mousewheel.directive';
+import { TooltipModule } from '../../../../directives/tooltip/tooltip.module';
+import { WindowRef } from '../../../../services/window.service';
 
 @NgModule({
   imports: [
     RouterModule.forChild([{ path: '', component: TalentCalculatorComponent }]),
-    CommonModule
+    CommonModule,
+    TooltipModule
   ],
   declarations: [
     TalentCalculatorComponent,
@@ -28,6 +31,6 @@ import { TalentCalculatorService } from './services/talent-calculator.service';
     TalentComponent,
     MouseWheelDirective
   ],
-  providers: [TalentCalculatorService]
+  providers: [TalentCalculatorService, WindowRef]
 })
 export class TalentCalculatorModule {}

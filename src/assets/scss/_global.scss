@@ -172,3 +172,49 @@
     }
   }
 }
+
+// Talent Tooltips
+// -------------------------
+.tooltip-talent {
+  position: relative;
+  font-size: 12px;
+
+  .icon {
+    position: absolute;
+    top: -0.5rem;
+    left: -3rem;
+    width: 2.5rem;
+  }
+
+  .name {
+    h5 {
+      color: $wm-primary-light;
+    }
+  }
+
+  .rank {
+    margin-left: 1rem;
+  }
+
+  .next-rank {
+    color: white;
+    font-size: 14px;
+    margin-top: 1rem;
+  }
+
+  .description {
+    color: $wm-gray;
+  }
+
+  .click-to {
+    font-size: 14px;
+  }
+
+  .click-to-learn {
+    color: $wm-green;
+  }
+
+  .click-to-remove {
+    color: $wm-red;
+  }
+}

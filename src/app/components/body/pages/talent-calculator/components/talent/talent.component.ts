@@ -21,6 +21,7 @@ export class TalentComponent implements OnInit, OnChanges {
   spec: string;
   lastActiveRow: number;
   pointsInTree: number[];
+  tooltipContent: string;
 
   @Input() talent: Talent;
 
@@ -37,6 +38,7 @@ export class TalentComponent implements OnInit, OnChanges {
         this.spec
       }/${this.talent.id}.jpg)`;
       this.talent.tooltip = this.talentService.talentTooltips[this.talent.id];
+      this.getTalentTooltip();
     }
   }
 
@@ -46,11 +48,57 @@ export class TalentComponent implements OnInit, OnChanges {
 
   addTalentPoint() {
     this.talentService.addPoint(this.talent.id, 1);
+    this.getTalentTooltip();
   }
 
   removeTalentPoint() {
     this.talentService.removePoint(this.talent.id, 1);
+    this.getTalentTooltip();
     return false;
+  }
+
+  private getTalentTooltip() {
+    const talentName = `<h5>${this.talent.name}</h5>`;
+    const tooltipRank = `<h5>${this.talent.curRank}/${
+      this.talent.maxRank
+    }</h5>`;
+    const talentIcon = `<img class="icon" src="assets/images/talent-icons/${this.classId}/${
+      this.spec
+    }/${this.talent.id}.jpg"/>`;
+    let currentRankDescription = '';
+    let nextRankDescription = '';
+    let clickTo = '';
+    let nextRank = '';
+
+    if (this.talent.curRank === 0) {
+      clickTo = `<span class="click-to-learn">Click or scroll up to learn.</span>`;
+      currentRankDescription = this.talent.tooltip[this.talent.curRank];
+    } else if (this.talent.curRank < this.talent.maxRank) {
+      currentRankDescription = this.talent.tooltip[this.talent.curRank - 1];
+      nextRankDescription = this.talent.tooltip[this.talent.curRank];
+      nextRank = `<div class="next-rank">Next rank:</div>`;
+    } else {
+      clickTo = `<span class="click-to-remove">Right click or scroll down to remove.</span>`;
+      currentRankDescription = this.talent.tooltip[this.talent.curRank - 1];
+    }
+
+    this.tooltipContent = `<div class="tooltip-talent flex-container flex-dir-column">
+      ${talentIcon}
+      <div class="flex-child-shrink flex-container">
+        <div class="flex-child-shrink name">${talentName}</div>
+        <div class="flex-child-grow"></div>
+        <div class="flex-child-shrink rank">${tooltipRank}</div>
+      </div>
+      <div class="flex-child-shrink description">
+        ${currentRankDescription}
+        ${nextRank}
+        ${nextRankDescription}
+      </div>
+      <div class="flex-child-shrink click-to">
+        ${clickTo}
+      </div>
+    </div>
+    `;
   }
 
   ngOnChanges(changes: SimpleChanges) {
