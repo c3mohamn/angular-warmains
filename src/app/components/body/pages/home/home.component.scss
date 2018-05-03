@@ -1,0 +1,20 @@
+@import '~assets/scss/variables';
+
+.home-container {
+  .planner-container {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .planner-routes {
+    min-width: 100px;
+    width: 200px;
+    padding: 1rem;
+    margin: 0 1rem 1rem 1rem;
+    transition: $wm-transition-slow;
+
+    p {
+      font-size: 12px;
+    }
+  }
+}

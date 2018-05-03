@@ -1,0 +1,57 @@
+<div class="register-container flex-container align-center align-middle">
+  <div class="auth-container flex-container align-center flex-dir-column">
+    <!-- Header -->
+    <h3 class="register-header" [hidden]="userRegistered">Register</h3>
+    <form (ngSubmit)="registerUser()" [formGroup]="userForm" [hidden]="userRegistered">
+      <div class="flex-child-shrink form-container">
+        <!-- Username -->
+        <mat-form-field>
+          <input matInput #inputUserName maxlength="20" placeholder="Username" formControlName="username" required>
+          <mat-hint align="end">{{inputUserName.value?.length || 0}}/20</mat-hint>
+          <mat-error *ngIf="userForm.get('username').invalid">{{getUsernameErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <!-- Email -->
+        <mat-form-field>
+          <input matInput #inputEmail placeholder="Enter your email" formControlName="email" required>
+          <mat-error *ngIf="userForm.get('email').invalid">{{getEmailErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <!-- Password -->
+        <mat-form-field>
+          <input matInput #inputPassword maxlength="20" placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password" required>
+          <mat-icon class="mat-icon-hide-password" matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+          <mat-hint align="end">{{inputPassword.value?.length || 0}}/20</mat-hint>
+          <mat-error *ngIf="userForm.get('password').invalid">{{getPasswordErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <!-- Password Confirm -->
+        <mat-form-field>
+          <input matInput #inputPasswordConfirm placeholder="Confirm password" [type]="hidePassword ? 'password' : 'text'" required>
+        </mat-form-field>
+        <div class="error-mismatch" *ngIf="inputPassword.value !== inputPasswordConfirm.value">
+          Passwords do not match.
+        </div>
+      </div>
+      <!-- Submit Button -->
+      <div class="flex-child-shrink flex-container">
+        <div class="flex-child-shrink register-error-msg">
+          <p>{{ apiErrorMsg }}</p>
+        </div>
+        <div class="flex-child-grow"></div>
+        <div class="flex-child-shrink">
+          <button type="submit" [disabled]="userForm.invalid || inputPassword.value !== inputPasswordConfirm.value" class="button success">Register</button>
+        </div>
+      </div>
+    </form>
+    <!-- Register Success Response -->
+    <div class="register-response-container" [hidden]="!userRegistered">
+      <div class="flex-container align-middle align-center flex-dir-column">
+        <div class="flex-child-shrink">
+          <h4 class="register-success-msg">{{ user.username }} has been registered!</h4>
+        </div>
+        <div class="flex-child-shrink">
+          <h5 class="login-redirect" [routerLink]="['/login']">Login</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
