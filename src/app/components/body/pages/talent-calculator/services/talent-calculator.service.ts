@@ -191,7 +191,7 @@ export class TalentCalculatorService {
         curRank: 0,
         maxRank: talent.maxRank,
         tree: talent.tree,
-        tooltip: [],
+        tooltip: this.talentTooltips[+key],
         allows: talent.allows,
         requires: talent.requires,
         arrows: talent.arrows
