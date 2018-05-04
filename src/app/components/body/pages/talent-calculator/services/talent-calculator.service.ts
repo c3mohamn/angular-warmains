@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Talent } from '../models/talents.model';
 import { TalentCalculatorState } from '../../../../../states/talent/talent.reducer';
 import {

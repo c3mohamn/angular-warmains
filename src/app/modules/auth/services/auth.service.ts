@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as Redux from 'redux';
 import * as UserActions from '../../../states/user/user.actions';
 import { UserTokenInfo, User } from '../../../models/user.model';

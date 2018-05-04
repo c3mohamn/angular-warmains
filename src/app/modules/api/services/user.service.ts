@@ -5,7 +5,7 @@ import {
   HttpHeaders,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { User, UserForm } from '../../../models/user.model';
 
 @Injectable()
