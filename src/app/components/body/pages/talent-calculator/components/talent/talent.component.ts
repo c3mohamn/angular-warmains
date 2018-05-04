@@ -73,14 +73,20 @@ export class TalentComponent implements OnInit, OnChanges {
     if (this.talent.curRank === 0) {
       clickTo = `<span class="click-to-learn">Click or scroll up to learn.</span>`;
       currentRankDescription = this.talent.tooltip[this.talent.curRank];
+
+      if (this.isInactive()) {
+        clickTo = '';
+      }
     } else if (this.talent.curRank < this.talent.maxRank) {
       currentRankDescription = this.talent.tooltip[this.talent.curRank - 1];
       nextRankDescription = this.talent.tooltip[this.talent.curRank];
       nextRank = `<div class="next-rank">Next rank:</div>`;
+
     } else {
       clickTo = `<span class="click-to-remove">Right click or scroll down to remove.</span>`;
       currentRankDescription = this.talent.tooltip[this.talent.curRank - 1];
     }
+
 
     this.tooltipContent = `<div class="tooltip-talent flex-container flex-dir-column">
       ${talentIcon}
