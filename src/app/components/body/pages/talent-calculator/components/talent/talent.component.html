@@ -6,7 +6,6 @@
       <span>{{talent.curRank}}</span>
     </div>
   </div>
-
   <!-- Pre-requisite arrow -->
   <div *ngIf="talent && talent.arrows">
     <img *ngFor="let a of talent.arrows" class="talent-arrow {{a.type}}" src="assets/images/talent-icons/arrows/{{a.filename}}"

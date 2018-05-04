@@ -13,7 +13,7 @@ import { TalentComponent } from './components/talent/talent.component';
 import { TalentCalculatorService } from './services/talent-calculator.service';
 import { MouseWheelDirective } from '../../../../directives/mousewheel.directive';
 import { TooltipModule } from '../../../../directives/tooltip/tooltip.module';
-import { WindowRef } from '../../../../services/window.service';
+import { WINDOW_PROVIDERS } from '../../../../services/window.service';
 
 @NgModule({
   imports: [
@@ -31,6 +31,6 @@ import { WindowRef } from '../../../../services/window.service';
     TalentComponent,
     MouseWheelDirective
   ],
-  providers: [TalentCalculatorService, WindowRef]
+  providers: [TalentCalculatorService, WINDOW_PROVIDERS]
 })
 export class TalentCalculatorModule {}

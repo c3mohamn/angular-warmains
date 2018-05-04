@@ -4,6 +4,7 @@ export interface ContentOptions {
   y: number;
   cls: string;
   offset: Offset;
+  position: string;
 }
 
 export interface Offset {
