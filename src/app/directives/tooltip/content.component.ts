@@ -1,6 +1,7 @@
 import { ContentOptions } from './options.model';
-
 import { Component, ElementRef, AfterViewInit } from '@angular/core';
+import { SafeHtmlPipe } from './safe-html.pipe';
+
 @Component({
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
@@ -8,7 +9,7 @@ import { Component, ElementRef, AfterViewInit } from '@angular/core';
 export class HoveredContentComponent implements AfterViewInit {
   private _options: ContentOptions;
 
-  constructor(private elRef: ElementRef) {}
+  constructor(private elRef: ElementRef, public safeHtml: SafeHtmlPipe) {}
 
   set options(op: ContentOptions) {
     this._options = op;
