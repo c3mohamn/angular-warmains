@@ -15,6 +15,7 @@ import * as TalentActions from '../../../../../states/talent/talent.actions';
 import { AppStore } from '../../../../../states/app.store';
 import { AppState } from '../../../../../states/app.reducer';
 import { Router } from '@angular/router';
+import { TalentService } from '../../../../../modules/api/services/talent.service';
 
 @Injectable()
 export class TalentCalculatorService {
@@ -27,10 +28,9 @@ export class TalentCalculatorService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private talentService: TalentService,
     @Inject(AppStore) private store: Redux.Store<AppState>
-  ) {
-    this.classId = this.getClassId();
-  }
+  ) {}
 
   // initialize talent calculator base
   init(classId: number = null) {
@@ -40,22 +40,24 @@ export class TalentCalculatorService {
 
     console.log(`initializing talent calculator for ${this.classId}...`);
 
-    this.getTalentTooltips().subscribe(
-      data => (this.talentTooltips = data),
+    this.talentService.getTalentTooltips(this.classId).subscribe(
+      tooltips => {
+        this.talentTooltips = tooltips;
+
+        if (this.talentDetails) {
+          this.loadTalentDetailsState(this.talentDetails[this.classId]);
+        } else {
+          this.talentService.getTalentDetails().subscribe(
+            details => {
+              this.talentDetails = details;
+              this.loadTalentDetailsState(details[this.classId]);
+            },
+            error => console.log(error)
+          );
+        }
+      },
       error => console.log(error)
     );
-
-    if (this.talentDetails) {
-      this.loadTalentDetailsState(this.talentDetails[this.classId]);
-    } else {
-      this.getTalentDetails().subscribe(
-        data => {
-          this.talentDetails = data;
-          this.loadTalentDetailsState(data[this.classId]);
-        },
-        error => console.log(error)
-      );
-    }
   }
 
   addPoint(talentId: number, count: number = 1) {
@@ -88,8 +90,8 @@ export class TalentCalculatorService {
   }
 
   // converts path to url
-  getClassId(): number {
-    const path = this.router.url;
+  getClassId(url: string = null): number {
+    const path = url || this.router.url;
     const classId = Number(path.slice(path.indexOf('/', 2) + 1));
 
     if (isNaN(classId) || classId === 10 || classId > 11 || classId < 1) {
@@ -136,6 +138,10 @@ export class TalentCalculatorService {
   getClassSpec(treeId: number, classId: number = this.classId): string {
     const specs = new ClassesSpecs();
     return specs.getClassSpec(classId, treeId);
+  }
+
+  getTalentTooltip(classId: number = this.classId): string[] {
+    return this.store.getState().talentCalculator.talents[classId].tooltip;
   }
 
   getTalentState(tree: number, row: number, col: number): Talent {
@@ -203,17 +209,7 @@ export class TalentCalculatorService {
     this.store.dispatch(TalentActions.loadTalentDetails(state));
   }
 
-  private getTalentStateById(talentId: number): Talent {
+  getTalentStateById(talentId: number): Talent {
     return this.store.getState().talentCalculator.talents[talentId];
-  }
-
-  private getTalentDetails() {
-    return this.http.get('./assets/data/talents/talent-details.json');
-  }
-
-  private getTalentTooltips() {
-    return this.http.get(
-      './assets/data/talents/tooltips/' + this.classId + '.json'
-    );
   }
 }

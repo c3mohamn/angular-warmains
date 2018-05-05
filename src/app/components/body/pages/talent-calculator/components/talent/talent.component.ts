@@ -37,8 +37,10 @@ export class TalentComponent implements OnInit, OnChanges {
       this.iconUrl = `url(assets/images/talent-icons/${this.classId}/${
         this.spec
       }/${this.talent.id}.jpg)`;
-      this.talent.tooltip = this.talentService.talentTooltips[this.talent.id];
-      this.getTalentTooltip();
+      this.talent.tooltip = this.talentService.getTalentTooltip(this.talent.id);
+      if (this.talent.tooltip) {
+        this.getTalentTooltip();
+      }
     }
   }
 
@@ -62,9 +64,9 @@ export class TalentComponent implements OnInit, OnChanges {
     const tooltipRank = `<h5>${this.talent.curRank}/${
       this.talent.maxRank
     }</h5>`;
-    const talentIcon = `<img class="icon" src="assets/images/talent-icons/${this.classId}/${
-      this.spec
-    }/${this.talent.id}.jpg"/>`;
+    const talentIcon = `<img class="icon" src="assets/images/talent-icons/${
+      this.classId
+    }/${this.spec}/${this.talent.id}.jpg"/>`;
     let currentRankDescription = '';
     let nextRankDescription = '';
     let clickTo = '';
@@ -81,12 +83,10 @@ export class TalentComponent implements OnInit, OnChanges {
       currentRankDescription = this.talent.tooltip[this.talent.curRank - 1];
       nextRankDescription = this.talent.tooltip[this.talent.curRank];
       nextRank = `<div class="next-rank">Next rank:</div>`;
-
     } else {
       clickTo = `<span class="click-to-remove">Right click or scroll down to remove.</span>`;
       currentRankDescription = this.talent.tooltip[this.talent.curRank - 1];
     }
-
 
     this.tooltipContent = `<div class="tooltip-talent flex-container flex-dir-column">
       ${talentIcon}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
 import { TalentCalculatorService } from './services/talent-calculator.service';
 
@@ -16,7 +16,6 @@ export class TalentCalculatorComponent implements OnInit {
     private router: Router,
     private meta: Meta
   ) {
-    this.talentService.init();
     meta.addTag({ property: 'og:title', content: 'Talents' });
     meta.addTag({ property: 'og:type', content: 'website' });
     meta.addTag({
@@ -28,6 +27,13 @@ export class TalentCalculatorComponent implements OnInit {
       content: 'Create and save your talents using the talent calculator.'
     });
     meta.addTag({ property: 'og:site_name', content: 'Warmains' });
+
+    this.router.events.subscribe(val => {
+      if (val instanceof NavigationEnd) {
+        const classId = this.talentService.getClassId(val.url);
+        this.talentService.init(classId);
+      }
+    });
   }
 
   ngOnInit() {}

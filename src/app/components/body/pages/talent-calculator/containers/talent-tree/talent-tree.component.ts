@@ -27,7 +27,7 @@ export class TalentTreeComponent implements OnInit {
 
   getSpecBg(treeId: number): string {
     const spec = this.talentService.getClassSpec(treeId);
-    const classId = this.talentService.classId;
+    const classId = this.talentService.getClassId();
 
     return `url(assets/images/talent-icons/${classId}/${spec}/background.jpg)`;
   }
