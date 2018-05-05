@@ -1,8 +1,17 @@
+@import '~assets/scss/variables';
+
 .talent-header-container {
   padding: 1rem;
 
-  .current-class-name {
+  h3,
+  h4,
+  h5,
+  h6 {
     margin: 0 0 0 1rem;
+  }
+
+  .talent-remaining {
+    color: $wm-primary-light;
   }
 
   .class-icons {

@@ -1,10 +1,21 @@
-<div class="talent-header-container flex-container align-middle align-center">
-  <div class="flex-child-shrink">
-    <h4 [style.color]="getClassColor()" class="current-class-name">{{ getClassName() }}</h4>
+<div class="talent-header-container">
+  <div class="flex-container align-middle align-center">
+    <div class="flex-child-shrink">
+      <h4 [style.color]="getClassColor()" class="current-class-name">{{ getClassName() }}</h4>
+    </div>
+    <div class="flex-child-shrink">
+      <h5 class="talent-preview">{{ getTalentPreview() }}</h5>
+    </div>
+    <div class="flex-child-grow"></div>
+    <div class="flex-child-shrink">
+      <img *ngFor="let classId of classIds" (click)="changeClass(classId)" [ngClass]="{selected: classId === curClassId}" title="{{ getClassName(classId) }}"
+        class="class-icons" src="assets/images/class-icons/{{classId}}.png" alt="">
+    </div>
   </div>
-  <div class="flex-child-grow"></div>
-  <div class="flex-child-shrink">
-    <img *ngFor="let classId of classIds" (click)="changeClass(classId)" [ngClass]="{selected: classId === curClassId}" title="{{ getClassName(classId) }}"
-      class="class-icons" src="assets/images/class-icons/{{classId}}.png" alt="">
+  <div class="flex-container align-middle align-center">
+    <div class="flex-child-shrink">
+      <h6 class="talent-remaining">Remaining: {{ getTalentsRemaining() }}</h6>
+    </div>
+    <div class="flex-child-grow"></div>
   </div>
 </div>

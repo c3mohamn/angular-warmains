@@ -144,6 +144,22 @@ export class TalentCalculatorService {
     return this.store.getState().talentCalculator.talents[classId].tooltip;
   }
 
+  getTalentPreview(): number[] {
+    if (this.store.getState().talentCalculator) {
+      return this.store.getState().talentCalculator.preview;
+    } else {
+      return [0, 0, 0];
+    }
+  }
+
+  getTalentPointsUsed(): number {
+    if (this.store.getState().talentCalculator) {
+      return this.store.getState().talentCalculator.totalPoints;
+    } else {
+      return 0;
+    }
+  }
+
   getTalentState(tree: number, row: number, col: number): Talent {
     if (!this.talentDetails) {
       return null;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TalentCalculatorService } from '../../services/talent-calculator.service';
 import { Talent } from '../../models/talents.model';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-talent-tree',
@@ -12,7 +13,10 @@ export class TalentTreeComponent implements OnInit {
   rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   cols = [0, 1, 2, 3];
 
-  constructor(private talentService: TalentCalculatorService) {}
+  constructor(
+    private talentService: TalentCalculatorService,
+    private title: Title
+  ) {}
 
   getTalent(tree: number, row: number, col: number): Talent {
     return this.talentService.getTalentState(tree, row, col);
@@ -32,5 +36,7 @@ export class TalentTreeComponent implements OnInit {
     return `url(assets/images/talent-icons/${classId}/${spec}/background.jpg)`;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.title.setTitle(`Talents | ${this.talentService.getClassName()}`);
+  }
 }
