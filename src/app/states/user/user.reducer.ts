@@ -32,7 +32,9 @@ export const UserReducer = function(
 
 export const getUsersState = (state): UserState => state.users;
 
-export const getCurrentUser = createSelector(
-  getUsersState,
-  (state: UserState) => state
-);
+export namespace UserSelector {
+  export const getCurrentUser = createSelector(
+    getUsersState,
+    (state: UserState) => state
+  );
+}
