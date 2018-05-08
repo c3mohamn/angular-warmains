@@ -24,7 +24,7 @@ export class TalentHeaderComponent implements OnInit {
     if (this.curClassId !== classId) {
       this.curClassId = classId;
       this.router.navigate(['/talent/' + classId]);
-      this.talentCalculatorService.init(classId);
+      // this.talentCalculatorService.init(classId);
     }
   }
 
@@ -35,6 +35,11 @@ export class TalentHeaderComponent implements OnInit {
 
   getTalentsRemaining(): number {
     return 71 - this.talentCalculatorService.getTalentPointsUsed();
+    // return this.talentCalculatorService.getPointsRemaining();
+  }
+
+  getRemaining() {
+    console.log(this.talentCalculatorService.getPointsRemaining());
   }
 
   getClassColor(classId: number = this.curClassId): string {

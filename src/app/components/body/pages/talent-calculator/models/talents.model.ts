@@ -1,13 +1,3 @@
-export interface TalentCalculator {
-  name: string;
-  description: string;
-  talentUrl: string;
-  glyphUrl: string;
-  classId: number;
-  preview: number[];
-  spec: string;
-}
-
 export interface Talent {
   name: string;
   id: number;

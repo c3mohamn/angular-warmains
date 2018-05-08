@@ -2,19 +2,46 @@ import { Action } from 'redux';
 import * as TalentActions from './talent.actions';
 import { createSelector } from 'reselect';
 import {
-  TalentCalculator,
   Talent
 } from '../../components/body/pages/talent-calculator/models/talents.model';
+import { TalentCalculatorComponent } from '../../components/body/pages/talent-calculator/talent-calculator.component';
 
-export interface TalentCalculatorState extends TalentCalculator {
+export interface TalentCalculatorState {
+  meta: TalentMetaInfo;
   talents: Talent[];
-  totalPoints: number;
   treeRows: number[][];
   lastActiveRow: number[];
+  preview: number[];
 }
 
+export interface TalentMetaInfo {
+  name: string;
+  description: string;
+  talentUrlParam: string;
+  glyphUrlParam: string;
+  classId: number;
+  spec: string;
+  totalPoints: number;
+}
+
+const initialState: TalentCalculatorState = {
+  meta: {
+    name: '',
+    description: '',
+    talentUrlParam: '',
+    glyphUrlParam: '',
+    classId: null,
+    spec: '',
+    totalPoints: 0
+  },
+  talents: [],
+  treeRows: [[]],
+  lastActiveRow: [],
+  preview: []
+};
+
 export const TalentReducer = function(
-  state: TalentCalculatorState = null,
+  state: TalentCalculatorState = initialState,
   action: Action
 ): TalentCalculatorState {
   switch (action.type) {
@@ -22,13 +49,7 @@ export const TalentReducer = function(
       const calculator: TalentCalculatorState = (<TalentActions.LoadTalentDetailsAction>action)
         .calculator;
       return {
-        name: calculator.name,
-        classId: calculator.classId,
-        description: calculator.description,
-        glyphUrl: calculator.glyphUrl,
-        talentUrl: calculator.talentUrl,
-        spec: calculator.spec,
-        totalPoints: calculator.totalPoints,
+        meta: calculator.meta,
         lastActiveRow: calculator.lastActiveRow,
         treeRows: calculator.treeRows,
         preview: calculator.preview,
@@ -43,7 +64,7 @@ export const TalentReducer = function(
       state.preview[tree]++;
       state.talents[talentId].curRank++;
       state.treeRows[tree][state.talents[talentId].row]++;
-      state.totalPoints++;
+      state.meta.totalPoints++;
       state.lastActiveRow[tree] =
         state.talents[talentId].row > state.lastActiveRow[tree]
           ? state.talents[talentId].row
@@ -58,7 +79,7 @@ export const TalentReducer = function(
       state.preview[tree]--;
       state.talents[talentId].curRank--;
       state.treeRows[tree][state.talents[talentId].row]--;
-      state.totalPoints--;
+      state.meta.totalPoints--;
       if (
         state.talents[talentId].row === state.lastActiveRow[tree] &&
         state.treeRows[tree][state.talents[talentId].row] === 0
@@ -80,11 +101,38 @@ export const TalentReducer = function(
 };
 
 export const getTalentCalculatorState = (state): TalentCalculatorState =>
-  state.calculator;
+  state.talentCalculator;
 
 export namespace TalentSelector {
   export const getCurrentTalentCalculatorState = createSelector(
     getTalentCalculatorState,
     (state: TalentCalculatorState) => state
   );
+
+  export const getTalentMeta = createSelector(
+    getTalentCalculatorState,
+    (state: TalentCalculatorState) => state.meta
+  );
+
+  export const getTalentPointsRemaining = createSelector(
+    getTalentMeta,
+    getTalentCalculatorState,
+    (meta: TalentMetaInfo, state: TalentCalculatorState) => 71 - meta.totalPoints
+  );
+
+  export const getTalentPreview = createSelector(
+    getTalentCalculatorState,
+    (state: TalentCalculatorState) => state.preview
+  );
+
+  export const getAllTalents = createSelector(
+    getTalentCalculatorState,
+    (state: TalentCalculatorState) => state.talents
+  );
+
+  // export const getTalent = createSelector(
+  //   getTalentCalculatorState,
+  //   getAllTalents,
+  //   (state: TalentCalculatorState, talents: Talent[])
+  // )
 }
