@@ -25,10 +25,11 @@ import { TalentService } from '../../../../../modules/api/services/talent.servic
 export class TalentCalculatorService {
   talentDetails: any;
   talentTooltips: any;
-  classId: number;
+  classId = 1;
   className: string;
   classColor: string;
   pointsRemaining = 71;
+  talentMeta: TalentMetaInfo;
 
   constructor(
     private http: HttpClient,
@@ -39,11 +40,12 @@ export class TalentCalculatorService {
     store.subscribe(() => this.updateState());
   }
 
-  // TODO: does not update
   updateState() {
     const state = this.store.getState();
-    this.pointsRemaining = TalentSelector.getTalentPointsRemaining(state);
-    console.log('state updated...', this.pointsRemaining);
+    this.talentMeta = TalentSelector.getTalentMeta(state);
+    this.pointsRemaining = 71 - this.talentMeta.totalPoints;
+    // this.classId = this.talentMeta.classId;
+    // console.log(this.classId); TODO: is 0 on load
   }
 
   // initialize talent calculator base
@@ -117,11 +119,6 @@ export class TalentCalculatorService {
     return classId;
   }
 
-  // TODO:
-  getPointsRemaining() {
-    return TalentSelector.getTalentPointsRemaining(this.store.getState());
-  }
-
   isTalentActive(talentId: number): boolean {
     const talent = this.getTalentStateById(talentId);
     const pointsInTree = this.store.getState().talentCalculator.preview[
@@ -156,7 +153,7 @@ export class TalentCalculatorService {
 
   getClassSpec(treeId: number, classId: number = this.classId): string {
     const specs = new ClassesSpecs();
-    return specs.getClassSpec(classId, treeId);
+    return specs.getClassSpec(this.classId, treeId);
   }
 
   getTalentTooltip(classId: number = this.classId): string[] {

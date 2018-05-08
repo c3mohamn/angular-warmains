@@ -8,7 +8,7 @@ export function canAddPoint(state: TalentCalculatorState, talentId: number) {
   if (talent.curRank === talent.maxRank) {
     console.log(`${talent.name} is already maxed.`);
     canAdd = false;
-  } else if (state.totalPoints === 71) {
+  } else if (state.meta.totalPoints === 71) {
     console.log('No points left to use.');
     canAdd = false;
   } else if (state.preview[talent.tree] < 5 * talent.row) {

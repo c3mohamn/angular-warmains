@@ -14,29 +14,29 @@ export class TalentTreeComponent implements OnInit {
   cols = [0, 1, 2, 3];
 
   constructor(
-    private talentService: TalentCalculatorService,
+    private talentCalculatorService: TalentCalculatorService,
     private title: Title
   ) {}
 
   getTalent(tree: number, row: number, col: number): Talent {
-    return this.talentService.getTalentState(tree, row, col);
+    return this.talentCalculatorService.getTalentState(tree, row, col);
   }
 
   isInitialized(): boolean {
-    if (this.talentService.talentDetails) {
+    if (this.talentCalculatorService.talentDetails) {
       return true;
     }
     return false;
   }
 
   getSpecBg(treeId: number): string {
-    const spec = this.talentService.getClassSpec(treeId);
-    const classId = this.talentService.getClassId();
+    const spec = this.talentCalculatorService.getClassSpec(treeId);
+    const classId = this.talentCalculatorService.classId;
 
     return `url(assets/images/talent-icons/${classId}/${spec}/background.jpg)`;
   }
 
   ngOnInit() {
-    this.title.setTitle(`Talents | ${this.talentService.getClassName()}`);
+    this.title.setTitle(`Talents | ${this.talentCalculatorService.getClassName()}`);
   }
 }

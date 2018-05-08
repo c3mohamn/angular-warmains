@@ -33,13 +33,8 @@ export class TalentHeaderComponent implements OnInit {
     return `(${preview[0]} / ${preview[1]} / ${preview[2]})`;
   }
 
-  getTalentsRemaining(): number {
-    return 71 - this.talentCalculatorService.getTalentPointsUsed();
-    // return this.talentCalculatorService.getPointsRemaining();
-  }
-
-  getRemaining() {
-    console.log(this.talentCalculatorService.getPointsRemaining());
+  getPointsRemaining() {
+    return this.talentCalculatorService.pointsRemaining;
   }
 
   getClassColor(classId: number = this.curClassId): string {

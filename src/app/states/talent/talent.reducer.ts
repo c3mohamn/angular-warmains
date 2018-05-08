@@ -36,8 +36,8 @@ const initialState: TalentCalculatorState = {
   },
   talents: [],
   treeRows: [[]],
-  lastActiveRow: [],
-  preview: []
+  lastActiveRow: [0, 0, 0],
+  preview: [0, 0, 0]
 };
 
 export const TalentReducer = function(
@@ -114,12 +114,6 @@ export namespace TalentSelector {
     (state: TalentCalculatorState) => state.meta
   );
 
-  export const getTalentPointsRemaining = createSelector(
-    getTalentMeta,
-    getTalentCalculatorState,
-    (meta: TalentMetaInfo, state: TalentCalculatorState) => 71 - meta.totalPoints
-  );
-
   export const getTalentPreview = createSelector(
     getTalentCalculatorState,
     (state: TalentCalculatorState) => state.preview
@@ -130,9 +124,13 @@ export namespace TalentSelector {
     (state: TalentCalculatorState) => state.talents
   );
 
-  // export const getTalent = createSelector(
-  //   getTalentCalculatorState,
-  //   getAllTalents,
-  //   (state: TalentCalculatorState, talents: Talent[])
-  // )
+  export const getLastActiveRow = createSelector(
+    getTalentCalculatorState,
+    (state: TalentCalculatorState) => state.lastActiveRow
+  );
+
+  export const getTreeRows = createSelector(
+    getTalentCalculatorState,
+    (state: TalentCalculatorState) => state.treeRows
+  );
 }
