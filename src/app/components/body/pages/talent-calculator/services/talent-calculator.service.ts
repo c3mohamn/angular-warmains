@@ -44,8 +44,7 @@ export class TalentCalculatorService {
     const state = this.store.getState();
     this.talentMeta = TalentSelector.getTalentMeta(state);
     this.pointsRemaining = 71 - this.talentMeta.totalPoints;
-    // this.classId = this.talentMeta.classId;
-    // console.log(this.classId); TODO: is 0 on load
+    this.classId = this.talentMeta.classId;
   }
 
   // initialize talent calculator base
@@ -200,12 +199,10 @@ export class TalentCalculatorService {
 
   private loadTalentDetailsState(details: any) {
     const meta: TalentMetaInfo = {
-      name: '',
-      description: '',
       spec: '',
       talentUrlParam: '',
       glyphUrlParam: '',
-      classId: 0,
+      classId: this.classId,
       totalPoints: 0
     };
 

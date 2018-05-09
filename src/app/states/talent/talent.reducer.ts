@@ -15,8 +15,6 @@ export interface TalentCalculatorState {
 }
 
 export interface TalentMetaInfo {
-  name: string;
-  description: string;
   talentUrlParam: string;
   glyphUrlParam: string;
   classId: number;
@@ -26,8 +24,6 @@ export interface TalentMetaInfo {
 
 const initialState: TalentCalculatorState = {
   meta: {
-    name: '',
-    description: '',
     talentUrlParam: '',
     glyphUrlParam: '',
     classId: null,
@@ -48,13 +44,8 @@ export const TalentReducer = function(
     case TalentActions.LOAD_TALENT_DETAILS:
       const calculator: TalentCalculatorState = (<TalentActions.LoadTalentDetailsAction>action)
         .calculator;
-      return {
-        meta: calculator.meta,
-        lastActiveRow: calculator.lastActiveRow,
-        treeRows: calculator.treeRows,
-        preview: calculator.preview,
-        talents: calculator.talents
-      };
+
+      return { ...state, ...calculator };
 
     case TalentActions.ADD_TALENT_POINT:
       let talentId: number = (<TalentActions.AddTalentPointAction>action)
