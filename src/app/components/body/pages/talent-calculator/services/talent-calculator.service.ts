@@ -2,7 +2,11 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Talent } from '../models/talents.model';
-import { TalentCalculatorState } from '../../../../../states/talent/talent.reducer';
+import {
+  TalentCalculatorState,
+  TalentMetaInfo,
+  TalentSelector
+} from '../../../../../states/talent/talent.reducer';
 import {
   Classes,
   ClassesColors,
@@ -21,16 +25,27 @@ import { TalentService } from '../../../../../modules/api/services/talent.servic
 export class TalentCalculatorService {
   talentDetails: any;
   talentTooltips: any;
-  classId: number;
+  classId = 1;
   className: string;
   classColor: string;
+  pointsRemaining = 71;
+  talentMeta: TalentMetaInfo;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private talentService: TalentService,
     @Inject(AppStore) private store: Redux.Store<AppState>
-  ) {}
+  ) {
+    store.subscribe(() => this.updateState());
+  }
+
+  updateState() {
+    const state = this.store.getState();
+    this.talentMeta = TalentSelector.getTalentMeta(state);
+    this.pointsRemaining = 71 - this.talentMeta.totalPoints;
+    this.classId = this.talentMeta.classId;
+  }
 
   // initialize talent calculator base
   init(classId: number = null) {
@@ -108,7 +123,7 @@ export class TalentCalculatorService {
     const pointsInTree = this.store.getState().talentCalculator.preview[
       talent.tree
     ];
-    const totalPoints = this.store.getState().talentCalculator.totalPoints;
+    const totalPoints = this.store.getState().talentCalculator.meta.totalPoints;
 
     if (talent.requires) {
       const requiredTalent = this.getTalentStateById(talent.requires);
@@ -137,7 +152,7 @@ export class TalentCalculatorService {
 
   getClassSpec(treeId: number, classId: number = this.classId): string {
     const specs = new ClassesSpecs();
-    return specs.getClassSpec(classId, treeId);
+    return specs.getClassSpec(this.classId, treeId);
   }
 
   getTalentTooltip(classId: number = this.classId): string[] {
@@ -154,7 +169,7 @@ export class TalentCalculatorService {
 
   getTalentPointsUsed(): number {
     if (this.store.getState().talentCalculator) {
-      return this.store.getState().talentCalculator.totalPoints;
+      return this.store.getState().talentCalculator.meta.totalPoints;
     } else {
       return 0;
     }
@@ -183,21 +198,23 @@ export class TalentCalculatorService {
   ///////////////////////////////
 
   private loadTalentDetailsState(details: any) {
-    const state: TalentCalculatorState = {
+    const meta: TalentMetaInfo = {
+      spec: '',
+      talentUrlParam: '',
+      glyphUrlParam: '',
       classId: this.classId,
-      name: '',
-      description: '',
-      talentUrl: '',
-      glyphUrl: '',
+      totalPoints: 0
+    };
+
+    const state: TalentCalculatorState = {
+      meta: meta,
       preview: [0, 0, 0],
       treeRows: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ],
-      spec: '',
       talents: [],
-      totalPoints: 0,
       lastActiveRow: [0, 0, 0]
     };
 

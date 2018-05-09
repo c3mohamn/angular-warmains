@@ -7,8 +7,18 @@ export interface UserState extends User {
   talents: any[];
 }
 
+const initialState: UserState = {
+  id: null,
+  username: '',
+  email: '',
+  role: 0,
+  favorites: [],
+  talents: [],
+  token: ''
+};
+
 export const UserReducer = function(
-  state: UserState = null,
+  state: UserState = initialState,
   action: Action
 ): UserState {
   switch (action.type) {
@@ -32,7 +42,9 @@ export const UserReducer = function(
 
 export const getUsersState = (state): UserState => state.users;
 
-export const getCurrentUser = createSelector(
-  getUsersState,
-  (state: UserState) => state
-);
+export namespace UserSelector {
+  export const getCurrentUser = createSelector(
+    getUsersState,
+    (state: UserState) => state
+  );
+}
