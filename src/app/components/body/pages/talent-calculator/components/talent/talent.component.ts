@@ -88,19 +88,19 @@ export class TalentComponent implements OnInit, OnChanges {
       currentRankDescription = this.talent.tooltip[this.talent.curRank - 1];
     }
 
-    this.tooltipContent = `<div class="tooltip-talent flex-container flex-dir-column">
+    this.tooltipContent = `<div class="tooltip-talent grid-y">
       ${talentIcon}
-      <div class="flex-child-shrink flex-container">
+      <div class="cell flex-container">
         <div class="flex-child-shrink name">${talentName}</div>
         <div class="flex-child-grow"></div>
         <div class="flex-child-shrink rank">${tooltipRank}</div>
       </div>
-      <div class="flex-child-shrink description">
+      <div class="cell description">
         ${currentRankDescription}
         ${nextRank}
         ${nextRankDescription}
       </div>
-      <div class="flex-child-shrink click-to">
+      <div class="cell click-to">
         ${clickTo}
       </div>
     </div>

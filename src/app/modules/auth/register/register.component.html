@@ -1,9 +1,9 @@
-<div class="register-container flex-container align-center align-middle">
-  <div class="auth-container flex-container align-center flex-dir-column">
+<div class="register-container grid-x align-center align-middle">
+  <div class="auth-container grid-y align-center">
     <!-- Header -->
     <h3 class="register-header" [hidden]="userRegistered">Register</h3>
     <form (ngSubmit)="registerUser()" [formGroup]="userForm" [hidden]="userRegistered">
-      <div class="flex-child-shrink form-container">
+      <div class="cell shrink form-container">
         <!-- Username -->
         <mat-form-field>
           <input matInput #inputUserName maxlength="20" placeholder="Username" formControlName="username" required>
@@ -32,23 +32,23 @@
         </div>
       </div>
       <!-- Submit Button -->
-      <div class="flex-child-shrink flex-container">
-        <div class="flex-child-shrink register-error-msg">
+      <div class="cell shrink grid-x">
+        <div class="cell shrink register-error-msg">
           <p>{{ apiErrorMsg }}</p>
         </div>
-        <div class="flex-child-grow"></div>
-        <div class="flex-child-shrink">
+        <div class="cell auto"></div>
+        <div class="cell shrink">
           <button type="submit" [disabled]="userForm.invalid || inputPassword.value !== inputPasswordConfirm.value" class="button success">Register</button>
         </div>
       </div>
     </form>
     <!-- Register Success Response -->
     <div class="register-response-container" [hidden]="!userRegistered">
-      <div class="flex-container align-middle align-center flex-dir-column">
-        <div class="flex-child-shrink">
+      <div class="grid-y align-middle align-center">
+        <div class="cell shrink">
           <h4 class="register-success-msg">{{ user.username }} has been registered!</h4>
         </div>
-        <div class="flex-child-shrink">
+        <div class="cell shrink">
           <h5 class="login-redirect" [routerLink]="['/login']">Login</h5>
         </div>
       </div>

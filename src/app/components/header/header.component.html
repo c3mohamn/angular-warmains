@@ -1,22 +1,22 @@
-<div class="header-container flex-container align-middle align-center">
-  <div class="flex-child-shrink">
+<div class="header-container grid-x align-middle align-center">
+  <div class="cell shrink">
     <app-header-title></app-header-title>
   </div>
-  <div class="flex-child-shrink">
+  <div class="cell shrink">
     <h6 class="header-current-state">
       <small>{{ currentState() }}</small>
     </h6>
   </div>
-  <div class="flex-child-grow"></div>
-  <div *ngIf="!isUserLoggedIn()" class="flex-child-shrink header-nav-links" [ngClass]="{'active': currentState() === 'login'}"
+  <div class="cell auto"></div>
+  <div *ngIf="!isUserLoggedIn()" class="cell shrink header-nav-links" [ngClass]="{'active': currentState() === 'login'}"
     [routerLink]="['/login']">
     Login
   </div>
-  <div *ngIf="!isUserLoggedIn()" class="flex-child-shrink header-nav-links" [ngClass]="{'active': currentState() === 'register'}"
+  <div *ngIf="!isUserLoggedIn()" class="cell shrink header-nav-links" [ngClass]="{'active': currentState() === 'register'}"
     [routerLink]="['/register']">
     Register
   </div>
-  <div *ngIf="isUserLoggedIn()" class="flex-child-shrink header-nav-links account-icon flex-container align-middle" [ngClass]="{'active': accountOptionsActive}"
+  <div *ngIf="isUserLoggedIn()" class="cell shrink header-nav-links account-icon grid-x align-middle" [ngClass]="{'active': accountOptionsActive}"
     (click)="accountOptionsActive = !accountOptionsActive">
     <i class="material-icons">account_circle</i>
     <app-account-options [accountOptionsActive]="accountOptionsActive" (toggleEvent)="toggleOptionsActive($event)"></app-account-options>
