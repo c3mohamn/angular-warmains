@@ -3,10 +3,11 @@ import { Store } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable, defer } from 'rxjs';
 
-import * as userActions from './user.actions';
+import { UserActions } from './user.actions';
 import { UserState } from './user.reducer';
 import { UserQuery } from './user.selector';
 import { UserService } from '../../api/services/user.service';
+import { UserForm } from '../../../models/user.model';
 
 @Injectable()
 export class UserFacade {
@@ -15,15 +16,15 @@ export class UserFacade {
 
   constructor(private actions$: Actions, private store: Store<UserState>) {}
 
-  clearUser() {
-    this.store.dispatch(new userActions.ClearUserMe());
+  refreshUser() {
+    this.store.dispatch(new UserActions.GetUser());
   }
 
-  refreshUser() {
-    this.store.dispatch(new userActions.GetUserMe());
+  loginUser(user: UserForm) {
+    this.store.dispatch(new UserActions.Userlogin(user));
   }
 
   logoutUser() {
-    this.store.dispatch(new userActions.UserLogout());
+    this.store.dispatch(new UserActions.UserLogout());
   }
 }

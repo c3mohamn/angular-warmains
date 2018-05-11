@@ -14,8 +14,8 @@ export interface State {
   // talentCalculator: TalentCalculatorState;
 }
 
-export const reducers: ActionReducerMap<State> = {
-  user: UserReducer,
+const reducers: ActionReducerMap<State> = {
+  user: UserReducer
   // talentCalculator: TalentCalculatorReducer
 };
 

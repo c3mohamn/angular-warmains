@@ -1,34 +1,44 @@
 import { Action } from '@ngrx/store';
-import { User } from '../../../models/user.model';
+import { User, UserForm } from '../../../models/user.model';
 
-export const USER_GET_ME = '[User] GET me';
-export const USER_GET_ME_SUCCESS = '[User] GET me success';
-export const USER_CLEAR = '[User] clear';
-export const USER_LOGOUT = '[User] logout';
-export const USER_ERROR = '[User] error';
-
-export class GetUserMe implements Action {
-  readonly type = USER_GET_ME;
+export enum UserActionTypes {
+  GET_USER = '[User] GET me',
+  GET_USER_SUCCESS = '[User] GET me success',
+  USER_LOGIN = '[User] login',
+  USER_LOGOUT = '[User] logout',
+  USER_ERROR = '[User] error'
 }
 
-export class GetUserMeSuccess implements Action {
-  readonly type = USER_GET_ME_SUCCESS;
+export namespace UserActions {
+  export class GetUser implements Action {
+    readonly type = UserActionTypes.GET_USER;
+  }
 
-  constructor(public payload: User) {}
+  export class GetUserSuccess implements Action {
+    readonly type = UserActionTypes.GET_USER_SUCCESS;
+
+    constructor(public payload: User) {}
+  }
+
+  export class Userlogin implements Action {
+    readonly type = UserActionTypes.USER_LOGIN;
+
+    constructor(public payload: UserForm) {}
+  }
+
+  export class UserLogout implements Action {
+    readonly type = UserActionTypes.USER_LOGOUT;
+  }
+
+  export class UserError implements Action {
+    readonly type = UserActionTypes.USER_ERROR;
+
+    constructor(public payload: any) {}
+  }
 }
 
-export class ClearUserMe implements Action {
-  readonly type = USER_CLEAR;
-}
-
-export class UserLogout implements Action {
-  readonly type = USER_LOGOUT;
-}
-
-export class UserError implements Action {
-  readonly type = USER_ERROR;
-
-  constructor(public payload: any) {}
-}
-
-export type ALL = GetUserMe | GetUserMeSuccess | ClearUserMe | UserLogout;
+export type UserActionsUnion =
+  | UserActions.GetUser
+  | UserActions.GetUserSuccess
+  | UserActions.Userlogin
+  | UserActions.UserLogout;

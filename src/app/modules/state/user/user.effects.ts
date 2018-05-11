@@ -1,3 +1,7 @@
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Action } from '@ngrx/store';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import {
   catchError,
   filter,
@@ -5,46 +9,59 @@ import {
   map,
   mergeMap,
   switchMap,
-  take,
-  debounceTime
+  take
 } from 'rxjs/operators';
-import { of, pipe, Scheduler, Observable } from 'rxjs';
-
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { Action } from '@ngrx/store';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { of, Observable } from 'rxjs';
 
 import { UserService } from '../../api/services/user.service';
-import * as userActions from './user.actions';
-import { Router } from '@angular/router';
-
-export const SEARCH_DEBOUNCE = new InjectionToken<number>('Search Debounce');
-export const SEARCH_SCHEDULER = new InjectionToken<Scheduler>(
-  'Search Scheduler'
-);
+import { UserActionTypes, UserActions } from './user.actions';
 
 @Injectable()
 export class UserEffects {
   // @Effect()
   // update$: Observable<Action> = this.actions$.pipe(
-  //   ofType(userActions.USER_GET_ME),
+  //   ofType(UserActionTypes.USER_GET_ME),
   //   switchMap(action => {
   //     // console.log('get user me');
   //     return this.userService
   //       .getMe()
   //       .map(data => {
   //         // console.log(`me`, data);
-  //         return new userActions.GetUserMeSuccess(data);
+  //         return new UserActions.GetUserMeSuccess(data);
   //       })
   //       .catchError(error => {
-  //         return Observable.of(new userActions.UserError(error));
+  //         return Observable.of(new UserActions.UserError(error));
   //       });
   //   })
   // );
 
+  @Effect()
+  login$: Observable<Action> = this.actions$
+    .ofType(UserActionTypes.GET_USER)
+    .pipe(
+      switchMap(action => {
+        console.log('USER_GET_ME');
+        const token = localStorage.getItem('token');
+
+        if (token) {
+          this.userService.validateToken(token).pipe(
+            map(data => {
+              console.log(`validated?: ${data}`);
+              return of(new UserActions.GetUserSuccess(data));
+            }),
+            catchError(error => {
+              return of(new UserActions.UserError(error));
+            })
+          );
+        } else {
+          return of(new UserActions.UserLogout());
+        }
+      })
+    );
+
   // @Effect()
   // logout$: Observable<Action> = this.actions$.pipe(
-  //   ofType(userActions.USER_LOGOUT),
+  //   ofType(UserActionTypes.USER_LOGOUT),
   //   switchMap(action => {
   //     this.router.navigate(['/login']);
   //     return Observable.of();
@@ -54,12 +71,6 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private router: Router,
-    private userService: UserService,
-    @Optional()
-    @Inject(SEARCH_DEBOUNCE)
-    private debounce: number,
-    @Optional()
-    @Inject(SEARCH_SCHEDULER)
-    private scheduler: Scheduler
+    private userService: UserService
   ) {}
 }
