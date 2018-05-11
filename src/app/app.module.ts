@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// import { AppStateModule } from './modules/state/state.module';
+import { AppStateModule } from './modules/state/state.module';
 import { RoutingModule } from './app.routing';
 import { HeaderModule } from './components/header/header.module';
 import { FooterModule } from './components/footer/footer.module';
@@ -27,8 +27,8 @@ import { AppStore, appStoreProviders } from './states/app.store';
     BrowserAnimationsModule,
     HeaderModule,
     FooterModule,
-    HttpClientModule
-    // AppStateModule
+    HttpClientModule,
+    AppStateModule
   ],
   providers: [AuthService, appStoreProviders, LoggedInGuard],
   bootstrap: [AppComponent]

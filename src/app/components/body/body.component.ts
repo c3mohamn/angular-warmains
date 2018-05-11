@@ -21,10 +21,10 @@ export class BodyComponent implements OnInit {
     // private userService: UserService,
     private talentService: TalentService
   ) {
-    this.talentService.getTalents().subscribe(res => {
-      this.talents = res;
-      console.log(this.talents);
-    });
+    // this.talentService.getTalents().subscribe(res => {
+    //   this.talents = res;
+    //   console.log(this.talents);
+    // });
   }
 
   ngOnInit() {}

@@ -44,17 +44,19 @@ export class UserEffects {
         const token = localStorage.getItem('token');
 
         if (token) {
-          this.userService.validateToken(token).pipe(
+          return this.userService.validateToken(token).pipe(
             map(data => {
               console.log(`validated?: ${data}`);
               return of(new UserActions.GetUserSuccess(data));
             }),
             catchError(error => {
+              console.log('here');
               return of(new UserActions.UserError(error));
             })
           );
         } else {
-          return of(new UserActions.UserLogout());
+          console.log('no token');
+          return of();
         }
       })
     );

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../modules/auth/services/auth.service';
+import { UserFacade } from '../../modules/state/user/user.facade';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,7 @@ import { AuthService } from '../../modules/auth/services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private _authService: AuthService) {
-    _authService.validateToken();
+  constructor(private userFacade: UserFacade) {
+    userFacade.refreshUser();
   }
 }
