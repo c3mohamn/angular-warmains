@@ -7,7 +7,7 @@ export interface UserState extends User {
 
 export const initialState: UserState = {
   id: null,
-  username: '',
+  username: null,
   email: '',
   role: 0,
   talents: [],
@@ -20,9 +20,7 @@ export function userReducer(
 ): UserState {
   switch (action.type) {
     case UserActionTypes.GET_USER_SUCCESS:
-      const isLoggedIn = action.payload.id.length > 0;
       const newState = Object.assign({}, state, action.payload, {
-        isLoggedIn: isLoggedIn,
         error: null
       });
 
@@ -34,9 +32,7 @@ export function userReducer(
       });
 
     case UserActionTypes.USER_LOGOUT:
-      return Object.assign({}, state, initialState, {
-        isLoggedIn: false
-      });
+      return Object.assign({}, state, initialState, {});
 
     default:
       return state;

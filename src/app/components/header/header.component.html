@@ -4,14 +4,14 @@
   </div>
   <div class="cell shrink">
     <h6 class="header-current-state">
-      <small>{{ currentState() }}</small>
+      <small>{{ pageTitle }}</small>
     </h6>
   </div>
   <div class="cell auto"></div>
-  <div *ngIf="!loggedIn" class="cell shrink header-nav-links" [ngClass]="{'active': currentState() === 'login'}" [routerLink]="['/login']">
+  <div *ngIf="!loggedIn" class="cell shrink header-nav-links" [ngClass]="{'active': pageTitle === 'Login'}" [routerLink]="['/login']">
     Login
   </div>
-  <div *ngIf="!loggedIn" class="cell shrink header-nav-links" [ngClass]="{'active': currentState() === 'register'}" [routerLink]="['/register']">
+  <div *ngIf="!loggedIn" class="cell shrink header-nav-links" [ngClass]="{'active': pageTitle === 'Register'}" [routerLink]="['/register']">
     Register
   </div>
   <div *ngIf="loggedIn" class="cell shrink header-nav-links account-icon grid-x align-middle" [ngClass]="{'active': accountOptionsActive}"

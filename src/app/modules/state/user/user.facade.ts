@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Actions, Effect } from '@ngrx/effects';
-import { Observable, defer } from 'rxjs';
+import { Actions } from '@ngrx/effects';
+import { Observable } from 'rxjs';
 
 import { UserActions } from './user.actions';
 import { UserState } from './user.reducer';
 import { UserQuery } from './user.selector';
-import { UserService } from '../../api/services/user.service';
 import { UserForm, User } from '../../../models/user.model';
 
 @Injectable()

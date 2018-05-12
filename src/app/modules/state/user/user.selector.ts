@@ -16,16 +16,16 @@ export namespace UserQuery {
 
   export const isLoggedIn: MemoizedSelector<{}, boolean> = createSelector(
     getUserState,
-    state => state.username != null && state.username.length > 1
+    state => state.username != null
   );
 
   export const isNotLoggedIn: MemoizedSelector<{}, boolean> = createSelector(
     getUserState,
-    state => state.username === null || state.username.length === 0
+    state => state.username === null
   );
 
-  export const getCurrentUserName: MemoizedSelector<{}, string> = createSelector(
-    getUserState,
-    state => state.username
-  );
+  export const getCurrentUserName: MemoizedSelector<
+    {},
+    string
+  > = createSelector(getUserState, state => state.username);
 }
