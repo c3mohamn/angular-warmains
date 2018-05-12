@@ -12,6 +12,8 @@ export enum UserActionTypes {
 export namespace UserActions {
   export class GetUser implements Action {
     readonly type = UserActionTypes.GET_USER;
+
+    constructor(public payload: string) {}
   }
 
   export class GetUserSuccess implements Action {
@@ -41,4 +43,5 @@ export type UserActionsUnion =
   | UserActions.GetUser
   | UserActions.GetUserSuccess
   | UserActions.Userlogin
-  | UserActions.UserLogout;
+  | UserActions.UserLogout
+  | UserActions.UserError;

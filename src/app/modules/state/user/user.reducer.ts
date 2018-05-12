@@ -10,7 +10,6 @@ export const initialState: UserState = {
   username: '',
   email: '',
   role: 0,
-  favorites: [],
   talents: [],
   token: ''
 };
@@ -20,14 +19,19 @@ export function userReducer(
   action: UserActionsUnion
 ): UserState {
   switch (action.type) {
-
     case UserActionTypes.GET_USER_SUCCESS:
       const isLoggedIn = action.payload.id.length > 0;
       const newState = Object.assign({}, state, action.payload, {
-        isLoggedIn: isLoggedIn
+        isLoggedIn: isLoggedIn,
+        error: null
       });
 
       return newState;
+
+    case UserActionTypes.USER_ERROR:
+      return Object.assign({}, state, initialState, {
+        error: action.payload.error
+      });
 
     case UserActionTypes.USER_LOGOUT:
       return Object.assign({}, state, initialState, {

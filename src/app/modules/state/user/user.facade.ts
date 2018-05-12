@@ -7,7 +7,7 @@ import { UserActions } from './user.actions';
 import { UserState } from './user.reducer';
 import { UserQuery } from './user.selector';
 import { UserService } from '../../api/services/user.service';
-import { UserForm } from '../../../models/user.model';
+import { UserForm, User } from '../../../models/user.model';
 
 @Injectable()
 export class UserFacade {
@@ -16,8 +16,27 @@ export class UserFacade {
 
   constructor(private actions$: Actions, private store: Store<UserState>) {}
 
-  refreshUser() {
-    this.store.dispatch(new UserActions.GetUser());
+  getUser(): Observable<User> {
+    return this.store.select(UserQuery.getCurrentUser);
+  }
+
+  getUserName(): Observable<string> {
+    return this.store.select(UserQuery.getCurrentUserName);
+  }
+
+  getUserLoggedIn(): Observable<boolean> {
+    return this.store.select(UserQuery.isLoggedIn);
+  }
+
+  getUserNotLoggedIn(): Observable<boolean> {
+    return this.store.select(UserQuery.isNotLoggedIn);
+  }
+
+  validateUser() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.store.dispatch(new UserActions.GetUser(token));
+    }
   }
 
   loginUser(user: UserForm) {

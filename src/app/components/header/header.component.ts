@@ -1,6 +1,6 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../modules/auth/services/auth.service';
+import { UserFacade } from '../../modules/state/user/user.facade';
 
 @Component({
   selector: 'app-header',
@@ -9,15 +9,16 @@ import { AuthService } from '../../modules/auth/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   accountOptionsActive = false;
+  loggedIn = false;
+  username = '';
 
-  constructor(private router: Router, private _authService: AuthService) {}
-
-  logoutUser() {
-    this._authService.logout();
+  constructor(private router: Router, private userFacade: UserFacade) {
+    this.userFacade.getUserLoggedIn().subscribe(data => (this.loggedIn = data));
+    this.userFacade.getUserName().subscribe(data => (this.username = data));
   }
 
-  isUserLoggedIn(): boolean {
-    return this._authService.isLoggedIn();
+  logoutUser() {
+    this.userFacade.logoutUser();
   }
 
   currentState() {

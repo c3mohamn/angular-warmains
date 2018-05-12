@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../modules/auth/services/auth.service';
 import { UserFacade } from '../../modules/state/user/user.facade';
 
 @Component({
@@ -9,6 +8,6 @@ import { UserFacade } from '../../modules/state/user/user.facade';
 })
 export class AppComponent {
   constructor(private userFacade: UserFacade) {
-    userFacade.refreshUser();
+    userFacade.validateUser();
   }
 }

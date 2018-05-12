@@ -1,25 +1,31 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AuthService } from '../../../modules/auth/services/auth.service';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
+import { UserFacade } from '../../../modules/state/user/user.facade';
 
 @Component({
   selector: 'app-account-options',
   templateUrl: './account-options.component.html',
-  styleUrls: ['./account-options.component.scss']
+  styleUrls: ['./account-options.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccountOptionsComponent implements OnInit {
   @Input() accountOptionsActive: boolean;
+  @Input() username = '';
   @Output() toggleEvent = new EventEmitter<boolean>();
+  @Output() logout = new EventEmitter<void>();
 
-  constructor(private _authService: AuthService) {}
+  constructor() {}
 
   ngOnInit() {}
 
-  getCurrentUsername() {
-    return this._authService.getUsername();
-  }
-
   logoutUser() {
-    this._authService.logout();
+    this.logout.emit();
     this.toggleEvent.emit(false);
   }
 

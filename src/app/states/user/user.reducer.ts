@@ -12,7 +12,6 @@ const initialState: UserState = {
   username: '',
   email: '',
   role: 0,
-  favorites: [],
   talents: [],
   token: ''
 };
@@ -29,7 +28,6 @@ export const UserReducer = function(
         username: user.username,
         email: user.email,
         role: user.role,
-        favorites: user.favorites,
         talents: [],
         token: user.token
       };

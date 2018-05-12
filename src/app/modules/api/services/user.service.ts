@@ -17,8 +17,8 @@ export class UserService {
     return this.http.post<User>('/api/user/register', newUser);
   }
 
-  setUserToken(user: UserForm): Observable<User> {
-    console.log('get user: ', user);
+  loginUser(user: UserForm): Observable<User> {
+    console.log('login user: ', user);
     return this.http.post<User>('/api/user/login', user);
   }
 

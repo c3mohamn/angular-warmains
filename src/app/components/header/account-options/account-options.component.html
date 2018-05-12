@@ -1,7 +1,6 @@
-<div *ngIf="accountOptionsActive" class="account-options" (clickOutside)="closeDropdown()"
-  [exclude]="'.account-icon'">
+<div *ngIf="accountOptionsActive" class="account-options" (clickOutside)="closeDropdown()" [exclude]="'.account-icon'">
   <div class="option static">
-    {{ getCurrentUsername() }}
+    {{ username }}
   </div>
   <div class="option" (click)="logoutUser()">
     Logout

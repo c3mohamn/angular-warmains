@@ -6,24 +6,16 @@ import {
   RouterStateSnapshot
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { UserFacade } from '../../state/user/user.facade';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
-  constructor(private _authService: AuthService, private router: Router) {}
+  constructor(private userFacade: UserFacade, private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    const isLoggedin = this._authService.isLoggedIn();
-    console.log('canActivate:', !isLoggedin);
-
-    // Redirect to home page if already logged in
-    if (isLoggedin) {
-      this.router.navigate(['/home']);
-    }
-
-    return !isLoggedin;
+    return this.userFacade.getUserNotLoggedIn();
   }
 }

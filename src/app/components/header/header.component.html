@@ -8,17 +8,16 @@
     </h6>
   </div>
   <div class="cell auto"></div>
-  <div *ngIf="!isUserLoggedIn()" class="cell shrink header-nav-links" [ngClass]="{'active': currentState() === 'login'}"
-    [routerLink]="['/login']">
+  <div *ngIf="!loggedIn" class="cell shrink header-nav-links" [ngClass]="{'active': currentState() === 'login'}" [routerLink]="['/login']">
     Login
   </div>
-  <div *ngIf="!isUserLoggedIn()" class="cell shrink header-nav-links" [ngClass]="{'active': currentState() === 'register'}"
-    [routerLink]="['/register']">
+  <div *ngIf="!loggedIn" class="cell shrink header-nav-links" [ngClass]="{'active': currentState() === 'register'}" [routerLink]="['/register']">
     Register
   </div>
-  <div *ngIf="isUserLoggedIn()" class="cell shrink header-nav-links account-icon grid-x align-middle" [ngClass]="{'active': accountOptionsActive}"
+  <div *ngIf="loggedIn" class="cell shrink header-nav-links account-icon grid-x align-middle" [ngClass]="{'active': accountOptionsActive}"
     (click)="accountOptionsActive = !accountOptionsActive">
     <i class="material-icons">account_circle</i>
-    <app-account-options [accountOptionsActive]="accountOptionsActive" (toggleEvent)="toggleOptionsActive($event)"></app-account-options>
+    <app-account-options [accountOptionsActive]="accountOptionsActive" (toggleEvent)="toggleOptionsActive($event)" (logout)="logoutUser()"
+      [username]="username"></app-account-options>
   </div>
 </div>

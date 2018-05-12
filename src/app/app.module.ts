@@ -10,7 +10,6 @@ import { FooterModule } from './components/footer/footer.module';
 import { ApiModule } from './modules/api/api.module';
 
 import { LoggedInGuard } from './modules/auth/guards/logged-in.guard';
-import { AuthService } from './modules/auth/services/auth.service';
 
 import { AppComponent } from './components/app/app.component';
 import { BodyComponent } from './components/body/body.component';
@@ -30,7 +29,7 @@ import { AppStore, appStoreProviders } from './states/app.store';
     HttpClientModule,
     AppStateModule
   ],
-  providers: [AuthService, appStoreProviders, LoggedInGuard],
+  providers: [appStoreProviders, LoggedInGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
