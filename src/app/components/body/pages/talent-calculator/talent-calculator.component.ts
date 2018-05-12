@@ -24,7 +24,7 @@ export class TalentCalculatorComponent implements OnInit {
       // TODO: move this logic & router to effects?
       this.classId = data.classId;
       if (
-        isNaN(this.classId) ||
+        (this.classId && isNaN(this.classId)) ||
         this.classId === 10 ||
         this.classId > 11 ||
         this.classId < 1

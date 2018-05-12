@@ -5,6 +5,11 @@ import { LoggedInGuard } from './modules/auth/guards/logged-in.guard';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
     path: 'home',
     loadChildren: './components/body/pages/home/home.module#HomeModule',
     data: { title: 'Home' }
