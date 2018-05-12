@@ -2,15 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import {
-  catchError,
-  filter,
-  delay,
-  map,
-  mergeMap,
-  switchMap,
-  take
-} from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 
 import { UserService } from '../../api/services/user.service';

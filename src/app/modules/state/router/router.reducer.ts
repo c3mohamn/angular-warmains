@@ -27,8 +27,6 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
     const path = routerState.root.firstChild.routeConfig.path || '';
     const title = routerState.root.firstChild.routeConfig.data.title || '';
 
-    // Only return an object including the URL, params and query params
-    // instead of the entire snapshot
     return { url, path, title, params, queryParams };
   }
 }

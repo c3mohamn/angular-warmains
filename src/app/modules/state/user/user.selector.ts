@@ -1,31 +1,24 @@
 import { UserState } from './user.reducer';
-import {
-  MemoizedSelector,
-  createSelector,
-  createFeatureSelector
-} from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { User } from '../../../models/user.model';
 
 const getUserState = createFeatureSelector<UserState>('user');
 
 export namespace UserQuery {
-  export const getCurrentUser: MemoizedSelector<{}, User> = createSelector(
+  export const getCurrentUser = createSelector(getUserState, state => state);
+
+  export const isLoggedIn = createSelector(
     getUserState,
-    state => state
+    state => state.username != null && state.username.length > 1
   );
 
-  export const isLoggedIn: MemoizedSelector<{}, boolean> = createSelector(
+  export const isNotLoggedIn = createSelector(
     getUserState,
-    state => state.username != null
+    state => state.username === null || state.username.length === 0
   );
 
-  export const isNotLoggedIn: MemoizedSelector<{}, boolean> = createSelector(
+  export const getCurrentUserName = createSelector(
     getUserState,
-    state => state.username === null
+    state => state.username
   );
-
-  export const getCurrentUserName: MemoizedSelector<
-    {},
-    string
-  > = createSelector(getUserState, state => state.username);
 }

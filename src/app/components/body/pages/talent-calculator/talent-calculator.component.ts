@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
 import { TalentCalculatorService } from './services/talent-calculator.service';
+import { TalentCalculatorFacade } from '../../../../modules/state/talent-calculator/talent-calculator.facade';
+import { RouterFacade } from '../../../../modules/state/router/router.facade';
 
 @Component({
   selector: 'app-talent-calculator',
@@ -13,27 +15,43 @@ export class TalentCalculatorComponent implements OnInit {
 
   constructor(
     private talentService: TalentCalculatorService,
+    private talentCalculatorFacade: TalentCalculatorFacade,
     private router: Router,
+    private routerFacade: RouterFacade,
     private meta: Meta
   ) {
-    meta.addTag({ property: 'og:title', content: 'Talents' });
-    meta.addTag({ property: 'og:type', content: 'website' });
-    meta.addTag({
+    routerFacade.getCurrentParams().subscribe(data => {
+      // TODO: move this logic & router to effects?
+      this.classId = data.classId;
+      if (
+        isNaN(this.classId) ||
+        this.classId === 10 ||
+        this.classId > 11 ||
+        this.classId < 1
+      ) {
+        // not valid a number, redirect to base class
+        this.router.navigate(['/talent/1']);
+      } else {
+        this.talentService.init(this.classId);
+        this.talentCalculatorFacade.getTalents(this.classId);
+      }
+    });
+
+    this.addMetaTags();
+  }
+
+  addMetaTags() {
+    this.meta.addTag({ property: 'og:title', content: 'Talents' });
+    this.meta.addTag({ property: 'og:type', content: 'website' });
+    this.meta.addTag({
       property: 'og:image',
       content: 'http://media.moddb.com/images/mods/1/28/27592/.5.jpg'
     });
-    meta.addTag({
+    this.meta.addTag({
       property: 'og:description',
       content: 'Create and save your talents using the talent calculator.'
     });
-    meta.addTag({ property: 'og:site_name', content: 'Warmains' });
-
-    this.router.events.subscribe(val => {
-      if (val instanceof NavigationEnd) {
-        const classId = this.talentService.getClassId(val.url);
-        this.talentService.init(classId);
-      }
-    });
+    this.meta.addTag({ property: 'og:site_name', content: 'Warmains' });
   }
 
   ngOnInit() {}

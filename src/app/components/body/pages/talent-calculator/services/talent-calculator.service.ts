@@ -58,18 +58,13 @@ export class TalentCalculatorService {
     this.talentService.getTalentTooltips(this.classId).subscribe(
       tooltips => {
         this.talentTooltips = tooltips;
-
-        if (this.talentDetails) {
-          this.loadTalentDetailsState(this.talentDetails[this.classId]);
-        } else {
-          this.talentService.getTalentDetails().subscribe(
-            details => {
-              this.talentDetails = details;
-              this.loadTalentDetailsState(details[this.classId]);
-            },
-            error => console.log(error)
-          );
-        }
+        this.talentService.getTalentDetails(this.classId).subscribe(
+          details => {
+            this.talentDetails = details;
+            this.loadTalentDetailsState(details);
+          },
+          error => console.log(error)
+        );
       },
       error => console.log(error)
     );

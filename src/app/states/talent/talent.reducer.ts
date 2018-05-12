@@ -4,7 +4,6 @@ import { createSelector } from 'reselect';
 import {
   Talent
 } from '../../components/body/pages/talent-calculator/models/talents.model';
-import { TalentCalculatorComponent } from '../../components/body/pages/talent-calculator/talent-calculator.component';
 
 export interface TalentCalculatorState {
   meta: TalentMetaInfo;
