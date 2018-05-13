@@ -6,8 +6,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { RouterStateModule } from './router/router-state.module';
 import { UserStateModule } from './user/user-state.module';
-import { UserState } from './user/user.reducer';
-import { UserReducer } from '../../states/user/user.reducer';
+import { UserState, userReducer } from './user/user.reducer';
 import { RouterState } from './router/router.selector';
 import { RouterReducerState, routerReducer } from '@ngrx/router-store';
 import { RouterStateUrl } from './router/router.reducer';
@@ -21,7 +20,7 @@ export interface State {
 }
 
 const reducers: ActionReducerMap<State> = {
-  user: UserReducer,
+  user: userReducer,
   router: routerReducer,
   talentCalculator: talentCalculatorReducer
 };

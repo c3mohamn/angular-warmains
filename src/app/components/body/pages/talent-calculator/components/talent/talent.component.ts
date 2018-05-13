@@ -1,60 +1,40 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  SimpleChange,
-  HostListener
-} from '@angular/core';
-import { TalentCalculatorService } from '../../services/talent-calculator.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { Talent } from '../../models/talents.model';
+import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
 
 @Component({
   selector: 'app-talent',
   templateUrl: './talent.component.html',
   styleUrls: ['./talent.component.scss']
 })
-export class TalentComponent implements OnInit, OnChanges {
-  iconUrl: string;
-  classId: number;
-  spec: string;
-  lastActiveRow: number;
-  pointsInTree: number[];
+export class TalentComponent implements OnInit {
   tooltipContent: string;
 
-  @Input() talent: Talent;
+  @Input() talent: Talent; // set default talents
+  @Input() classId = 1;
+  @Input() iconUrl = `url(assets/images/talent-icons/1/fury/31.jpg)`;
+  @Input() spec = '';
 
-  constructor(private talentService: TalentCalculatorService) {}
+  constructor(private talentCalculatorFacade: TalentCalculatorFacade) {}
 
-  initTalent(): void {
-    if (this.talent !== undefined) {
-      this.classId = this.talentService.getClassId();
-      this.spec = this.talentService.getClassSpec(
-        this.talent.tree,
-        this.classId
-      );
-      this.iconUrl = `url(assets/images/talent-icons/${this.classId}/${
-        this.spec
-      }/${this.talent.id}.jpg)`;
-      this.talent.tooltip = this.talentService.getTalentTooltip(this.talent.id);
-      if (this.talent.tooltip) {
-        this.getTalentTooltip();
-      }
-    }
+  ngOnInit() {
+    // if (this.talent.tooltip) {
+    //   this.getTalentTooltip();
+    // }
   }
 
   isInactive(): boolean {
-    return this.talentService.isTalentActive(this.talent.id);
+    return false;
+    // return this.talentService.isTalentActive(this.talent.id);
   }
 
   addTalentPoint() {
-    this.talentService.addPoint(this.talent.id, 1);
+    // event emitter
     this.getTalentTooltip();
   }
 
   removeTalentPoint() {
-    this.talentService.removePoint(this.talent.id, 1);
+    // event emitter
     this.getTalentTooltip();
     return false;
   }
@@ -105,14 +85,5 @@ export class TalentComponent implements OnInit, OnChanges {
       </div>
     </div>
     `;
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    const talent: SimpleChange = changes.talent;
-    this.initTalent();
-  }
-
-  ngOnInit() {
-    this.initTalent();
   }
 }

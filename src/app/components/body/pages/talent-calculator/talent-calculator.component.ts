@@ -11,7 +11,7 @@ import { RouterFacade } from '../../../../modules/state/router/router.facade';
   styleUrls: ['./talent-calculator.component.scss']
 })
 export class TalentCalculatorComponent implements OnInit {
-  classId: number;
+  classId = 1;
 
   constructor(
     private talentService: TalentCalculatorService,
@@ -32,8 +32,7 @@ export class TalentCalculatorComponent implements OnInit {
         // not valid a number, redirect to base class
         this.router.navigate(['/talent/1']);
       } else {
-        this.talentService.init(this.classId);
-        this.talentCalculatorFacade.getTalents(this.classId);
+        this.talentCalculatorFacade.loadTalents(this.classId);
       }
     });
 

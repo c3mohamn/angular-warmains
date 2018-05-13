@@ -1,10 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Talent } from '../../../components/body/pages/talent-calculator/models/talents.model';
-import { TalentCalculatorState } from './talent-calculator.reducer';
+import {
+  TalentCalculatorState,
+  TalentMetaInfo
+} from './talent-calculator.reducer';
+import { Store } from '@ngrx/store';
+import { TalentCalculatorQuery } from './talent-calculator.selector';
 
 @Injectable()
 export class TalentCalculatorService {
-  constructor() {}
+  meta: TalentMetaInfo;
+
+  constructor(private store$: Store<TalentCalculatorState>) {
+    store$
+      .select(TalentCalculatorQuery.getMetaInfo)
+      .subscribe(data => (this.meta = data));
+  }
 
   getTalentDetails(details: any): Talent[] {
     const talents: Talent[] = [];
@@ -58,5 +69,11 @@ export class TalentCalculatorService {
     };
 
     return state;
+  }
+
+  updateTalentMetaInfo(talent: Talent, addPoint: boolean): TalentMetaInfo {
+    console.log(this.meta);
+
+    return this.meta;
   }
 }

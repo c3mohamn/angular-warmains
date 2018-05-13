@@ -14,9 +14,6 @@ import { LoggedInGuard } from './modules/auth/guards/logged-in.guard';
 import { AppComponent } from './components/app/app.component';
 import { BodyComponent } from './components/body/body.component';
 
-import { AppState, default as reducer } from './states/app.reducer';
-import { AppStore, appStoreProviders } from './states/app.store';
-
 @NgModule({
   declarations: [AppComponent, BodyComponent],
   imports: [
@@ -29,7 +26,7 @@ import { AppStore, appStoreProviders } from './states/app.store';
     HttpClientModule,
     AppStateModule
   ],
-  providers: [appStoreProviders, LoggedInGuard],
+  providers: [LoggedInGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

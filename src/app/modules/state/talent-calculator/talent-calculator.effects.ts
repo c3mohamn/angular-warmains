@@ -58,6 +58,19 @@ export class TalentCalculatorEffects {
       )
     );
 
+  @Effect()
+  addPoint$: Observable<Action> = this.actions$
+    .ofType<TalentCalculatorActions.AddTalentPoint>(
+      TalentCalculatorActionTypes.ADD_TALENT_POINT
+    )
+    .pipe(
+      map(action => action.payload),
+      map(talent => {
+        console.log(talent.name);
+        return new TalentCalculatorActions.AddTalentPoint(talent);
+      })
+    );
+
   constructor(
     private actions$: Actions,
     private router: Router,

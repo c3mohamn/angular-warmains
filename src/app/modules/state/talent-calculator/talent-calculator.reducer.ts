@@ -44,7 +44,8 @@ export function talentCalculatorReducer(
       return newState;
 
     case TalentCalculatorActionTypes.ADD_TALENT_POINT:
-      return Object.assign({}, state, action.payload, {});
+      return state;
+    // return Object.assign({}, state, action.payload, {});
 
     case TalentCalculatorActionTypes.REMOVE_TALENT_POINT:
       return Object.assign({}, state, action.payload, {});

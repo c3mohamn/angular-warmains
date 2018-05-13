@@ -10,4 +10,9 @@ export namespace TalentCalculatorQuery {
     getTalentCalculatorState,
     state => state.meta
   );
+
+  export const getTalents = createSelector(
+    getTalentCalculatorState,
+    state => state.talents
+  );
 }

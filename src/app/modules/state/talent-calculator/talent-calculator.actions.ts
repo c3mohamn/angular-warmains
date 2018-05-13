@@ -1,7 +1,9 @@
 import { Action } from '@ngrx/store';
 import { Talent } from '../../../components/body/pages/talent-calculator/models/talents.model';
-import { TalentMetaInfo } from '../../../states/talent/talent.reducer';
-import { TalentCalculatorState } from './talent-calculator.reducer';
+import {
+  TalentCalculatorState,
+  TalentMetaInfo
+} from './talent-calculator.reducer';
 
 export enum TalentCalculatorActionTypes {
   GET_TALENTS = '[TalentCalculator] get talents',
