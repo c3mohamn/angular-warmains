@@ -1,27 +1,57 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  Input,
+  SimpleChanges,
+  SimpleChange
+} from '@angular/core';
 import { Talent } from '../../models/talents.model';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
+import { TalentCalculatorService } from '../../services/talent-calculator.service';
 
 @Component({
   selector: 'app-talent',
   templateUrl: './talent.component.html',
   styleUrls: ['./talent.component.scss']
 })
-export class TalentComponent implements OnInit {
+export class TalentComponent implements OnInit, OnChanges {
   tooltipContent: string;
 
   @Input() talent: Talent; // set default talents
   @Input() classId = 1;
-  @Input() iconUrl = `url(assets/images/talent-icons/1/fury/31.jpg)`;
-  @Input() spec = '';
+  iconUrl = `url(assets/images/UI-EmptyBack.png)`;
+  spec = '';
 
-  constructor(private talentCalculatorFacade: TalentCalculatorFacade) {}
+  constructor(
+    private talentCalculatorFacade: TalentCalculatorFacade,
+    private talentCalculatorService: TalentCalculatorService
+  ) {}
 
-  ngOnInit() {
-    // if (this.talent.tooltip) {
-    //   this.getTalentTooltip();
-    // }
+  ngOnChanges(changes: SimpleChanges) {
+    const talent = changes.talent;
+
+    if (
+      talent &&
+      talent.currentValue &&
+      talent.currentValue !== talent.previousValue
+    ) {
+      // get spec of talent && iconUrl
+      this.spec = this.talentCalculatorService.getClassSpec(
+        this.talent.tree,
+        this.classId
+      );
+      this.iconUrl = `url(./assets/images/talent-icons/${this.classId}/${
+        this.spec
+      }/${this.talent.id}.jpg)`;
+      this.getTalentTooltip();
+    }
+
+    if (this.talent && this.classId) {
+    }
   }
+
+  ngOnInit() {}
 
   isInactive(): boolean {
     return false;

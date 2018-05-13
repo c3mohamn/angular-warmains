@@ -28,7 +28,6 @@ export class TalentTreeComponent implements OnInit {
   }
 
   getTalent(tree: number, row: number, col: number): Talent {
-    // console.log(this.talents);
     if (this.talents === []) {
       return null;
     }
