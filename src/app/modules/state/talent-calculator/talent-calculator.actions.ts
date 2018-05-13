@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Talent } from '../../../components/body/pages/talent-calculator/models/talents.model';
 import { TalentMetaInfo } from '../../../states/talent/talent.reducer';
+import { TalentCalculatorState } from './talent-calculator.reducer';
 
 export enum TalentCalculatorActionTypes {
   GET_TALENTS = '[TalentCalculator] get talents',
@@ -22,7 +23,7 @@ export namespace TalentCalculatorActions {
   export class LoadTalents implements Action {
     readonly type = TalentCalculatorActionTypes.LOAD_TALENTS;
 
-    constructor(public payload: Talent[]) {}
+    constructor(public payload: TalentCalculatorState) {}
   }
 
   export class UpdateTalentMetaInfo implements Action {

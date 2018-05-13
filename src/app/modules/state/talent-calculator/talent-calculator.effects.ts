@@ -46,6 +46,10 @@ export class TalentCalculatorEffects {
               )
             )
           ),
+          map(talents =>
+            // get talent calculator state
+            this.talentCalculatorService.getTalentMetaInfo(talents, classId)
+          ),
           map(tooltips => new TalentCalculatorActions.LoadTalents(tooltips)),
           catchError(error =>
             of(new TalentCalculatorActions.TalentError(error))
