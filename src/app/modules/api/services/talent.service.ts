@@ -23,6 +23,8 @@ export class TalentService {
   }
 
   getTalentTooltips(classId: number): Observable<any> {
-    return this.http.get<any>(`./assets/data/talents/tooltips/${classId}.json`);
+    return this.http
+      .get<any>(`./assets/data/talents/tooltips/${classId}.json`)
+      .pipe(map(data => data));
   }
 }

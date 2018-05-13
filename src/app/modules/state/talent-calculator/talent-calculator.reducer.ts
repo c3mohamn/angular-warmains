@@ -40,7 +40,8 @@ export function talentCalculatorReducer(
 ): TalentCalculatorState {
   switch (action.type) {
     case TalentCalculatorActionTypes.LOAD_TALENTS:
-      const newState = Object.assign({}, state, action.payload, {});
+      const newState = Object.assign({}, state, {});
+      newState.talents = Object.assign({}, action.payload, {});
       return newState;
 
     case TalentCalculatorActionTypes.ADD_TALENT_POINT:
