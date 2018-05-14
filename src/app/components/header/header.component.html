@@ -1,0 +1,23 @@
+<div class="header-container grid-x align-middle align-center">
+  <div class="cell shrink">
+    <app-header-title></app-header-title>
+  </div>
+  <div class="cell shrink">
+    <h6 class="header-current-state">
+      <small>{{ pageTitle }}</small>
+    </h6>
+  </div>
+  <div class="cell auto"></div>
+  <div *ngIf="!loggedIn" class="cell shrink header-nav-links" [ngClass]="{'active': pageTitle === 'Login'}" [routerLink]="['/login']">
+    Login
+  </div>
+  <div *ngIf="!loggedIn" class="cell shrink header-nav-links" [ngClass]="{'active': pageTitle === 'Register'}" [routerLink]="['/register']">
+    Register
+  </div>
+  <div *ngIf="loggedIn" class="cell shrink header-nav-links account-icon grid-x align-middle" [ngClass]="{'active': accountOptionsActive}"
+    (click)="accountOptionsActive = !accountOptionsActive">
+    <i class="material-icons">account_circle</i>
+    <app-account-options [accountOptionsActive]="accountOptionsActive" (toggleEvent)="toggleOptionsActive($event)" (logout)="logoutUser()"
+      [username]="username"></app-account-options>
+  </div>
+</div>

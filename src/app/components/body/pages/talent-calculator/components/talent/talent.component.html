@@ -1,0 +1,15 @@
+<div class="talent-container-outer">
+  <div *ngIf="talent" appTooltip content="{{tooltipContent}}" [style.background-image]="iconUrl" class="talent-container-inner"
+    [ngClass]="{disabled: isInactive()}" (click)="addTalentPoint()" (contextmenu)="removeTalentPoint()" appMouseWheel (mouseWheelUp)="addTalentPoint()"
+    (mouseWheelDown)="removeTalentPoint()">
+    <!-- Talent Counter -->
+    <div [hidden]="isInactive()" class="talent-points" [ngClass]="{'maxed': talent.curRank === talent.maxRank, 'min': talent.curRank === 0}">
+      <span>{{talent.curRank}}</span>
+    </div>
+  </div>
+  <!-- Pre-requisite arrow -->
+  <div *ngIf="talent && talent.arrows">
+    <img *ngFor="let a of talent.arrows" class="talent-arrow {{a.type}}" src="assets/images/talent-icons/arrows/{{a.filename}}"
+      alt="">
+  </div>
+</div>

@@ -51,7 +51,7 @@
     }
 
     &.disabled {
-      opacity: .7;
+      opacity: 0.7;
       cursor: default;
 
       &:hover {
@@ -67,7 +67,8 @@
 }
 
 // Class Icons
-.class-icons, .spec-icons {
+.class-icons,
+.spec-icons {
   width: 48px;
   height: 48px;
 
@@ -85,7 +86,7 @@
     cursor: pointer;
 
     &:hover {
-      opacity: .8;
+      opacity: 0.8;
     }
   }
 }
@@ -100,20 +101,20 @@
   }
 
   &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  	background-color: inherit;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: inherit;
   }
 
   &::-webkit-scrollbar {
-    width: .5rem;
-  	background-color: $wm-secondary-light;
+    width: 0.5rem;
+    background-color: $wm-secondary-light;
   }
 
   &::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-  	background-color: $wm-secondary-verylight;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: $wm-secondary-verylight;
 
     &:hover {
       background-color: darken($wm-secondary-verylight, 5);
@@ -122,8 +123,8 @@
 
   &.small {
     &::-webkit-scrollbar {
-      width: .3rem;
-    	background-color: $wm-secondary-light;
+      width: 0.3rem;
+      background-color: $wm-secondary-light;
     }
   }
 }
@@ -131,9 +132,9 @@
 // Buttons
 // ---------------
 .button {
-  padding: .8rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   box-shadow: $wm-boxshadow-2;
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
 
   &.clear {
     box-shadow: none;
@@ -169,5 +170,51 @@
     &:active {
       box-shadow: none;
     }
+  }
+}
+
+// Talent Tooltips
+// -------------------------
+.tooltip-talent {
+  position: relative;
+  font-size: 12px;
+
+  .icon {
+    position: absolute;
+    top: -0.5rem;
+    left: -3rem;
+    width: 2.5rem;
+  }
+
+  .name {
+    h5 {
+      color: $wm-primary-light;
+    }
+  }
+
+  .rank {
+    margin-left: 1rem;
+  }
+
+  .next-rank {
+    color: white;
+    font-size: 14px;
+    margin-top: 1rem;
+  }
+
+  .description {
+    color: $wm-gray;
+  }
+
+  .click-to {
+    font-size: 14px;
+  }
+
+  .click-to-learn {
+    color: $wm-green;
+  }
+
+  .click-to-remove {
+    color: $wm-red;
   }
 }

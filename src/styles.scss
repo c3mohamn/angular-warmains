@@ -1,10 +1,9 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import "./assets/scss/foundation-styles";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import './assets/scss/foundation-styles';
 
 html,
 body {
   width: 100%;
-  min-width: 300px;
   height: 100%;
   padding: 0;
   overflow: auto;

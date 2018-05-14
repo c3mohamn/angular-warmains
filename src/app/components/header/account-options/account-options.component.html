@@ -1,0 +1,8 @@
+<div *ngIf="accountOptionsActive" class="account-options" (clickOutside)="closeDropdown()" [exclude]="'.account-icon'">
+  <div class="option static">
+    {{ username }}
+  </div>
+  <div class="option" (click)="logoutUser()">
+    Logout
+  </div>
+</div>
