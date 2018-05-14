@@ -4,29 +4,31 @@ import {
   OnChanges,
   Input,
   SimpleChanges,
-  SimpleChange
+  SimpleChange,
+  EventEmitter,
+  Output,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Talent } from '../../models/talents.model';
-import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
 import { TalentCalculatorService } from '../../services/talent-calculator.service';
+import { canAddPoint } from '../../helpers/talent-tree.helper';
 
 @Component({
   selector: 'app-talent',
   templateUrl: './talent.component.html',
-  styleUrls: ['./talent.component.scss']
+  styleUrls: ['./talent.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TalentComponent implements OnInit, OnChanges {
-  tooltipContent: string;
-
-  @Input() talent: Talent; // set default talents
+  @Input() talent: Talent;
   @Input() classId = 1;
+  @Output() addPoint = new EventEmitter<Talent>();
+  @Output() removePoint = new EventEmitter<Talent>();
   iconUrl = `url(assets/images/UI-EmptyBack.png)`;
   spec = '';
+  tooltipContent: string;
 
-  constructor(
-    private talentCalculatorFacade: TalentCalculatorFacade,
-    private talentCalculatorService: TalentCalculatorService
-  ) {}
+  constructor(private talentCalculatorService: TalentCalculatorService) {}
 
   ngOnChanges(changes: SimpleChanges) {
     const talent = changes.talent;
@@ -59,12 +61,12 @@ export class TalentComponent implements OnInit, OnChanges {
   }
 
   addTalentPoint() {
-    // event emitter
+    this.addPoint.emit(this.talent);
     this.getTalentTooltip();
   }
 
   removeTalentPoint() {
-    // event emitter
+    this.removePoint.emit(this.talent);
     this.getTalentTooltip();
     return false;
   }

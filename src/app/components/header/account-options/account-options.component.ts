@@ -1,12 +1,10 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { UserFacade } from '../../../modules/state/user/user.facade';
 
 @Component({
   selector: 'app-account-options',
@@ -14,15 +12,13 @@ import { UserFacade } from '../../../modules/state/user/user.facade';
   styleUrls: ['./account-options.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AccountOptionsComponent implements OnInit {
+export class AccountOptionsComponent {
   @Input() accountOptionsActive: boolean;
   @Input() username = '';
   @Output() toggleEvent = new EventEmitter<boolean>();
   @Output() logout = new EventEmitter<void>();
 
   constructor() {}
-
-  ngOnInit() {}
 
   logoutUser() {
     this.logout.emit();

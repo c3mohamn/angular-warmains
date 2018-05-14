@@ -19,7 +19,7 @@ export class TalentCalculatorFacade {
   ) {}
 
   loadTalents(classId: number) {
-    return this.store.dispatch(new TalentCalculatorActions.GetTalents(classId));
+    return this.store.dispatch(new TalentCalculatorActions.LoadTalents(classId));
   }
 
   addTalentPoint(talent: Talent) {

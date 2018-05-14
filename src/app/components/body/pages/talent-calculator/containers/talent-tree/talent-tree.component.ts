@@ -27,6 +27,22 @@ export class TalentTreeComponent implements OnInit {
       .subscribe(data => (this.talents = data));
   }
 
+  ngOnInit() {
+    this.title.setTitle(
+      `Talents | ${this.talentCalculatorService.getClassName(this.classId)}`
+    );
+  }
+
+  addTalentPoint(talent: Talent) {
+    console.log('Add point to: ', talent.name);
+    this.talentCalculatorFacade.addTalentPoint(talent);
+  }
+
+  removeTalentPoint(talent: Talent) {
+    console.log('Remove point from: ', talent.name);
+    this.talentCalculatorFacade.removeTalentPoint(talent);
+  }
+
   getTalent(tree: number, row: number, col: number): Talent {
     if (this.talents === []) {
       return null;
@@ -46,11 +62,5 @@ export class TalentTreeComponent implements OnInit {
     return `url(assets/images/talent-icons/${
       this.classId
     }/${spec}/background.jpg)`;
-  }
-
-  ngOnInit() {
-    this.title.setTitle(
-      `Talents | ${this.talentCalculatorService.getClassName(this.classId)}`
-    );
   }
 }

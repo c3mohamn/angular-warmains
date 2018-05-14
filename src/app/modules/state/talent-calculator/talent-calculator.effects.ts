@@ -21,8 +21,8 @@ import { TalentService } from '../../api/services/talent.service';
 export class TalentCalculatorEffects {
   @Effect()
   get$: Observable<Action> = this.actions$
-    .ofType<TalentCalculatorActions.GetTalents>(
-      TalentCalculatorActionTypes.GET_TALENTS
+    .ofType<TalentCalculatorActions.LoadTalents>(
+      TalentCalculatorActionTypes.LOAD_TALENTS
     )
     .pipe(
       // get class id
@@ -50,7 +50,9 @@ export class TalentCalculatorEffects {
             // get talent calculator state
             this.talentCalculatorService.getTalentMetaInfo(talents, classId)
           ),
-          map(tooltips => new TalentCalculatorActions.LoadTalents(tooltips)),
+          map(
+            tooltips => new TalentCalculatorActions.LoadTalentsSuccess(tooltips)
+          ),
           catchError(error =>
             of(new TalentCalculatorActions.TalentError(error))
           )
@@ -67,7 +69,20 @@ export class TalentCalculatorEffects {
       map(action => action.payload),
       map(talent => {
         console.log(talent.name);
-        return new TalentCalculatorActions.AddTalentPoint(talent);
+        return new TalentCalculatorActions.AddTalentPointSuccess(talent);
+      })
+    );
+
+  @Effect()
+  removePoint$: Observable<Action> = this.actions$
+    .ofType<TalentCalculatorActions.RemoveTalentPoint>(
+      TalentCalculatorActionTypes.REMOVE_TALENT_POINT
+    )
+    .pipe(
+      map(action => action.payload),
+      map(talent => {
+        console.log(talent.name);
+        return new TalentCalculatorActions.RemoveTalentPointSuccess(talent);
       })
     );
 
