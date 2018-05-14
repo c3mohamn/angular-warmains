@@ -13,7 +13,6 @@ export enum TalentCalculatorActionTypes {
   REMOVE_TALENT_POINT = '[TalentCalculator] removing a talent point from [Talent]',
   REMOVE_TALENT_POINT_SUCCESS = '[TalentCalculator] removed a talent point from [Talent]',
   RESET_TALENT_POINTS = '[TalentCalculator] reset talents',
-  UPDATE_TALENT_META = '[TalentCalculator] meta updated.',
   TALENT_ERROR = '[TalentCalculator] error'
 }
 
@@ -30,12 +29,6 @@ export namespace TalentCalculatorActions {
     constructor(public payload: TalentCalculatorState) {}
   }
 
-  export class UpdateTalentMetaInfo implements Action {
-    readonly type = TalentCalculatorActionTypes.UPDATE_TALENT_META;
-
-    constructor(public payload: TalentMetaInfo) {}
-  }
-
   export class AddTalentPoint implements Action {
     readonly type = TalentCalculatorActionTypes.ADD_TALENT_POINT;
 
@@ -45,7 +38,7 @@ export namespace TalentCalculatorActions {
   export class AddTalentPointSuccess implements Action {
     readonly type = TalentCalculatorActionTypes.ADD_TALENT_POINT_SUCCESS;
 
-    constructor(public payload: Talent) {}
+    constructor(public payload: [Talent, TalentMetaInfo]) {}
   }
 
   export class RemoveTalentPoint implements Action {
@@ -57,7 +50,7 @@ export namespace TalentCalculatorActions {
   export class RemoveTalentPointSuccess implements Action {
     readonly type = TalentCalculatorActionTypes.REMOVE_TALENT_POINT_SUCCESS;
 
-    constructor(public payload: Talent) {}
+    constructor(public payload: [Talent, TalentMetaInfo]) {}
   }
 
   export class ResetTalentPoints implements Action {
@@ -77,4 +70,4 @@ export type TalentCalculatorActionsUnion =
   | TalentCalculatorActions.LoadTalentsSuccess
   | TalentCalculatorActions.AddTalentPointSuccess
   | TalentCalculatorActions.RemoveTalentPointSuccess
-  | TalentCalculatorActions.ResetTalentPoints;
+  | TalentCalculatorActions.TalentError;

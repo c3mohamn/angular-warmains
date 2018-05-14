@@ -6,6 +6,11 @@ const getTalentCalculatorState = createFeatureSelector<TalentCalculatorState>(
 );
 
 export namespace TalentCalculatorQuery {
+  export const getState = createSelector(
+    getTalentCalculatorState,
+    state => state
+  );
+
   export const getMetaInfo = createSelector(
     getTalentCalculatorState,
     state => state.meta

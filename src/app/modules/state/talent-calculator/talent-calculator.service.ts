@@ -6,15 +6,16 @@ import {
 } from './talent-calculator.reducer';
 import { Store } from '@ngrx/store';
 import { TalentCalculatorQuery } from './talent-calculator.selector';
+import { canAddPoint, canRemovePoint } from './talent-calculator.helper';
 
 @Injectable()
 export class TalentCalculatorService {
-  meta: TalentMetaInfo;
+  state: TalentCalculatorState;
 
   constructor(private store$: Store<TalentCalculatorState>) {
     store$
-      .select(TalentCalculatorQuery.getMetaInfo)
-      .subscribe(data => (this.meta = data));
+      .select(TalentCalculatorQuery.getState)
+      .subscribe(data => (this.state = data));
   }
 
   getTalentDetails(details: any): Talent[] {
@@ -71,9 +72,34 @@ export class TalentCalculatorService {
     return state;
   }
 
-  updateTalentMetaInfo(talent: Talent, addPoint: boolean): TalentMetaInfo {
-    console.log(this.meta);
+  canAddPoint(talent: Talent): boolean {
+    return canAddPoint(this.state, talent);
+  }
 
-    return this.meta;
+  canRemovePoint(talent: Talent): boolean {
+    return canRemovePoint(this.state, talent);
+  }
+
+  getUpdatedTalentMetaInfo(talent: Talent, amount: number): TalentMetaInfo {
+    const meta = Object.assign({}, this.state.meta);
+
+    meta.totalPoints += amount;
+    meta.preview[talent.tree] += amount;
+    meta.treeRows[talent.tree][talent.row] += amount;
+
+    if (amount > 0) {
+      meta.lastActiveRow[talent.tree] =
+        meta.lastActiveRow[talent.tree] < talent.row
+          ? talent.row
+          : meta.lastActiveRow[talent.tree];
+    } else {
+      if (
+        talent.row === meta.lastActiveRow[talent.tree] &&
+        meta.treeRows[talent.tree][talent.row] === 0
+      ) {
+        meta.lastActiveRow[talent.tree]--;
+      }
+    }
+    return meta;
   }
 }

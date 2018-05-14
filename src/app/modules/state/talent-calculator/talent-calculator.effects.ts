@@ -68,8 +68,15 @@ export class TalentCalculatorEffects {
     .pipe(
       map(action => action.payload),
       map(talent => {
-        console.log(talent.name);
-        return new TalentCalculatorActions.AddTalentPointSuccess(talent);
+        if (this.talentCalculatorService.canAddPoint(talent)) {
+          const newMeta = this.talentCalculatorService.getUpdatedTalentMetaInfo(
+            talent,
+            1
+          );
+          return new TalentCalculatorActions.AddTalentPointSuccess([talent, newMeta]);
+        } else {
+          return new TalentCalculatorActions.TalentError('Cannot add point.');
+        }
       })
     );
 
@@ -81,8 +88,17 @@ export class TalentCalculatorEffects {
     .pipe(
       map(action => action.payload),
       map(talent => {
-        console.log(talent.name);
-        return new TalentCalculatorActions.RemoveTalentPointSuccess(talent);
+        if (this.talentCalculatorService.canRemovePoint(talent)) {
+          const newMeta = this.talentCalculatorService.getUpdatedTalentMetaInfo(
+            talent,
+            -1
+          );
+          return new TalentCalculatorActions.RemoveTalentPointSuccess([talent, newMeta]);
+        } else {
+          return new TalentCalculatorActions.TalentError(
+            'Cannot remove point.'
+          );
+        }
       })
     );
 

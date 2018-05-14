@@ -20,7 +20,7 @@ export class TalentHeaderComponent implements OnInit {
     private talentCaluclatorFacade: TalentCalculatorFacade
   ) {
     talentCaluclatorFacade.getTalentMetaInfo().subscribe(data => {
-      this.remaining = this.remaining - data.totalPoints;
+      this.remaining = 71 - data.totalPoints;
       this.preview = data.preview;
       this.classId = data.classId;
     });

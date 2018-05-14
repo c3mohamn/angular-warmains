@@ -1,8 +1,7 @@
 import { TalentCalculatorState } from './talent-calculator.reducer';
 import { Talent } from '../../../components/body/pages/talent-calculator/models/talents.model';
 
-export function canAddPoint(state: TalentCalculatorState, talentId: number) {
-  const talent: Talent = state.talents[talentId];
+export function canAddPoint(state: TalentCalculatorState, talent: Talent) {
   let canAdd = true;
 
   if (talent.curRank === talent.maxRank) {
@@ -30,8 +29,7 @@ export function canAddPoint(state: TalentCalculatorState, talentId: number) {
   return canAdd;
 }
 
-export function canRemovePoint(state: TalentCalculatorState, talentId: number) {
-  const talent = state.talents[talentId];
+export function canRemovePoint(state: TalentCalculatorState, talent: Talent) {
   let canRemove = true;
   const lastActiveRow = state.meta.lastActiveRow[talent.tree];
 

@@ -3,6 +3,7 @@ import { TalentCalculatorService } from '../../services/talent-calculator.servic
 import { Talent } from '../../models/talents.model';
 import { Title } from '@angular/platform-browser';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
+import { TalentMetaInfo } from '../../../../../../modules/state/talent-calculator/talent-calculator.reducer';
 
 @Component({
   selector: 'app-talent-tree',
@@ -13,6 +14,7 @@ export class TalentTreeComponent implements OnInit {
   trees = [0, 1, 2];
   rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   cols = [0, 1, 2, 3];
+  meta: TalentMetaInfo;
   talents: Talent[] = [];
 
   @Input() classId = 1;
@@ -25,6 +27,9 @@ export class TalentTreeComponent implements OnInit {
     talentCalculatorFacade
       .getTalents()
       .subscribe(data => (this.talents = data));
+    talentCalculatorFacade
+      .getTalentMetaInfo()
+      .subscribe(data => (this.meta = data));
   }
 
   ngOnInit() {
@@ -43,14 +48,19 @@ export class TalentTreeComponent implements OnInit {
     this.talentCalculatorFacade.removeTalentPoint(talent);
   }
 
-  getTalent(tree: number, row: number, col: number): Talent {
+  getTalents(tree: number, row: number, col: number): [Talent, Talent | null] {
     if (this.talents === []) {
       return null;
     }
 
-    return this.talents.find(
-      talent => talent.tree === tree && talent.row === row && talent.col === col
+    const talent = this.talents.find(
+      t => t.tree === tree && t.row === row && t.col === col
     );
+
+    const requiredTalent =
+      talent && talent.requires && this.talents[talent.requires];
+
+    return [talent, requiredTalent || null];
   }
 
   getSpecBg(treeId: number): string {
