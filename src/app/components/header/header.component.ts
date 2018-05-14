@@ -1,6 +1,7 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../modules/auth/services/auth.service';
+import { UserFacade } from '../../modules/state/user/user.facade';
+import { RouterFacade } from '../../modules/state/router/router.facade';
 
 @Component({
   selector: 'app-header',
@@ -9,20 +10,24 @@ import { AuthService } from '../../modules/auth/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   accountOptionsActive = false;
+  loggedIn = false;
+  username = '';
+  pageTitle = '';
 
-  constructor(private router: Router, private _authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private userFacade: UserFacade,
+    private routerFacade: RouterFacade
+  ) {
+    this.userFacade.getUserLoggedIn().subscribe(data => (this.loggedIn = data));
+    this.userFacade.getUserName().subscribe(data => (this.username = data));
+    this.routerFacade
+      .getCurrentPageTitle()
+      .subscribe(data => (this.pageTitle = data));
+  }
 
   logoutUser() {
-    this._authService.logout();
-  }
-
-  isUserLoggedIn(): boolean {
-    return this._authService.isLoggedIn();
-  }
-
-  currentState() {
-    const path = this.router.url;
-    return path.indexOf('talent') > -1 ? 'talent' : path.slice(1);
+    this.userFacade.logoutUser();
   }
 
   toggleOptionsActive($event) {

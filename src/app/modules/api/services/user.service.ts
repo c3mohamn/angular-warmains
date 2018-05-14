@@ -12,18 +12,13 @@ import { User, UserForm } from '../../../models/user.model';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<User[]> {
-    console.log('getting all users');
-    return this.http.get<User[]>('/api/user/getAll', {});
-  }
-
   createUser(newUser: UserForm): Observable<User> {
     console.log('creating new user: ', newUser);
     return this.http.post<User>('/api/user/register', newUser);
   }
 
-  setUserToken(user: UserForm): Observable<User> {
-    console.log('get user: ', user);
+  loginUser(user: UserForm): Observable<User> {
+    console.log('login user: ', user);
     return this.http.post<User>('/api/user/login', user);
   }
 

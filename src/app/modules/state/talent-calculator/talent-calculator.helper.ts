@@ -1,8 +1,7 @@
-import { TalentCalculatorState } from '../../../../../states/talent/talent.reducer';
-import { Talent } from '../models/talents.model';
+import { TalentCalculatorState } from './talent-calculator.reducer';
+import { Talent } from '../../../components/body/pages/talent-calculator/models/talents.model';
 
-export function canAddPoint(state: TalentCalculatorState, talentId: number) {
-  const talent: Talent = state.talents[talentId];
+export function canAddPoint(state: TalentCalculatorState, talent: Talent) {
   let canAdd = true;
 
   if (talent.curRank === talent.maxRank) {
@@ -11,7 +10,7 @@ export function canAddPoint(state: TalentCalculatorState, talentId: number) {
   } else if (state.meta.totalPoints === 71) {
     console.log('No points left to use.');
     canAdd = false;
-  } else if (state.preview[talent.tree] < 5 * talent.row) {
+  } else if (state.meta.preview[talent.tree] < 5 * talent.row) {
     console.log(`This talent requires ${talent.row * 5} points`);
     canAdd = false;
   } else if (
@@ -30,10 +29,9 @@ export function canAddPoint(state: TalentCalculatorState, talentId: number) {
   return canAdd;
 }
 
-export function canRemovePoint(state: TalentCalculatorState, talentId: number) {
-  const talent = state.talents[talentId];
+export function canRemovePoint(state: TalentCalculatorState, talent: Talent) {
   let canRemove = true;
-  const lastActiveRow = state.lastActiveRow[talent.tree];
+  const lastActiveRow = state.meta.lastActiveRow[talent.tree];
 
   if (talent.curRank === 0) {
     console.log(`${talent.name} has no talents points to remove.`);
@@ -53,7 +51,7 @@ export function canRemovePoint(state: TalentCalculatorState, talentId: number) {
     let i = 0;
     while (lastActiveRow - i > talent.row) {
       if (
-        sumRows(lastActiveRow - i, state.treeRows[talent.tree]) <=
+        sumRows(lastActiveRow - i, state.meta.treeRows[talent.tree]) <=
         (lastActiveRow - i) * 5
       ) {
         console.log(`This talent is required for row ${lastActiveRow - i}`);

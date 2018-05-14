@@ -3,7 +3,6 @@ export interface User {
   username: string;
   email: string;
   role: number;
-  favorites: any[];
   token: string;
 }
 

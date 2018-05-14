@@ -1,4 +1,5 @@
 @import '~assets/scss/variables';
+@import '~assets/scss/settings';
 
 .header-container {
   position: fixed;
@@ -21,8 +22,14 @@
       font-weight: 100;
       text-transform: uppercase;
     }
+
+    // temp for when TODO is finished..
+    @include breakpoint(small down) {
+      display: none;
+    }
   }
 
+  // TODO: Eventually make links a dropdown on small screen
   .header-nav-links {
     position: relative;
     margin: 0 0.5rem;

@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-header-title',
   templateUrl: './header-title.component.html',
   styleUrls: ['./header-title.component.scss']
 })
-export class HeaderTitleComponent implements OnInit {
+export class HeaderTitleComponent {
   constructor() {}
-
-  ngOnInit() {}
 }
