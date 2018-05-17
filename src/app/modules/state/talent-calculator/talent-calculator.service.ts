@@ -35,7 +35,8 @@ export class TalentCalculatorService {
         tooltip: [],
         allows: talent.allows,
         requires: talent.requires,
-        arrows: talent.arrows
+        arrows: talent.arrows,
+        iconPath: talent.iconPath
       };
 
       talents.push(newTalent);

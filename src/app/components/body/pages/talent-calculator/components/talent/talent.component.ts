@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   OnChanges,
   Input,
   SimpleChanges,
@@ -10,7 +9,6 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 import { Talent } from '../../models/talents.model';
-import { TalentCalculatorService } from '../../services/talent-calculator.service';
 
 @Component({
   selector: 'app-talent',
@@ -18,48 +16,32 @@ import { TalentCalculatorService } from '../../services/talent-calculator.servic
   styleUrls: ['./talent.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TalentComponent implements OnInit, OnChanges {
+export class TalentComponent implements OnChanges {
   @Input() talents: [Talent, Talent]; // talent, requires
-  @Input() classId = 1;
   @Input() preview = [];
   @Input() totalPoints = 0;
   @Output() addPoint = new EventEmitter<Talent>();
   @Output() removePoint = new EventEmitter<Talent>();
   iconUrl = `url(assets/images/UI-EmptyBack.png)`;
-  spec = '';
   tooltipContent: string;
   isDisabled = false;
-  requiredTalent: Talent;
   talent: Talent;
+  requires: Talent;
 
-  constructor(private talentCalculatorService: TalentCalculatorService) {}
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     const talents = changes.talents;
     this.talent = this.talents[0];
-    this.requiredTalent = this.talents[1];
+    this.requires = this.talents[1];
 
-    if (
-      talents &&
-      talents.currentValue[0] &&
-      talents.currentValue[0] !== talents.previousValue[0]
-    ) {
-      // get spec of talent && iconUrl
-      this.spec = this.talentCalculatorService.getClassSpec(
-        this.talent.tree,
-        this.classId
-      );
-      this.iconUrl = `url(./assets/images/talent-icons/${this.classId}/${
-        this.spec
-      }/${this.talent.id}.jpg)`;
+    if (talents && talents.currentValue[0]) {
+      this.iconUrl = `url(./assets/images/talent-icons/${
+        this.talent.iconPath
+      }.jpg)`;
       this.getTalentTooltip();
     }
-
-    if (this.talent && this.classId) {
-    }
   }
-
-  ngOnInit() {}
 
   addTalentPoint() {
     this.addPoint.emit(this.talent);
@@ -77,7 +59,7 @@ export class TalentComponent implements OnInit, OnChanges {
       const pointsInTree = this.preview[this.talent.tree];
 
       if (this.talent.requires) {
-        if (this.requiredTalent.curRank !== this.requiredTalent.maxRank) {
+        if (this.requires.curRank !== this.requires.maxRank) {
           return true;
         }
       }
@@ -97,8 +79,8 @@ export class TalentComponent implements OnInit, OnChanges {
       this.talent.maxRank
     }</h5>`;
     const talentIcon = `<img class="icon" src="assets/images/talent-icons/${
-      this.classId
-    }/${this.spec}/${this.talent.id}.jpg"/>`;
+      this.talent.iconPath
+    }.jpg"/>`;
     let currentRankDescription = '';
     let nextRankDescription = '';
     let clickTo = '';

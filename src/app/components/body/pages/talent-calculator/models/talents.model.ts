@@ -10,6 +10,7 @@ export interface Talent {
   allows: number[];
   requires: number;
   arrows: TalentTreeArrow[];
+  iconPath: string;
 }
 
 export interface TalentTreeArrow {

@@ -4,6 +4,7 @@ import { Talent } from '../../models/talents.model';
 import { Title } from '@angular/platform-browser';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
 import { TalentMetaInfo } from '../../../../../../modules/state/talent-calculator/talent-calculator.reducer';
+import { talentIdMap } from '../../services/talent-details-map';
 
 @Component({
   selector: 'app-talent-tree',
@@ -53,9 +54,8 @@ export class TalentTreeComponent implements OnInit {
       return null;
     }
 
-    const talent = this.talents.find(
-      t => t.tree === tree && t.row === row && t.col === col
-    );
+    const talentId = talentIdMap[this.classId][tree][row][col];
+    const talent = this.talents[talentId];
 
     const requiredTalent =
       talent && talent.requires && this.talents[talent.requires];
