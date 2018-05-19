@@ -5,7 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { talentCalculatorReducer } from './talent-calculator.reducer';
 import { TalentCalculatorEffects } from './talent-calculator.effects';
 import { TalentCalculatorFacade } from './talent-calculator.facade';
-import { TalentCalculatorService } from './talent-calculator.service';
+import { TalentCalculatorService } from './helpers/talent-calculator.service';
 
 @NgModule({
   imports: [

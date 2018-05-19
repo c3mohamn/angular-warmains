@@ -12,6 +12,7 @@ export interface TalentCalculatorState {
 export interface TalentMetaInfo {
   talentUrlParam: string;
   glyphUrlParam: string;
+  talentPointsArray: number[];
   classId: number;
   spec: string;
   totalPoints: number;
@@ -23,6 +24,7 @@ export interface TalentMetaInfo {
 const initialState: TalentCalculatorState = {
   meta: {
     talentUrlParam: '',
+    talentPointsArray: [],
     glyphUrlParam: '',
     classId: null,
     spec: '',

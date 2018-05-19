@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Talent } from '../../../components/body/pages/talent-calculator/models/talents.model';
+import { Talent } from '../../../../components/body/pages/talent-calculator/models/talents.model';
 import {
   TalentCalculatorState,
   TalentMetaInfo
-} from './talent-calculator.reducer';
+} from '../talent-calculator.reducer';
 import { Store } from '@ngrx/store';
-import { TalentCalculatorQuery } from './talent-calculator.selector';
-import { canAddPoint, canRemovePoint } from './talent-calculator.helper';
+import { TalentCalculatorQuery } from '../talent-calculator.selector';
+import * as talentHelper from './talent-calculator.helper';
 
 @Injectable()
 export class TalentCalculatorService {
@@ -52,10 +52,15 @@ export class TalentCalculatorService {
   }
 
   getTalentMetaInfo(talents: Talent[], classId: number): TalentCalculatorState {
+    const points = [];
+
+    talents.forEach(t => points.push(0));
+
     const state: TalentCalculatorState = {
       talents: talents,
       meta: {
         talentUrlParam: '',
+        talentPointsArray: points,
         glyphUrlParam: '',
         classId: classId,
         spec: '',
@@ -74,19 +79,21 @@ export class TalentCalculatorService {
   }
 
   canAddPoint(talent: Talent): boolean {
-    return canAddPoint(this.state, talent);
+    return talentHelper.canAddPoint(this.state, talent);
   }
 
   canRemovePoint(talent: Talent): boolean {
-    return canRemovePoint(this.state, talent);
+    return talentHelper.canRemovePoint(this.state, talent);
   }
 
   getUpdatedTalentMetaInfo(talent: Talent, amount: number): TalentMetaInfo {
     const meta = Object.assign({}, this.state.meta);
 
+    meta.talentPointsArray[talent.id] += amount;
     meta.totalPoints += amount;
     meta.preview[talent.tree] += amount;
     meta.treeRows[talent.tree][talent.row] += amount;
+    meta.talentUrlParam = talentHelper.encodeTalents(meta.talentPointsArray);
 
     if (amount > 0) {
       meta.lastActiveRow[talent.tree] =

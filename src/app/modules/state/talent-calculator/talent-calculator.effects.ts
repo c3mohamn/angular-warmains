@@ -14,13 +14,13 @@ import {
   TalentCalculatorActions,
   TalentCalculatorActionTypes
 } from './talent-calculator.actions';
-import { TalentCalculatorService } from './talent-calculator.service';
+import { TalentCalculatorService } from './helpers/talent-calculator.service';
 import { TalentService } from '../../api/services/talent.service';
 
 @Injectable()
 export class TalentCalculatorEffects {
   @Effect()
-  get$: Observable<Action> = this.actions$
+  load$: Observable<Action> = this.actions$
     .ofType<TalentCalculatorActions.LoadTalents>(
       TalentCalculatorActionTypes.LOAD_TALENTS
     )

@@ -4,7 +4,7 @@ import { Talent } from '../../models/talents.model';
 import { Title } from '@angular/platform-browser';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
 import { TalentMetaInfo } from '../../../../../../modules/state/talent-calculator/talent-calculator.reducer';
-import { talentIdMap } from '../../services/talent-details-map';
+import { talentIdMap } from '../../models/talent-id.map';
 
 @Component({
   selector: 'app-talent-tree',
