@@ -39,6 +39,7 @@ export class TooltipDirective {
   @Input() autoShowHide = true;
   @Input() position = 'bottom-right';
   @Input() padding = 10;
+  leaving = false;
 
   private contentCmpRef: ComponentRef<HoveredContentComponent>;
 
@@ -49,15 +50,25 @@ export class TooltipDirective {
     @Inject(WINDOW) private window: Window
   ) {}
 
-  @HostListener('mouseenter', ['$event'])
-  private onMouseHover(event: any) {
-    if (!this.autoShowHide || this.showOnClick) {
-      return;
-    }
-    this.buildTooltip(event);
+  @HostListener('mouseleave')
+  private onMouseLeave() {
+    this.leaving = true;
+    this.hideTooltip();
   }
 
-  @HostListener('mouseleave')
+  @HostListener('mouseenter', ['$event'])
+  private onMouseEnter(event: any): void {
+    this.leaving = false;
+    setTimeout(() => this.buildTooltip(event));
+  }
+
+  @HostListener('click', ['$event'])
+  @HostListener('mousewheel', ['$event'])
+  @HostListener('contextmenu', ['$event'])
+  private onPointChange(event: any): void {
+    setTimeout(() => this.buildTooltip(event));
+  }
+
   public hideTooltip() {
     if (this.contentCmpRef) {
       this.beforeHide.emit(this);
@@ -66,14 +77,10 @@ export class TooltipDirective {
     }
   }
 
-  @HostListener('click', ['$event'])
-  @HostListener('mousewheel', ['$event'])
-  @HostListener('contextmenu', ['$event'])
-  private rebuildTooltip(event: any): void {
-    setTimeout(() => this.buildTooltip(event));
-  }
-
   public showTooltip(options: ContentOptions) {
+    if (this.leaving) {
+      return;
+    }
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
       HoveredContentComponent
     );
@@ -89,6 +96,7 @@ export class TooltipDirective {
   }
 
   private buildTooltip(event: any) {
+    this.hideTooltip();
     const position = this.getPosition();
     const options: ContentOptions = {
       content: this.content,
@@ -98,7 +106,6 @@ export class TooltipDirective {
       offset: this.tooltipDisplayOffset,
       position: this.position
     };
-    this.hideTooltip();
     this.showTooltip(options);
   }
 
