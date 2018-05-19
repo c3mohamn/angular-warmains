@@ -3,6 +3,8 @@ import { UserActionTypes, UserActionsUnion } from './user.actions';
 
 export interface UserState extends User {
   talents: any[];
+  error: string;
+  success: string;
 }
 
 export const initialState: UserState = {
@@ -11,7 +13,9 @@ export const initialState: UserState = {
   email: '',
   role: 0,
   talents: [],
-  token: ''
+  token: '',
+  error: '',
+  success: ''
 };
 
 export function userReducer(
@@ -21,7 +25,8 @@ export function userReducer(
   switch (action.type) {
     case UserActionTypes.GET_USER_SUCCESS:
       const newState = Object.assign({}, state, action.payload, {
-        error: null
+        error: '',
+        success: 'Successfully logged in.'
       });
 
       return newState;

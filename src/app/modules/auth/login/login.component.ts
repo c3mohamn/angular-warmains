@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormControl,
   Validators,
@@ -14,7 +14,7 @@ import { UserFacade } from '../../state/user/user.facade';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   hidePassword = true;
   user: UserForm;
   userForm: FormGroup;
@@ -33,6 +33,10 @@ export class LoginComponent implements OnInit {
       username: '',
       password: ''
     };
+    this.userFacade.getUser().subscribe(data => {
+      this.errorMsg = data.error;
+      this.successMsg = data.success;
+    });
   }
 
   createForm() {
@@ -65,6 +69,4 @@ export class LoginComponent implements OnInit {
     const password = this.userForm.get('password');
     return password.hasError('required') ? 'You must enter a value' : '';
   }
-
-  ngOnInit() {}
 }

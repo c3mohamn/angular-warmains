@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { UserActions } from './user.actions';
 import { UserState } from './user.reducer';
 import { UserQuery } from './user.selector';
-import { UserForm, User } from '../../../models/user.model';
+import { UserForm } from '../../../models/user.model';
 
 @Injectable()
 export class UserFacade {
@@ -15,7 +15,7 @@ export class UserFacade {
 
   constructor(private actions$: Actions, private store: Store<UserState>) {}
 
-  getUser(): Observable<User> {
+  getUser(): Observable<UserState> {
     return this.store.select(UserQuery.getCurrentUser);
   }
 
