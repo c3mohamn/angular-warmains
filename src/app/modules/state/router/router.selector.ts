@@ -9,6 +9,11 @@ export interface RouterState {
 const getRouterState = createFeatureSelector<RouterState>('router');
 
 export namespace RouterQuery {
+  export const getState = createSelector(
+    getRouterState,
+    state => state && state.state
+  );
+
   export const getCurrentUrl = createSelector(
     getRouterState,
     state => state && state.state && state.state.url

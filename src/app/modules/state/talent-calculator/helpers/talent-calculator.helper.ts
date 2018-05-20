@@ -90,13 +90,13 @@ export function decodeTalents(t: string): number[] | null {
     return null;
   }
 
-  const result = [];
+  let result = '';
 
   for (let i = 0; i < t.length; i++) {
-    result.push(urlMap.toInt[t[i]]);
+    result += urlMap.toInt[t[i]];
   }
 
-  return result;
+  return result.split('').map(x => parseInt(x, 10));
 }
 
 // takes list of talent point values and converts them in to char url

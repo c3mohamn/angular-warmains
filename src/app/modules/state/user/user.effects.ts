@@ -54,6 +54,7 @@ export class UserEffects {
     switchMap(action => {
       localStorage.removeItem('token');
       this.router.navigate(['login']);
+      // this.userService.removeUserToken()
       return of();
     })
   );

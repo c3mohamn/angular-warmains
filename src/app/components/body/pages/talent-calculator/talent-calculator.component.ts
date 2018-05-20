@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
 import { TalentCalculatorService } from './services/talent-calculator.service';
@@ -10,7 +10,7 @@ import { RouterFacade } from '../../../../modules/state/router/router.facade';
   templateUrl: './talent-calculator.component.html',
   styleUrls: ['./talent-calculator.component.scss']
 })
-export class TalentCalculatorComponent implements OnInit {
+export class TalentCalculatorComponent {
   classId = 1;
 
   constructor(
@@ -20,20 +20,14 @@ export class TalentCalculatorComponent implements OnInit {
     private routerFacade: RouterFacade,
     private meta: Meta
   ) {
-    routerFacade.getCurrentParams().subscribe(data => {
-      // TODO: move this logic & router to effects?
-      this.classId = data.classId;
-      if (
-        (this.classId && isNaN(this.classId)) ||
-        this.classId === 10 ||
-        this.classId > 11 ||
-        this.classId < 1
-      ) {
-        // not valid a number, redirect to base class
-        this.router.navigate(['/talent/1']);
-      } else {
-        this.talentCalculatorFacade.loadTalents(this.classId);
-      }
+    routerFacade.getCurrentState().subscribe(data => {
+      this.classId = data.params.classId;
+      this.isValidClassId(this.classId);
+      this.talentCalculatorFacade.loadTalents(
+        this.classId,
+        data.queryParams.talents,
+        data.queryParams.glyphs
+      );
     });
 
     this.addMetaTags();
@@ -53,5 +47,15 @@ export class TalentCalculatorComponent implements OnInit {
     this.meta.addTag({ property: 'og:site_name', content: 'Warmains' });
   }
 
-  ngOnInit() {}
+  isValidClassId(classId: any): void {
+    if (
+      (classId && isNaN(classId)) ||
+      classId === 10 ||
+      classId > 11 ||
+      classId < 1
+    ) {
+      // not valid a number, redirect to base class
+      this.router.navigate(['/talent/1']);
+    }
+  }
 }

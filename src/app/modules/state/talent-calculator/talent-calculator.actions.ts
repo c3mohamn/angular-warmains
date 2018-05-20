@@ -20,7 +20,7 @@ export namespace TalentCalculatorActions {
   export class LoadTalents implements Action {
     readonly type = TalentCalculatorActionTypes.LOAD_TALENTS;
 
-    constructor(public payload: number) {}
+    constructor(public payload: [number, string, string]) {}
   }
 
   export class LoadTalentsSuccess implements Action {

@@ -15,22 +15,37 @@ export class UserFacade {
 
   constructor(private actions$: Actions, private store: Store<UserState>) {}
 
+  /**
+   * Return current user state.
+   */
   getUser(): Observable<UserState> {
     return this.store.select(UserQuery.getCurrentUser);
   }
 
+  /**
+   * Return current user's username.
+   */
   getUserName(): Observable<string> {
     return this.store.select(UserQuery.getCurrentUserName);
   }
 
+  /**
+   * Return true iff current user is logged in.
+   */
   getUserLoggedIn(): Observable<boolean> {
     return this.store.select(UserQuery.isLoggedIn);
   }
 
+  /**
+   * Return false iff current user is logged in.
+   */
   getUserNotLoggedIn(): Observable<boolean> {
     return this.store.select(UserQuery.isNotLoggedIn);
   }
 
+  /**
+   * Iff token exists in local storage, validate and log user in iff is still valid.
+   */
   validateUser() {
     const token = localStorage.getItem('token');
     if (token) {
@@ -38,10 +53,17 @@ export class UserFacade {
     }
   }
 
+  /**
+   * Log user in iff user information is valid.
+   * @param user User information
+   */
   loginUser(user: UserForm) {
     this.store.dispatch(new UserActions.Userlogin(user));
   }
 
+  /**
+   * Log current user out.
+   */
   logoutUser() {
     this.store.dispatch(new UserActions.UserLogout());
   }

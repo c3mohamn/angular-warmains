@@ -27,16 +27,16 @@ export class TalentCalculatorEffects {
     .pipe(
       // get class id
       map(action => action.payload),
-      concatMap(classId =>
+      concatMap(payload =>
         // get raw details from api
-        this.talentService.getTalentDetails(classId).pipe(
+        this.talentService.getTalentDetails(payload[0]).pipe(
           map(rawDetails =>
             // transform details to proper Talent[]
             this.talentCalculatorService.getTalentDetails(rawDetails)
           ),
           concatMap(details =>
             // get tooltips from api
-            this.talentService.getTalentTooltips(classId).pipe(
+            this.talentService.getTalentTooltips(payload[0]).pipe(
               map(tooltips =>
                 // add tooltips to Talent[]
                 this.talentCalculatorService.getTalentTooltips(
@@ -48,7 +48,12 @@ export class TalentCalculatorEffects {
           ),
           map(talents =>
             // get talent calculator state
-            this.talentCalculatorService.getTalentMetaInfo(talents, classId)
+            this.talentCalculatorService.getTalentStateFromUrl(
+              talents,
+              payload[0],
+              payload[1],
+              payload[2]
+            )
           ),
           map(
             tooltips => new TalentCalculatorActions.LoadTalentsSuccess(tooltips)
@@ -73,7 +78,10 @@ export class TalentCalculatorEffects {
             talent,
             1
           );
-          return new TalentCalculatorActions.AddTalentPointSuccess([talent, newMeta]);
+          return new TalentCalculatorActions.AddTalentPointSuccess([
+            talent,
+            newMeta
+          ]);
         } else {
           return new TalentCalculatorActions.TalentError('Cannot add point.');
         }
@@ -93,7 +101,10 @@ export class TalentCalculatorEffects {
             talent,
             -1
           );
-          return new TalentCalculatorActions.RemoveTalentPointSuccess([talent, newMeta]);
+          return new TalentCalculatorActions.RemoveTalentPointSuccess([
+            talent,
+            newMeta
+          ]);
         } else {
           return new TalentCalculatorActions.TalentError(
             'Cannot remove point.'
