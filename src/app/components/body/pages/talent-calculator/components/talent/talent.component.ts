@@ -22,7 +22,7 @@ export class TalentComponent implements OnChanges {
   @Input() totalPoints = 0;
   @Output() addPoint = new EventEmitter<Talent>();
   @Output() removePoint = new EventEmitter<Talent>();
-  iconUrl = `url(assets/images/UI-EmptyBack.png)`;
+  iconUrl = `url(./assets/images/UI-EmptyBack.png)`;
   tooltipContent: string;
   isDisabled = false;
   talent: Talent;
@@ -90,7 +90,7 @@ export class TalentComponent implements OnChanges {
       clickTo = `<span class="click-to-learn">Click or scroll up to learn.</span>`;
       currentRankDescription = this.talent.tooltip[this.talent.curRank];
 
-      if (this.isDisabled) {
+      if (this.isDisabled || this.totalPoints === 71) {
         clickTo = '';
       }
     } else if (this.talent.curRank < this.talent.maxRank) {

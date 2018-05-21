@@ -1,7 +1,7 @@
 <div class="talent-container-outer">
   <div *ngIf="talent" appTooltip content="{{tooltipContent}}" [style.background-image]="iconUrl" class="talent-container-inner"
-    [ngClass]="{disabled: isInactive()}" (click)="addTalentPoint()" (contextmenu)="removeTalentPoint()" appMouseWheel (mouseWheelUp)="addTalentPoint()"
-    (mouseWheelDown)="removeTalentPoint()">
+    [ngClass]="{disabled: isInactive(), 'no-points-left': talent.curRank === 0 && totalPoints === 71}" (click)="addTalentPoint()"
+    (contextmenu)="removeTalentPoint()" appMouseWheel (mouseWheelUp)="addTalentPoint()" (mouseWheelDown)="removeTalentPoint()">
     <!-- Talent Counter -->
     <div [hidden]="isInactive()" class="talent-points" [ngClass]="{'maxed': talent.curRank === talent.maxRank, 'min': talent.curRank === 0}">
       <span>{{talent.curRank}}</span>
