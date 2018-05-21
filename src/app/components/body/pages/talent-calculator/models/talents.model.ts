@@ -17,3 +17,12 @@ export interface TalentTreeArrow {
   filename: string;
   type: string;
 }
+
+export interface Glyph {
+  name: string;
+  description: string;
+  icon: string;
+  type: number;
+  uid: number;
+  id: number;
+}

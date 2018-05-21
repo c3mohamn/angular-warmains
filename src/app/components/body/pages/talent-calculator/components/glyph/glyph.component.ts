@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Glyph } from '../../models/talents.model';
 
 @Component({
   selector: 'app-glyph',
   templateUrl: './glyph.component.html',
-  styleUrls: ['./glyph.component.scss']
+  styleUrls: ['./glyph.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GlyphComponent implements OnInit {
-  constructor() {}
+export class GlyphComponent {
+  @Input() type: string;
+  glyph: Glyph;
 
-  ngOnInit() {}
+  iconUrl = `url(./assets/images/UI-EmptyBack.png)`;
+  constructor() {}
 }

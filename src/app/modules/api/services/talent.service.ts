@@ -32,7 +32,7 @@ export class TalentService {
    */
   getTalentDetails(classId: number): Observable<any[]> {
     return this.http
-      .get<any>('./assets/data/talents/talent-details.json')
+      .get<any[]>('./assets/data/talents/talent-details.json')
       .pipe(map(data => data[classId]));
   }
 
@@ -41,8 +41,18 @@ export class TalentService {
    * @param classId class id
    */
   getTalentTooltips(classId: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `./assets/data/talents/tooltips/${classId}.json`
+    );
+  }
+
+  /**
+   * Return array of glyphs for class with classId.
+   * @param classId class Id
+   */
+  getGlyphDetails(classId: number): Observable<any[]> {
     return this.http
-      .get<any>(`./assets/data/talents/tooltips/${classId}.json`)
-      .pipe(map(data => data));
+      .get<any[]>('./assets/data/talents/glyphs.json')
+      .pipe(map(data => data[classId]));
   }
 }
