@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormControl,
   Validators,
@@ -8,13 +8,16 @@ import {
 import { Router } from '@angular/router';
 import { UserForm } from '../../../models/user.model';
 import { UserFacade } from '../../state/user/user.facade';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
+  private ngUnsubscribe: Subject<any> = new Subject();
   hidePassword = true;
   user: UserForm;
   userForm: FormGroup;
@@ -33,10 +36,13 @@ export class LoginComponent {
       username: '',
       password: ''
     };
-    this.userFacade.getUser().subscribe(data => {
-      this.errorMsg = data.error;
-      this.successMsg = data.success;
-    });
+    this.userFacade
+      .getUser()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+        this.errorMsg = data.error;
+        this.successMsg = data.success;
+      });
   }
 
   createForm() {
@@ -68,5 +74,10 @@ export class LoginComponent {
   getPasswordErrorMessage() {
     const password = this.userForm.get('password');
     return password.hasError('required') ? 'You must enter a value' : '';
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

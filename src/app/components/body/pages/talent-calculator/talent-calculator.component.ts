@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
 import { TalentCalculatorService } from './services/talent-calculator.service';
 import { TalentCalculatorFacade } from '../../../../modules/state/talent-calculator/talent-calculator.facade';
 import { RouterFacade } from '../../../../modules/state/router/router.facade';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-talent-calculator',
   templateUrl: './talent-calculator.component.html',
   styleUrls: ['./talent-calculator.component.scss']
 })
-export class TalentCalculatorComponent {
+export class TalentCalculatorComponent implements OnDestroy {
+  private ngUnsubscribe: Subject<any> = new Subject();
   classId = 1;
 
   constructor(
@@ -20,15 +23,18 @@ export class TalentCalculatorComponent {
     private routerFacade: RouterFacade,
     private meta: Meta
   ) {
-    routerFacade.getCurrentState().subscribe(data => {
-      this.classId = data.params.classId;
-      this.isValidClassId(this.classId);
-      this.talentCalculatorFacade.loadTalents(
-        this.classId,
-        data.queryParams.talents,
-        data.queryParams.glyphs
-      );
-    });
+    routerFacade
+      .getCurrentState()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => {
+        this.classId = data.params.classId;
+        this.isValidClassId(this.classId);
+        this.talentCalculatorFacade.loadTalents(
+          this.classId,
+          data.queryParams.talents,
+          data.queryParams.glyphs
+        );
+      });
 
     this.addMetaTags();
   }
@@ -57,5 +63,10 @@ export class TalentCalculatorComponent {
       // not valid a number, redirect to base class
       this.router.navigate(['/talent/1']);
     }
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

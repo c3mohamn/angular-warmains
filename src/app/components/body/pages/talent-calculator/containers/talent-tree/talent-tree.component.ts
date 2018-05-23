@@ -1,17 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { TalentCalculatorService } from '../../services/talent-calculator.service';
 import { Talent } from '../../models/talents.model';
 import { Title } from '@angular/platform-browser';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
 import { TalentMetaInfo } from '../../../../../../modules/state/talent-calculator/talent-calculator.reducer';
 import { talentIdMap } from '../../models/talent-id.map';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-talent-tree',
   templateUrl: './talent-tree.component.html',
   styleUrls: ['./talent-tree.component.scss']
 })
-export class TalentTreeComponent implements OnInit {
+export class TalentTreeComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe: Subject<any> = new Subject();
   trees = [0, 1, 2];
   rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   cols = [0, 1, 2, 3];
@@ -27,9 +30,11 @@ export class TalentTreeComponent implements OnInit {
   ) {
     talentCalculatorFacade
       .getTalents()
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => (this.talents = data));
     talentCalculatorFacade
       .getTalentMetaInfo()
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => (this.meta = data));
   }
 
@@ -72,5 +77,10 @@ export class TalentTreeComponent implements OnInit {
     return `url(assets/images/talent-icons/${
       this.classId
     }/${spec}/background.jpg)`;
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

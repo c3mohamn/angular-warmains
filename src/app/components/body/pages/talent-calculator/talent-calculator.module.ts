@@ -14,6 +14,7 @@ import { TalentCalculatorService } from './services/talent-calculator.service';
 import { MouseWheelDirective } from '../../../../directives/mousewheel/mousewheel.directive';
 import { TooltipModule } from '../../../../directives/tooltip/tooltip.module';
 import { WINDOW_PROVIDERS } from '../../../../services/window.service';
+import { GlypsDialogComponent } from './components/glyps-dialog/glyps-dialog.component';
 
 @NgModule({
   imports: [
@@ -29,8 +30,10 @@ import { WINDOW_PROVIDERS } from '../../../../services/window.service';
     TalentSavedComponent,
     GlyphComponent,
     TalentComponent,
-    MouseWheelDirective
+    MouseWheelDirective,
+    GlypsDialogComponent
   ],
+  entryComponents: [GlypsDialogComponent],
   providers: [TalentCalculatorService, WINDOW_PROVIDERS]
 })
 export class TalentCalculatorModule {}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Talent } from '../../models/talent.model';
 import { TalentService } from '../../modules/api/services/talent.service';
@@ -8,7 +8,7 @@ import { TalentService } from '../../modules/api/services/talent.service';
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss']
 })
-export class BodyComponent implements OnInit {
+export class BodyComponent {
   talents: Talent[];
 
   constructor(private router: Router, private talentService: TalentService) {
@@ -17,6 +17,4 @@ export class BodyComponent implements OnInit {
     //   console.log(this.talents);
     // });
   }
-
-  ngOnInit() {}
 }

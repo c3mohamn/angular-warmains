@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormControl,
   Validators,
@@ -8,23 +8,23 @@ import {
 import { Router } from '@angular/router';
 import { UserForm } from '../../../models/user.model';
 import { UserService } from '../../api/services/user.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnDestroy {
+  private ngUnsubscribe: Subject<any> = new Subject();
   hidePassword = true;
   userRegistered = false;
   user: UserForm;
   userForm: FormGroup;
   apiErrorMsg: string;
 
-  constructor(
-    private userService: UserService,
-    private fb: FormBuilder
-  ) {
+  constructor(private userService: UserService, private fb: FormBuilder) {
     this.createForm();
     this.apiErrorMsg = '';
     this.user = {
@@ -60,16 +60,19 @@ export class RegisterComponent implements OnInit {
     this.user.username = this.userForm.get('username').value;
     this.user.password = this.userForm.get('password').value;
 
-    this.userService.createUser(this.user).subscribe(
-      data => {
-        console.log('user registered! ', data);
-        this.userRegistered = true;
-      },
-      error => {
-        console.log('error ', error);
-        this.apiErrorMsg = error.error;
-      }
-    );
+    this.userService
+      .createUser(this.user)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        data => {
+          console.log('user registered! ', data);
+          this.userRegistered = true;
+        },
+        error => {
+          console.log('error ', error);
+          this.apiErrorMsg = error.error;
+        }
+      );
   }
 
   // Form error messages
@@ -108,5 +111,8 @@ export class RegisterComponent implements OnInit {
           : '';
   }
 
-  ngOnInit() {}
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }

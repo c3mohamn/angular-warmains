@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Talent } from '../../../../components/body/pages/talent-calculator/models/talents.model';
 import {
@@ -8,9 +8,12 @@ import {
 import { Store } from '@ngrx/store';
 import { TalentCalculatorQuery } from '../talent-calculator.selector';
 import * as talentHelper from './talent-calculator.helper';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
-export class TalentCalculatorService {
+export class TalentCalculatorService implements OnDestroy {
+  private ngUnsubscribe: Subject<any> = new Subject();
   state: TalentCalculatorState;
 
   constructor(
@@ -19,6 +22,7 @@ export class TalentCalculatorService {
   ) {
     store$
       .select(TalentCalculatorQuery.getState)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => (this.state = data));
   }
 
@@ -181,5 +185,10 @@ export class TalentCalculatorService {
         meta.lastActiveRow[talent.tree]--;
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
