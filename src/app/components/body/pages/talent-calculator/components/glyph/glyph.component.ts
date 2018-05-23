@@ -22,8 +22,8 @@ export class GlyphComponent implements OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
   @Input() type: string;
   @Input() classId: number;
-  // @Output() addGlyph: new EventEmitter<Glyph>();
-  // @Output() removeGlyph: newEventEmitter<Glyph>();
+  @Output() add = new EventEmitter<Glyph>();
+  @Output() remove = new EventEmitter<Glyph>();
   glyph: Glyph;
   iconUrl = `url(./assets/images/UI-EmptyBack.png)`;
 
@@ -42,8 +42,24 @@ export class GlyphComponent implements OnDestroy {
       .afterClosed()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(result => {
-        console.log(result);
+        if (result) {
+          this.addGlyph(result);
+        }
       });
+  }
+
+  addGlyph(glyph: Glyph): void {
+    this.add.emit(glyph);
+  }
+
+  removeGlyph(): boolean {
+    if (this.glyph) {
+      this.remove.emit(this.glyph);
+    } else {
+      console.log('no glyph to remove...', this.glyph);
+    }
+
+    return false;
   }
 
   ngOnDestroy() {

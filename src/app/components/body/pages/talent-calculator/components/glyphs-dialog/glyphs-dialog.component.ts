@@ -33,7 +33,6 @@ export class GlyphsDialogComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         glyphs => {
-          console.log(glyphs);
           this.glyphs = glyphs;
           this.loading = false;
         },
@@ -41,9 +40,8 @@ export class GlyphsDialogComponent implements OnInit, OnDestroy {
       );
   }
 
-  closeDialog(): void {
-    console.log('closing dialog');
-    this.dialogRef.close();
+  addGlyph(glyph): void {
+    this.dialogRef.close(glyph);
   }
 
   ngOnDestroy() {

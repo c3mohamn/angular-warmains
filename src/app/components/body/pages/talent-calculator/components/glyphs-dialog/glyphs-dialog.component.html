@@ -1,6 +1,6 @@
 <div class="glyphs-dialog-container">
   <div class="grid-x grid-margin-x">
-    <div *ngFor="let glyph of glyphs" class="small-12 medium-6 grid-x glyph">
+    <div *ngFor="let glyph of glyphs" class="small-12 medium-6 grid-x glyph" (click)="addGlyph(glyph)">
       <div class="cell shrink">
         <img class="icon" src="http://wow.zamimg.com/images/wow/icons/medium/{{glyph.icon.toLowerCase()}}.jpg" alt="">
       </div>
