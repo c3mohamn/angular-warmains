@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Talent } from '../../../models/talent.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, publishReplay, refCount } from 'rxjs/operators';
 import { TalentMetaInfo } from '../../state/talent-calculator/talent-calculator.reducer';
 import { Glyph } from '../../../components/body/pages/talent-calculator/models/talents.model';
 
@@ -34,7 +34,12 @@ export class TalentService {
   getTalentDetails(classId: number): Observable<any[]> {
     return this.http
       .get<any[]>('./assets/data/talents/talent-details.json')
-      .pipe(map(data => data[classId]));
+      .pipe(
+        map(data => data),
+        publishReplay(1),
+        refCount(),
+        map(data => data[classId])
+      );
   }
 
   /**
@@ -42,9 +47,9 @@ export class TalentService {
    * @param classId class id
    */
   getTalentTooltips(classId: number): Observable<any[]> {
-    return this.http.get<any[]>(
-      `./assets/data/talents/tooltips/${classId}.json`
-    );
+    return this.http
+      .get<any[]>(`./assets/data/talents/tooltips/${classId}.json`)
+      .pipe(map(data => data), publishReplay(1), refCount());
   }
 
   /**
@@ -55,6 +60,9 @@ export class TalentService {
     return this.http
       .get<Glyph[]>('./assets/data/talents/glyphs.json')
       .pipe(
+        map(data => data),
+        publishReplay(1),
+        refCount(),
         map(data => data[classId][type]),
         map(glyphs => Object.keys(glyphs).map(g => glyphs[g]))
       );
