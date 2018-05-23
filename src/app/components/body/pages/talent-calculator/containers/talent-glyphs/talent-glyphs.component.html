@@ -2,22 +2,10 @@
   <div class="cell small-12">
     <h5 class="glyphs-header">Glyphs</h5>
   </div>
-  <div class="cell small-4">
-    <app-glyph [type]="'major'"></app-glyph>
+  <div *ngFor="let n of [0, 1, 2]" class="cell small-4">
+    <app-glyph [type]="1" [classId]="classId"></app-glyph>
   </div>
-  <div class="cell small-4">
-    <app-glyph [type]="'major'"></app-glyph>
-  </div>
-  <div class="cell small-4">
-    <app-glyph [type]="'major'"></app-glyph>
-  </div>
-  <div class="cell small-4">
-    <app-glyph [type]="'minor'"></app-glyph>
-  </div>
-  <div class="cell small-4">
-    <app-glyph [type]="'minor'"></app-glyph>
-  </div>
-  <div class="cell small-4">
-    <app-glyph [type]="'minor'"></app-glyph>
+  <div *ngFor="let n of [0, 1, 2]" class="cell small-4">
+    <app-glyph [type]="2" [classId]="classId"></app-glyph>
   </div>
 </div>

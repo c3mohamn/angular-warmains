@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AngularMaterialModule } from '../../../../modules/material/material.module';
 
 import { TalentCalculatorComponent } from './talent-calculator.component';
 import { TalentHeaderComponent } from './containers/talent-header/talent-header.component';
@@ -14,13 +15,14 @@ import { TalentCalculatorService } from './services/talent-calculator.service';
 import { MouseWheelDirective } from '../../../../directives/mousewheel/mousewheel.directive';
 import { TooltipModule } from '../../../../directives/tooltip/tooltip.module';
 import { WINDOW_PROVIDERS } from '../../../../services/window.service';
-import { GlypsDialogComponent } from './components/glyps-dialog/glyps-dialog.component';
+import { GlyphsDialogComponent } from './components/glyphs-dialog/glyphs-dialog.component';
 
 @NgModule({
   imports: [
     RouterModule.forChild([{ path: '', component: TalentCalculatorComponent }]),
     CommonModule,
-    TooltipModule
+    TooltipModule,
+    AngularMaterialModule
   ],
   declarations: [
     TalentCalculatorComponent,
@@ -31,9 +33,9 @@ import { GlypsDialogComponent } from './components/glyps-dialog/glyps-dialog.com
     GlyphComponent,
     TalentComponent,
     MouseWheelDirective,
-    GlypsDialogComponent
+    GlyphsDialogComponent
   ],
-  entryComponents: [GlypsDialogComponent],
+  entryComponents: [GlyphsDialogComponent],
   providers: [TalentCalculatorService, WINDOW_PROVIDERS]
 })
 export class TalentCalculatorModule {}

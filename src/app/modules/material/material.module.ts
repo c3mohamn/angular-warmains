@@ -4,7 +4,8 @@ import {
   MatInputModule,
   MatFormFieldModule,
   MatOptionModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDialogModule
 } from '@angular/material';
 
 const materialDesignComponents: ReadonlyArray<Type<any>> = [
@@ -12,7 +13,8 @@ const materialDesignComponents: ReadonlyArray<Type<any>> = [
   MatInputModule,
   MatFormFieldModule,
   MatOptionModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDialogModule
 ];
 
 @NgModule({

@@ -1,0 +1,30 @@
+@import '~assets/scss/variables';
+
+.mat-dialog-container {
+  background-color: $wm-secondary-dark;
+  color: white;
+}
+
+.glyph {
+  padding: 0.5rem;
+  cursor: pointer;
+
+  .icon {
+    margin: 0 0.5rem;
+    opacity: 0.9;
+  }
+
+  .description {
+    font-size: 12px;
+    margin: 0;
+  }
+
+  &:hover {
+    .description,
+    .name,
+    .icon {
+      color: $wm-black;
+      opacity: 1;
+    }
+  }
+}

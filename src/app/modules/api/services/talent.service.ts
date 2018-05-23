@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TalentMetaInfo } from '../../state/talent-calculator/talent-calculator.reducer';
+import { Glyph } from '../../../components/body/pages/talent-calculator/models/talents.model';
 
 @Injectable()
 export class TalentService {
@@ -50,9 +51,12 @@ export class TalentService {
    * Return array of glyphs for class with classId.
    * @param classId class Id
    */
-  getGlyphDetails(classId: number): Observable<any[]> {
+  getGlyphDetails(classId: number, type: number): Observable<Glyph[]> {
     return this.http
-      .get<any[]>('./assets/data/talents/glyphs.json')
-      .pipe(map(data => data[classId]));
+      .get<Glyph[]>('./assets/data/talents/glyphs.json')
+      .pipe(
+        map(data => data[classId][type]),
+        map(glyphs => Object.keys(glyphs).map(g => glyphs[g]))
+      );
   }
 }
