@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TalentService } from '../../../../../../modules/api/services/talent.service';
 import { Glyph } from '../../models/talents.model';
@@ -10,7 +10,7 @@ import { Subject } from 'rxjs/Subject';
   templateUrl: './glyphs-dialog.component.html',
   styleUrls: ['./glyphs-dialog.component.scss']
 })
-export class GlyphsDialogComponent implements OnDestroy {
+export class GlyphsDialogComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
   classId: number;
   type: number;
@@ -25,6 +25,9 @@ export class GlyphsDialogComponent implements OnDestroy {
     this.loading = true;
     this.classId = data.classId;
     this.type = data.type;
+  }
+
+  ngOnInit() {
     this.talentService
       .getGlyphDetails(this.classId, this.type)
       .pipe(takeUntil(this.ngUnsubscribe))

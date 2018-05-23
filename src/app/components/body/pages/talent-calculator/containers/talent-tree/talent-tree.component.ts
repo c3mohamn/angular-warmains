@@ -27,18 +27,18 @@ export class TalentTreeComponent implements OnInit, OnDestroy {
     private talentCalculatorService: TalentCalculatorService,
     private title: Title,
     private talentCalculatorFacade: TalentCalculatorFacade
-  ) {
-    talentCalculatorFacade
+  ) {}
+
+  ngOnInit() {
+    this.talentCalculatorFacade
       .getTalents()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => (this.talents = data));
-    talentCalculatorFacade
+    this.talentCalculatorFacade
       .getTalentMetaInfo()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => (this.meta = data));
-  }
 
-  ngOnInit() {
     this.title.setTitle(
       `Talents | ${this.talentCalculatorService.getClassName(this.classId)}`
     );

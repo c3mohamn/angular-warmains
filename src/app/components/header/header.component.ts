@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserFacade } from '../../modules/state/user/user.facade';
 import { RouterFacade } from '../../modules/state/router/router.facade';
@@ -10,7 +10,7 @@ import { Subject } from 'rxjs/Subject';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
   accountOptionsActive = false;
   loggedIn = false;
@@ -21,7 +21,9 @@ export class HeaderComponent implements OnDestroy {
     private router: Router,
     private userFacade: UserFacade,
     private routerFacade: RouterFacade
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.userFacade
       .getUserLoggedIn()
       .pipe(takeUntil(this.ngUnsubscribe))

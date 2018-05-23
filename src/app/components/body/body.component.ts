@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Talent } from '../../models/talent.model';
-import { TalentService } from '../../modules/api/services/talent.service';
 
 @Component({
   selector: 'app-body',
@@ -11,10 +10,5 @@ import { TalentService } from '../../modules/api/services/talent.service';
 export class BodyComponent {
   talents: Talent[];
 
-  constructor(private router: Router, private talentService: TalentService) {
-    // this.talentService.getTalents().subscribe(res => {
-    //   this.talents = res;
-    //   console.log(this.talents);
-    // });
-  }
+  constructor(private router: Router) {}
 }

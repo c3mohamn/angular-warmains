@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormControl,
   Validators,
@@ -16,13 +16,12 @@ import { Subject } from 'rxjs/Subject';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
   hidePassword = true;
-  user: UserForm;
   userForm: FormGroup;
-  errorMsg: string;
-  successMsg: string;
+  errorMsg = '';
+  successMsg = '';
 
   constructor(
     private userFacade: UserFacade,
@@ -30,12 +29,9 @@ export class LoginComponent implements OnDestroy {
     private fb: FormBuilder
   ) {
     this.createForm();
-    this.errorMsg = '';
-    this.user = {
-      email: '',
-      username: '',
-      password: ''
-    };
+  }
+
+  ngOnInit() {
     this.userFacade
       .getUser()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -59,11 +55,13 @@ export class LoginComponent implements OnDestroy {
     }
     this.errorMsg = '';
 
-    this.user.email = this.userForm.get('username').value;
-    this.user.username = this.userForm.get('username').value;
-    this.user.password = this.userForm.get('password').value;
+    const user: UserForm = {
+      email: this.userForm.get('username').value,
+      username: this.userForm.get('username').value,
+      password: this.userForm.get('password').value
+    };
 
-    this.userFacade.loginUser(this.user);
+    this.userFacade.loginUser(user);
   }
 
   getUsernameErrorMessage() {

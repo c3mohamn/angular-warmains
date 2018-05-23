@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
 import { TalentCalculatorService } from './services/talent-calculator.service';
@@ -12,7 +12,7 @@ import { Subject } from 'rxjs/Subject';
   templateUrl: './talent-calculator.component.html',
   styleUrls: ['./talent-calculator.component.scss']
 })
-export class TalentCalculatorComponent implements OnDestroy {
+export class TalentCalculatorComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
   classId = 1;
 
@@ -22,8 +22,10 @@ export class TalentCalculatorComponent implements OnDestroy {
     private router: Router,
     private routerFacade: RouterFacade,
     private meta: Meta
-  ) {
-    routerFacade
+  ) {}
+
+  ngOnInit() {
+    this.routerFacade
       .getCurrentState()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {

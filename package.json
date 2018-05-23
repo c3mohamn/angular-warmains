@@ -41,9 +41,9 @@
     "express-validator": "^5.2.0",
     "jsonwebtoken": "^8.2.1",
     "mongodb": "^3.0.8",
-    "mongoose": "^5.1.1",
+    "mongoose": "^5.1.2",
     "ng4-click-outside": "^1.0.1",
-    "rxjs": "^6.1.0",
+    "rxjs": "^6.2.0",
     "rxjs-compat": "^6.1.0",
     "typescript": "2.7.2",
     "zone.js": "^0.8.26"

@@ -20,18 +20,11 @@ export class RegisterComponent implements OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
   hidePassword = true;
   userRegistered = false;
-  user: UserForm;
+  apiErrorMsg = '';
   userForm: FormGroup;
-  apiErrorMsg: string;
 
   constructor(private userService: UserService, private fb: FormBuilder) {
     this.createForm();
-    this.apiErrorMsg = '';
-    this.user = {
-      email: '',
-      username: '',
-      password: ''
-    };
   }
 
   createForm() {
@@ -56,12 +49,14 @@ export class RegisterComponent implements OnDestroy {
       return;
     }
 
-    this.user.email = this.userForm.get('email').value;
-    this.user.username = this.userForm.get('username').value;
-    this.user.password = this.userForm.get('password').value;
+    const user: UserForm = {
+      email: this.userForm.get('email').value,
+      username: this.userForm.get('username').value,
+      password: this.userForm.get('password').value
+    };
 
     this.userService
-      .createUser(this.user)
+      .createUser(user)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         data => {

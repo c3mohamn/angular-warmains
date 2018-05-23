@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TalentCalculatorService } from '../../services/talent-calculator.service';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
@@ -10,7 +10,7 @@ import { Subject } from 'rxjs/Subject';
   templateUrl: './talent-header.component.html',
   styleUrls: ['./talent-header.component.scss']
 })
-export class TalentHeaderComponent implements OnDestroy {
+export class TalentHeaderComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
   classIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11];
   classId = 1;
@@ -21,8 +21,10 @@ export class TalentHeaderComponent implements OnDestroy {
     private router: Router,
     private talentCalculatorService: TalentCalculatorService,
     private talentCaluclatorFacade: TalentCalculatorFacade
-  ) {
-    talentCaluclatorFacade
+  ) {}
+
+  ngOnInit() {
+    this.talentCaluclatorFacade
       .getTalentMetaInfo()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {
@@ -32,7 +34,6 @@ export class TalentHeaderComponent implements OnDestroy {
       });
   }
 
-  // reinitialize talent details to new classes
   changeClass(classId: number) {
     if (this.classId !== classId) {
       this.router.navigate(['/talent/' + classId]);
