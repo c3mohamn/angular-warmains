@@ -21,6 +21,7 @@ export class RegisterComponent implements OnDestroy {
   hidePassword = true;
   userRegistered = false;
   apiErrorMsg = '';
+  successMsg = '';
   userForm: FormGroup;
 
   constructor(private userService: UserService, private fb: FormBuilder) {
@@ -62,6 +63,7 @@ export class RegisterComponent implements OnDestroy {
         data => {
           console.log('user registered! ', data);
           this.userRegistered = true;
+          this.successMsg = `${data.username} has been registered!`;
         },
         error => {
           console.log('error ', error);

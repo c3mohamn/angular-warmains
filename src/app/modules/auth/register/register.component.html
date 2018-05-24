@@ -46,7 +46,7 @@
     <div class="register-response-container" [hidden]="!userRegistered">
       <div class="grid-y align-middle align-center">
         <div class="cell shrink">
-          <h4 class="register-success-msg">{{ user.username }} has been registered!</h4>
+          <h4 class="register-success-msg">{{ successMsg }}</h4>
         </div>
         <div class="cell shrink">
           <h5 class="login-redirect" [routerLink]="['/login']">Login</h5>
