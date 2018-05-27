@@ -3,9 +3,9 @@
     <h5 class="glyphs-header">Glyphs</h5>
   </div>
   <div *ngFor="let n of [0, 1, 2]" class="cell small-4">
-    <app-glyph [type]="1" [classId]="classId" (add)="addGlyph($event)" (remove)="removeGlyph($event)"></app-glyph>
+    <app-glyph [type]="1" [classId]="classId" [glyph]="glyphs[n]" (add)="addGlyph($event, n)" (remove)="removeGlyph(n)"></app-glyph>
   </div>
   <div *ngFor="let n of [3, 4, 5]" class="cell small-4">
-    <app-glyph [type]="2" [classId]="classId" (add)="addGlyph($event)" (remove)="removeGlyph($event)"></app-glyph>
+    <app-glyph [type]="2" [classId]="classId" [glyph]="glyphs[n]" (add)="addGlyph($event, n)" (remove)="removeGlyph(n)"></app-glyph>
   </div>
 </div>

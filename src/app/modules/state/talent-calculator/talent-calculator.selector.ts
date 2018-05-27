@@ -20,4 +20,9 @@ export namespace TalentCalculatorQuery {
     getTalentCalculatorState,
     state => state.talents
   );
+
+  export const getGlyphs = createSelector(
+    getTalentCalculatorState,
+    state => state.glyphs
+  );
 }

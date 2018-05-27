@@ -1,4 +1,7 @@
-import { Talent } from '../../../components/body/pages/talent-calculator/models/talents.model';
+import {
+  Talent,
+  Glyph
+} from '../../../components/body/pages/talent-calculator/models/talents.model';
 import {
   TalentCalculatorActionsUnion,
   TalentCalculatorActionTypes
@@ -7,12 +10,14 @@ import {
 export interface TalentCalculatorState {
   meta: TalentMetaInfo;
   talents: Talent[];
+  glyphs: Glyph[];
 }
 
 export interface TalentMetaInfo {
   talentUrlParam: string;
   glyphUrlParam: string;
   talentPointsArray: number[];
+  glyphsArray: number[];
   classId: number;
   spec: string;
   totalPoints: number;
@@ -24,8 +29,9 @@ export interface TalentMetaInfo {
 const initialState: TalentCalculatorState = {
   meta: {
     talentUrlParam: '',
-    talentPointsArray: [],
     glyphUrlParam: '',
+    talentPointsArray: [],
+    glyphsArray: [],
     classId: null,
     spec: '',
     totalPoints: 0,
@@ -33,7 +39,8 @@ const initialState: TalentCalculatorState = {
     treeRows: [[]],
     lastActiveRow: [0, 0, 0]
   },
-  talents: []
+  talents: [],
+  glyphs: []
 };
 
 export function talentCalculatorReducer(
@@ -59,6 +66,12 @@ export function talentCalculatorReducer(
         { meta: action.payload[1] },
         action.payload[0].curRank--
       );
+
+    case TalentCalculatorActionTypes.ADD_GLYPH_SUCCESS:
+      return Object.assign({}, state, { glyphs: action.payload });
+
+    case TalentCalculatorActionTypes.REMOVE_GLYPH_SUCCESS:
+      return Object.assign({}, state, { glyphs: action.payload });
 
     case TalentCalculatorActionTypes.TALENT_ERROR:
       return state;

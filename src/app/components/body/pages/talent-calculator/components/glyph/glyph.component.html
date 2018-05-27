@@ -1,2 +1,4 @@
-<div class="glyph-container" [style.background-image]="iconUrl" (click)="openGlyphsDialog()" (contextmenu)="removeGlyph()">
+<div class="glyph-container" [style.background-image]="getBackgroundImage()" (click)="openGlyphsDialog()" (contextmenu)="removeGlyph()">
+    <!-- TODO: Fix -->
+    <!-- <div class="glyph-container-inner" appTooltip content="{{tooltipContent}}"></div> -->
 </div>

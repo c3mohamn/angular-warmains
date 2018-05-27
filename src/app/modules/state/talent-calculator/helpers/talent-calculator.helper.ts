@@ -1,8 +1,54 @@
 import { TalentCalculatorState } from '../talent-calculator.reducer';
-import { Talent } from '../../../../components/body/pages/talent-calculator/models/talents.model';
+import {
+  Talent,
+  Glyph
+} from '../../../../components/body/pages/talent-calculator/models/talents.model';
 import { urlMap } from './talent-url.map';
 
-export function canAddPoint(state: TalentCalculatorState, talent: Talent) {
+export function canAddGlyph(
+  glyphState: Glyph[],
+  glyph: Glyph,
+  index: number
+): boolean {
+  // 1. Cannot add glyph if glyph already equipped.
+  if (glyphState.find(g => g && g.id === glyph.id)) {
+    console.log(`${glyph.name} is already equipped.`);
+    return false;
+  }
+
+  // 2. Cannot add glyph if already have 3 of glyph.type equipped where unless replacing 1 of them (in index)
+  const count = glyphState.reduce(
+    (total, g) => (total = g && glyph.type === g.type ? total + 1 : 0),
+    0
+  );
+
+  if (
+    count === 3 &&
+    glyphState[index] &&
+    glyphState[index].type !== glyph.type
+  ) {
+    console.log(`Cannot add glyph too many glyphs of type ${glyph.type}.`);
+    return false;
+  }
+
+  // 3. Cannot add minor glyph to indexes [0, 1, 2] && major glyph to indexes [3, 4, 5]
+  if ((glyph.type === 2 && index < 3) || (glyph.type === 1 && index > 2)) {
+    console.log(`Cannot add glyph of type ${glyph.type} at that slot.`);
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Return true iff a point can be added to talent.
+ * @param state current talent calculator state
+ * @param talent current Talent point is being added to
+ */
+export function canAddPoint(
+  state: TalentCalculatorState,
+  talent: Talent
+): boolean {
   let canAdd = true;
 
   if (talent.curRank === talent.maxRank) {
@@ -30,7 +76,15 @@ export function canAddPoint(state: TalentCalculatorState, talent: Talent) {
   return canAdd;
 }
 
-export function canRemovePoint(state: TalentCalculatorState, talent: Talent) {
+/**
+ * Return true iff a point can be removed from talent.
+ * @param state current talent calculator state
+ * @param talent current Talent point is being removed from
+ */
+export function canRemovePoint(
+  state: TalentCalculatorState,
+  talent: Talent
+): boolean {
   let canRemove = true;
   const lastActiveRow = state.meta.lastActiveRow[talent.tree];
 
@@ -83,7 +137,10 @@ export function canRemovePoint(state: TalentCalculatorState, talent: Talent) {
   return canRemove;
 }
 
-// takes an encoded url and converts it to usable talents
+/**
+ * Return talentPointsArray (array representation of current talent state)
+ * @param t encoded talent url param
+ */
 export function decodeTalents(t: string): number[] | null {
   t = reverseMinifyUrl(t);
   if (!t) {
@@ -99,7 +156,10 @@ export function decodeTalents(t: string): number[] | null {
   return result.split('').map(x => parseInt(x, 10));
 }
 
-// takes list of talent point values and converts them in to char url
+/**
+ * Return an encoded talent url param
+ * @param pointsArray talentPointsArray (array representation of current talent state)
+ */
 export function encodeTalents(pointsArray: number[]): string {
   const t = pointsArray.join('');
   let result = '';

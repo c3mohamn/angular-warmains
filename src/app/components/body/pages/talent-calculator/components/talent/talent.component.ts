@@ -23,14 +23,14 @@ export class TalentComponent implements OnChanges {
   @Output() addPoint = new EventEmitter<Talent>();
   @Output() removePoint = new EventEmitter<Talent>();
   iconUrl = `url(./assets/images/UI-EmptyBack.png)`;
-  tooltipContent: string;
+  tooltipContent = '';
   isDisabled = false;
   talent: Talent;
   requires: Talent;
 
   constructor() {}
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     const talents = changes.talents;
     this.talent = this.talents[0];
     this.requires = this.talents[1];
@@ -43,12 +43,12 @@ export class TalentComponent implements OnChanges {
     }
   }
 
-  addTalentPoint() {
+  addTalentPoint(): void {
     this.addPoint.emit(this.talent);
     this.getTalentTooltip();
   }
 
-  removeTalentPoint() {
+  removeTalentPoint(): boolean {
     this.removePoint.emit(this.talent);
     this.getTalentTooltip();
     return false;
@@ -73,7 +73,7 @@ export class TalentComponent implements OnChanges {
     return true;
   }
 
-  private getTalentTooltip() {
+  private getTalentTooltip(): void {
     const talentName = `<h5>${this.talent.name}</h5>`;
     const tooltipRank = `<h5>${this.talent.curRank}/${
       this.talent.maxRank

@@ -1,6 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { Talent } from '../../../../components/body/pages/talent-calculator/models/talents.model';
+import {
+  Talent,
+  Glyph
+} from '../../../../components/body/pages/talent-calculator/models/talents.model';
 import {
   TalentCalculatorState,
   TalentMetaInfo
@@ -83,10 +86,12 @@ export class TalentCalculatorService implements OnDestroy {
   ): TalentCalculatorState {
     const state: TalentCalculatorState = {
       talents: [],
+      glyphs: new Array<Glyph>(6),
       meta: {
         talentUrlParam: talentUrlParam,
         glyphUrlParam: glyphUrlParam,
         talentPointsArray: [],
+        glyphsArray: [],
         classId: classId,
         spec: '',
         totalPoints: 0,
@@ -133,6 +138,40 @@ export class TalentCalculatorService implements OnDestroy {
    */
   canRemovePoint(talent: Talent): boolean {
     return talentHelper.canRemovePoint(this.state, talent);
+  }
+
+  /**
+   * Return true iff glyph can be added to glyph state at index.
+   * @param glyph Glyph
+   * @param index index in Glyph state where glyph is to be added to
+   */
+  canAddGlyph(glyph: Glyph, index): boolean {
+    return talentHelper.canAddGlyph(this.state.glyphs, glyph, index);
+  }
+
+  /**
+   * Return new glyph state with glyph added to index.
+   * @param glyph Glyph
+   * @param index index in Glyph state where glyph is to be added to
+   */
+  addGlyph(glyph: Glyph, index: number): Glyph[] {
+    const glyphs = Object.assign(new Array<Glyph>(6), this.state.glyphs);
+
+    glyphs[index] = glyph;
+
+    return glyphs;
+  }
+
+  /**
+   * Return new glyph state with glyph removed from idnex.
+   * @param index index where glyph is to be removed from
+   */
+  removeGlyph(index: number): Glyph[] {
+    const glyphs = Object.assign(new Array<Glyph>(6), this.state.glyphs);
+
+    glyphs[index] = null;
+
+    return glyphs;
   }
 
   /**

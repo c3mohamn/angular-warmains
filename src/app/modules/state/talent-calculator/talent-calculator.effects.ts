@@ -27,16 +27,19 @@ export class TalentCalculatorEffects {
     .pipe(
       // get class id
       map(action => action.payload),
-      concatMap(payload =>
+      concatMap(payload => {
+        const classId = payload[0],
+          talentUrlParam = payload[1],
+          glyphUrlParam = payload[2];
         // get raw details from api
-        this.talentService.getTalentDetails(payload[0]).pipe(
+        return this.talentService.getTalentDetails(classId).pipe(
           map(rawDetails =>
             // transform details to proper Talent[]
             this.talentCalculatorService.getTalentDetails(rawDetails)
           ),
           concatMap(details =>
             // get tooltips from api
-            this.talentService.getTalentTooltips(payload[0]).pipe(
+            this.talentService.getTalentTooltips(classId).pipe(
               map(tooltips =>
                 // add tooltips to Talent[]
                 this.talentCalculatorService.getTalentTooltips(
@@ -50,9 +53,9 @@ export class TalentCalculatorEffects {
             // get talent calculator state
             this.talentCalculatorService.getTalentStateFromUrl(
               talents,
-              payload[0],
-              payload[1],
-              payload[2]
+              classId,
+              talentUrlParam,
+              glyphUrlParam
             )
           ),
           map(
@@ -61,8 +64,8 @@ export class TalentCalculatorEffects {
           catchError(error =>
             of(new TalentCalculatorActions.TalentError(error))
           )
-        )
-      )
+        );
+      })
     );
 
   @Effect()
@@ -83,7 +86,9 @@ export class TalentCalculatorEffects {
             newMeta
           ]);
         } else {
-          return new TalentCalculatorActions.TalentError('Cannot add point.');
+          return new TalentCalculatorActions.TalentError(
+            `Cannot add point to ${talent.name}.`
+          );
         }
       })
     );
@@ -107,9 +112,43 @@ export class TalentCalculatorEffects {
           ]);
         } else {
           return new TalentCalculatorActions.TalentError(
-            'Cannot remove point.'
+            `Cannot remove point from ${talent.name}.`
           );
         }
+      })
+    );
+
+  @Effect()
+  addGlyph$: Observable<Action> = this.actions$
+    .ofType<TalentCalculatorActions.AddGlyph>(
+      TalentCalculatorActionTypes.ADD_GLYPH
+    )
+    .pipe(
+      map(action => action.payload),
+      map(payload => {
+        const glyph = payload[0],
+          index = payload[1];
+        if (this.talentCalculatorService.canAddGlyph(glyph, index)) {
+          const newGlyphs = this.talentCalculatorService.addGlyph(glyph, index);
+          return new TalentCalculatorActions.AddGlyphSuccess(newGlyphs);
+        } else {
+          return new TalentCalculatorActions.TalentError(
+            `Cannot add glyph ${glyph.name}.`
+          );
+        }
+      })
+    );
+
+  @Effect()
+  removeGlyph$: Observable<Action> = this.actions$
+    .ofType<TalentCalculatorActions.RemoveGlyph>(
+      TalentCalculatorActionTypes.REMOVE_GLPYH
+    )
+    .pipe(
+      map(action => action.payload),
+      map(index => {
+        const newGlyphs = this.talentCalculatorService.removeGlyph(index);
+        return new TalentCalculatorActions.RemoveGlyphSuccess(newGlyphs);
       })
     );
 

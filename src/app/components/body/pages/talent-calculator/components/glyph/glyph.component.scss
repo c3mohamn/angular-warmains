@@ -1,6 +1,7 @@
 @import '~assets/scss/variables';
 
 .glyph-container {
+  position: relative;
   margin: 0.5rem;
   width: 45px;
   height: 45px;
@@ -10,5 +11,10 @@
 
   &:hover {
       box-shadow: $wm-inset-boxshadow-white;
+  }
+
+  .glyph-container-inner {
+    height: 100%;
+    width: 100%;
   }
 }
