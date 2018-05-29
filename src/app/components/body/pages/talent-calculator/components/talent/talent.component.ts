@@ -23,7 +23,7 @@ export class TalentComponent implements OnChanges {
   @Output() addPoint = new EventEmitter<Talent>();
   @Output() removePoint = new EventEmitter<Talent>();
   iconUrl = `url(./assets/images/UI-EmptyBack.png)`;
-  tooltipContent = '';
+  tooltipContent: string;
   isDisabled = false;
   talent: Talent;
   requires: Talent;
@@ -39,18 +39,18 @@ export class TalentComponent implements OnChanges {
       this.iconUrl = `url(./assets/images/talent-icons/${
         this.talent.iconPath
       }.jpg)`;
-      this.getTalentTooltip();
+      this.tooltipContent = this.getTooltip(this.talent);
     }
   }
 
   addTalentPoint(): void {
     this.addPoint.emit(this.talent);
-    this.getTalentTooltip();
+    this.tooltipContent = this.getTooltip(this.talent);
   }
 
   removeTalentPoint(): boolean {
     this.removePoint.emit(this.talent);
-    this.getTalentTooltip();
+    this.tooltipContent = this.getTooltip(this.talent);
     return false;
   }
 
@@ -73,51 +73,54 @@ export class TalentComponent implements OnChanges {
     return true;
   }
 
-  private getTalentTooltip(): void {
-    const talentName = `<h5>${this.talent.name}</h5>`;
-    const tooltipRank = `<h5>${this.talent.curRank}/${
-      this.talent.maxRank
-    }</h5>`;
-    const talentIcon = `<img class="icon" src="assets/images/talent-icons/${
-      this.talent.iconPath
+  /**
+   * Return the html tooltip content for talent.
+   * @param talent Talent
+   */
+  private getTooltip(talent: Talent): string {
+    const name = `<h5>${talent.name}</h5>`;
+    const rank = `<h5>${talent.curRank}/${talent.maxRank}</h5>`;
+    const icon = `<img class="icon" src="assets/images/talent-icons/${
+      talent.iconPath
     }.jpg"/>`;
     let currentRankDescription = '';
     let nextRankDescription = '';
     let clickTo = '';
     let nextRank = '';
 
-    if (this.talent.curRank === 0) {
+    if (talent.curRank === 0) {
       clickTo = `<span class="click-to-learn">Click or scroll up to learn.</span>`;
-      currentRankDescription = this.talent.tooltip[this.talent.curRank];
+      currentRankDescription = talent.tooltip[talent.curRank];
 
       if (this.isDisabled || this.totalPoints === 71) {
         clickTo = '';
       }
-    } else if (this.talent.curRank < this.talent.maxRank) {
-      currentRankDescription = this.talent.tooltip[this.talent.curRank - 1];
-      nextRankDescription = this.talent.tooltip[this.talent.curRank];
+    } else if (talent.curRank < talent.maxRank) {
+      currentRankDescription = talent.tooltip[talent.curRank - 1];
+      nextRankDescription = talent.tooltip[talent.curRank];
       nextRank = `<div class="next-rank">Next rank:</div>`;
     } else {
       clickTo = `<span class="click-to-remove">Right click or scroll down to remove.</span>`;
-      currentRankDescription = this.talent.tooltip[this.talent.curRank - 1];
+      currentRankDescription = talent.tooltip[talent.curRank - 1];
     }
 
-    this.tooltipContent = `<div class="tooltip-talent grid-y">
-      ${talentIcon}
-      <div class="cell flex-container">
-        <div class="flex-child-shrink name">${talentName}</div>
-        <div class="flex-child-grow"></div>
-        <div class="flex-child-shrink rank">${tooltipRank}</div>
+    return `
+      <div class="tooltip-talent grid-y">
+        ${icon}
+        <div class="cell flex-container">
+          <div class="flex-child-shrink name">${name}</div>
+          <div class="flex-child-grow"></div>
+          <div class="flex-child-shrink rank">${rank}</div>
+        </div>
+        <div class="cell description">
+          ${currentRankDescription}
+          ${nextRank}
+          ${nextRankDescription}
+        </div>
+        <div class="cell click-to">
+          ${clickTo}
+        </div>
       </div>
-      <div class="cell description">
-        ${currentRankDescription}
-        ${nextRank}
-        ${nextRankDescription}
-      </div>
-      <div class="cell click-to">
-        ${clickTo}
-      </div>
-    </div>
     `;
   }
 }
