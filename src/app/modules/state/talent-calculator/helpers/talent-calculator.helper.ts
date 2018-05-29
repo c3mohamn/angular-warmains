@@ -5,6 +5,12 @@ import {
 } from '../../../../components/body/pages/talent-calculator/models/talents.model';
 import { urlMap } from './talent-url.map';
 
+/**
+ * Return true iff glyph can be added to glyphState at index.
+ * @param glyphState current state of glyphs represented as list of glyphs
+ * @param glyph Glyph
+ * @param index index of glyph in glyphState
+ */
 export function canAddGlyph(
   glyphState: Glyph[],
   glyph: Glyph,
@@ -141,7 +147,7 @@ export function canRemovePoint(
  * Return talentPointsArray (array representation of current talent state)
  * @param t encoded talent url param
  */
-export function decodeTalents(t: string): number[] | null {
+export function decodeTalentUrlParam(t: string): number[] | null {
   t = reverseMinifyUrl(t);
   if (!t) {
     return null;
@@ -160,7 +166,7 @@ export function decodeTalents(t: string): number[] | null {
  * Return an encoded talent url param
  * @param pointsArray talentPointsArray (array representation of current talent state)
  */
-export function encodeTalents(pointsArray: number[]): string {
+export function getTalentUrlParam(pointsArray: number[]): string {
   const t = pointsArray.join('');
   let result = '';
 

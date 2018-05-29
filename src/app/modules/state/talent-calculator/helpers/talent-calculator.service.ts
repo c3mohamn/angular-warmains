@@ -91,7 +91,7 @@ export class TalentCalculatorService implements OnDestroy {
         talentUrlParam: talentUrlParam,
         glyphUrlParam: glyphUrlParam,
         talentPointsArray: [],
-        glyphsArray: [],
+        glyphsArray: new Array<number>(6),
         classId: classId,
         spec: '',
         totalPoints: 0,
@@ -105,7 +105,7 @@ export class TalentCalculatorService implements OnDestroy {
       }
     };
 
-    const pointsFromUrl = talentHelper.decodeTalents(talentUrlParam);
+    const pointsFromUrl = talentHelper.decodeTalentUrlParam(talentUrlParam);
 
     Object.keys(talents).forEach(i => {
       const p = (pointsFromUrl && pointsFromUrl[i]) || 0;
@@ -183,13 +183,7 @@ export class TalentCalculatorService implements OnDestroy {
     const meta = Object.assign({}, this.state.meta);
 
     this.updateMetaInfo(meta, talent, points);
-
-    // Change url params every time meta data is updated
-    this.location.replaceState(
-      `talent/${meta.classId}?talents=${meta.talentUrlParam}&glyphs=${
-        meta.glyphUrlParam
-      }`
-    );
+    this.updateUrlParams(meta.classId, meta.talentUrlParam, meta.glyphUrlParam);
 
     return meta;
   }
@@ -209,7 +203,9 @@ export class TalentCalculatorService implements OnDestroy {
     meta.totalPoints += points;
     meta.preview[talent.tree] += points;
     meta.treeRows[talent.tree][talent.row] += points;
-    meta.talentUrlParam = talentHelper.encodeTalents(meta.talentPointsArray);
+    meta.talentUrlParam = talentHelper.getTalentUrlParam(
+      meta.talentPointsArray
+    );
 
     if (points > 0) {
       meta.lastActiveRow[talent.tree] =
@@ -224,6 +220,22 @@ export class TalentCalculatorService implements OnDestroy {
         meta.lastActiveRow[talent.tree]--;
       }
     }
+  }
+
+  /**
+   * Change the url parameters to reflect the meta information of talent calculator.
+   * @param classId current class id
+   * @param talentParam url talent parameter
+   * @param glyphParam url glyph parameter
+   */
+  private updateUrlParams(
+    classId: number,
+    talentParam: string,
+    glyphParam: string
+  ): void {
+    this.location.replaceState(
+      `talent/${classId}?talents=${talentParam}&glyphs=${glyphParam}`
+    );
   }
 
   ngOnDestroy() {
