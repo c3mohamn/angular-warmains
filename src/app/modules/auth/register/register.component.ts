@@ -5,6 +5,7 @@ import {
   FormGroup,
   FormBuilder
 } from '@angular/forms';
+import { trigger, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
 import { UserForm } from '../../../models/user.model';
 import { UserService } from '../../api/services/user.service';
@@ -14,7 +15,15 @@ import { Subject } from 'rxjs/Subject';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  animations: [
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate('200ms ease-in')
+      ])
+    ])
+  ]
 })
 export class RegisterComponent implements OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();

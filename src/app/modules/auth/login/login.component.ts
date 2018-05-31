@@ -5,6 +5,7 @@ import {
   FormGroup,
   FormBuilder
 } from '@angular/forms';
+import { trigger, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
 import { UserForm } from '../../../models/user.model';
 import { UserFacade } from '../../state/user/user.facade';
@@ -14,7 +15,15 @@ import { Subject } from 'rxjs/Subject';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  animations: [
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate('200ms ease-in')
+      ])
+    ])
+  ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
