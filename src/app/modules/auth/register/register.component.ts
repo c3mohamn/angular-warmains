@@ -5,7 +5,6 @@ import {
   FormGroup,
   FormBuilder
 } from '@angular/forms';
-import { trigger, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
 import { UserForm } from '../../../models/user.model';
 import { UserService } from '../../api/services/user.service';
@@ -15,15 +14,7 @@ import { Subject } from 'rxjs/Subject';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({ transform: 'translateY(-100%)' }),
-        animate('200ms ease-in')
-      ])
-    ])
-  ]
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
@@ -53,68 +44,43 @@ export class RegisterComponent implements OnDestroy {
     });
   }
 
-  registerUser() {
-    if (this.userForm.invalid) {
-      this.apiErrorMsg = 'Invalid form.';
-      return;
+  registerUser({ value, valid }) {
+    if (valid) {
+      const user: UserForm = {
+        email: value.email,
+        username: value.username,
+        password: value.password
+      };
+
+      this.userService
+        .createUser(user)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          data => {
+            console.log('user registered! ', data);
+            this.userRegistered = true;
+            this.successMsg = `${data.username} has been registered!`;
+          },
+          error => {
+            console.log('error ', error);
+            this.apiErrorMsg = 'Something went wrong: ' + error.error;
+          }
+        );
     }
-
-    const user: UserForm = {
-      email: this.userForm.get('email').value,
-      username: this.userForm.get('username').value,
-      password: this.userForm.get('password').value
-    };
-
-    this.userService
-      .createUser(user)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        data => {
-          console.log('user registered! ', data);
-          this.userRegistered = true;
-          this.successMsg = `${data.username} has been registered!`;
-        },
-        error => {
-          console.log('error ', error);
-          this.apiErrorMsg = error.error;
-        }
-      );
   }
 
-  // Form error messages
-  // --------------------
-  getEmailErrorMessage() {
-    const email = this.userForm.get('email');
+  getErrorMessage(inputName: string): string {
+    const input = this.userForm.get(inputName);
 
-    return this.userForm.get('email').hasError('required')
+    return input.hasError('required')
       ? 'You must enter a value'
-      : email.hasError('email')
+      : input.hasError('email')
         ? 'Not a valid email'
-        : '';
-  }
-
-  getUsernameErrorMessage() {
-    const username = this.userForm.get('username');
-
-    return username.hasError('minlength')
-      ? 'Username be greater than 2 characters'
-      : username.hasError('maxlength')
-        ? 'Username be less than 21 characters'
-        : username.hasError('required')
-          ? 'You must enter a value'
-          : '';
-  }
-
-  getPasswordErrorMessage() {
-    const password = this.userForm.get('password');
-
-    return password.hasError('minlength')
-      ? 'Password be greater than 4 characters'
-      : password.hasError('maxlength')
-        ? 'Password must be less than 21 characters'
-        : password.hasError('required')
-          ? 'You must enter a value'
-          : '';
+        : input.hasError('minLength')
+          ? 'Username be greater than 2 characters'
+          : input.hasError('maxlength')
+            ? 'You must enter a value'
+            : '';
   }
 
   ngOnDestroy() {

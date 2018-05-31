@@ -1,19 +1,19 @@
-<div [@slideIn] class="login-container grid-x align-center align-middle">
+<div class="login-container grid-x align-center align-middle">
   <div class="auth-container grid-y align-center">
     <h3 class="login-header">Login</h3>
-    <form (ngSubmit)="loginUser()" [formGroup]="userForm">
+    <form (ngSubmit)="loginUser(userForm)" [formGroup]="userForm">
       <div class="cell shrink form-container">
         <!-- Username -->
         <mat-form-field>
-          <input matInput #inputUserName placeholder="Username" formControlName="username" required>
-          <mat-error *ngIf="userForm.get('username').invalid">{{getUsernameErrorMessage()}}</mat-error>
+          <input matInput placeholder="Username" formControlName="username" required>
+          <mat-error *ngIf="userForm.get('username').invalid">{{getErrorMessage('username')}}</mat-error>
         </mat-form-field>
         <!-- Password -->
         <mat-form-field>
-          <input matInput #inputPassword placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+          <input matInput placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'" formControlName="password"
             required>
           <mat-icon class="mat-icon-hide-password" matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
-          <mat-error *ngIf="userForm.get('password').invalid">{{getPasswordErrorMessage()}}</mat-error>
+          <mat-error *ngIf="userForm.get('password').invalid">{{getErrorMessage('password')}}</mat-error>
         </mat-form-field>
       </div>
       <!-- Button -->

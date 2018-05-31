@@ -5,7 +5,6 @@ import {
   FormGroup,
   FormBuilder
 } from '@angular/forms';
-import { trigger, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
 import { UserForm } from '../../../models/user.model';
 import { UserFacade } from '../../state/user/user.facade';
@@ -15,15 +14,7 @@ import { Subject } from 'rxjs/Subject';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({ transform: 'translateY(-100%)' }),
-        animate('200ms ease-in')
-      ])
-    ])
-  ]
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
@@ -57,30 +48,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  loginUser() {
-    if (this.userForm.invalid) {
-      this.errorMsg = 'Please enter values for username and password';
-      return;
+  loginUser({ value, valid }) {
+    if (valid) {
+      this.errorMsg = '';
+
+      console.log(value, valid);
+
+      const user: UserForm = {
+        email: value.username,
+        username: value.username,
+        password: value.password
+      };
+
+      this.userFacade.loginUser(user);
     }
-    this.errorMsg = '';
-
-    const user: UserForm = {
-      email: this.userForm.get('username').value,
-      username: this.userForm.get('username').value,
-      password: this.userForm.get('password').value
-    };
-
-    this.userFacade.loginUser(user);
   }
 
-  getUsernameErrorMessage() {
-    const username = this.userForm.get('username');
-    return username.hasError('required') ? 'You must enter a value' : '';
-  }
-
-  getPasswordErrorMessage() {
-    const password = this.userForm.get('password');
-    return password.hasError('required') ? 'You must enter a value' : '';
+  getErrorMessage(inputName: string): string {
+    const input = this.userForm.get(inputName);
+    return input.hasError('required') ? 'You must enter a value' : '';
   }
 
   ngOnDestroy() {
