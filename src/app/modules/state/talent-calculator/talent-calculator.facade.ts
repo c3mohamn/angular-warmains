@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 
 import { TalentCalculatorActions } from './talent-calculator.actions';
@@ -16,10 +15,7 @@ import {
 
 @Injectable()
 export class TalentCalculatorFacade {
-  constructor(
-    private actions$: Actions,
-    private store: Store<TalentCalculatorState>
-  ) {}
+  constructor(private store: Store<TalentCalculatorState>) {}
 
   /**
    * Loads the talents and glyphs for class, filling talent points and glyphs according to queryParma.

@@ -3,7 +3,6 @@ import {
   OnChanges,
   Input,
   SimpleChanges,
-  SimpleChange,
   EventEmitter,
   Output,
   ChangeDetectionStrategy

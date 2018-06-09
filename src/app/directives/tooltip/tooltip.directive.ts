@@ -1,13 +1,11 @@
 import { ContentOptions, Offset } from './options.model';
 import { HoveredContentComponent } from './content.component';
 import {
-  Component,
   Directive,
   Inject,
   ComponentFactoryResolver,
   Input,
   Output,
-  ElementRef,
   ViewContainerRef,
   ComponentRef,
   EventEmitter,

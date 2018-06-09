@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import {
-  catchError,
-  map,
-  switchMap,
-  concatMap,
-  mergeMap
-} from 'rxjs/operators';
+import { Actions, Effect } from '@ngrx/effects';
+import { catchError, map, concatMap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import {
   TalentCalculatorActions,
@@ -154,7 +147,6 @@ export class TalentCalculatorEffects {
 
   constructor(
     private actions$: Actions,
-    private router: Router,
     private talentService: TalentService,
     private talentCalculatorService: TalentCalculatorService
   ) {}

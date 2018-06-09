@@ -14,6 +14,7 @@ import * as talentHelper from './talent-calculator.helper';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 
+
 @Injectable()
 export class TalentCalculatorService implements OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();

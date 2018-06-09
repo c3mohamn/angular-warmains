@@ -7,7 +7,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { RouterStateModule } from './router/router-state.module';
 import { UserStateModule } from './user/user-state.module';
 import { UserState, userReducer } from './user/user.reducer';
-import { RouterState } from './router/router.selector';
 import { RouterReducerState, routerReducer } from '@ngrx/router-store';
 import { RouterStateUrl } from './router/router.reducer';
 import { TalentCalculatorState, talentCalculatorReducer } from './talent-calculator/talent-calculator.reducer';

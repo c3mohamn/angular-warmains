@@ -1,15 +1,5 @@
-import {
-  Component,
-  Input,
-  Output,
-  OnChanges,
-  SimpleChanges,
-  SimpleChange,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Glyph } from '../../models/talents.model';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Component({
@@ -18,7 +8,6 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
   styleUrls: ['./glyph.component.scss']
 })
 export class GlyphComponent implements OnChanges {
-  private ngUnsubscribe: Subject<any> = new Subject();
   @Input() glyph: Glyph = null;
   iconUrl = `url(./assets/images/UI-EmptyBack.png)`;
   tooltipContent: string;
