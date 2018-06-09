@@ -2,10 +2,7 @@
   <div class="cell small-12">
     <h5 class="glyphs-header">Glyphs</h5>
   </div>
-  <div *ngFor="let n of [0, 1, 2]" class="cell small-4">
-    <app-glyph [type]="1" [classId]="classId" [glyph]="glyphs[n]" (add)="addGlyph($event, n)" (remove)="removeGlyph(n)"></app-glyph>
-  </div>
-  <div *ngFor="let n of [3, 4, 5]" class="cell small-4">
-    <app-glyph [type]="2" [classId]="classId" [glyph]="glyphs[n]" (add)="addGlyph($event, n)" (remove)="removeGlyph(n)"></app-glyph>
+  <div *ngFor="let n of [0, 1, 2, 3, 4, 5]" class="cell small-4">
+    <app-glyph [glyph]="glyphs[n]" (click)="openGlyphsDialog(n)" (contextmenu)="removeGlyph(n)"></app-glyph>
   </div>
 </div>

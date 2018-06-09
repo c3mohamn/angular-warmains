@@ -1,8 +1,10 @@
 import { Component, OnDestroy, Input, OnInit } from '@angular/core';
 import { Glyph } from '../../models/talents.model';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
+import { GlyphsDialogComponent } from '../../components/glyphs-dialog/glyphs-dialog.component';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-talent-glyphs',
@@ -14,7 +16,10 @@ export class TalentGlyphsComponent implements OnInit, OnDestroy {
   @Input() classId = 1;
   glyphs: Glyph[] = [];
 
-  constructor(private talentCalculatorFacade: TalentCalculatorFacade) {}
+  constructor(
+    public dialog: MatDialog,
+    private talentCalculatorFacade: TalentCalculatorFacade
+  ) {}
 
   ngOnInit(): void {
     this.talentCalculatorFacade
@@ -27,8 +32,29 @@ export class TalentGlyphsComponent implements OnInit, OnDestroy {
     this.talentCalculatorFacade.addGlyph(glyph, index);
   }
 
-  removeGlyph(index): void {
+  removeGlyph(index): boolean {
     this.talentCalculatorFacade.removeGlyph(index);
+    return false;
+  }
+
+  openGlyphsDialog(index: number): void {
+    const type = index > 2 ? 2 : 1;
+    const dialogRef = this.dialog.open(GlyphsDialogComponent, {
+      width: '80%',
+      minWidth: '300px',
+      maxWidth: '1000px',
+      maxHeight: '600px',
+      data: { classId: this.classId, type: type }
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((glyph: Glyph) => {
+        if (glyph) {
+          this.addGlyph(glyph, index);
+        }
+      });
   }
 
   ngOnDestroy() {
