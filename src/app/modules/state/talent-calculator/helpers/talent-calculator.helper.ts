@@ -143,6 +143,14 @@ export function canRemovePoint(
   return canRemove;
 }
 
+export function decodeGlyphUrlParam(g: string): number[] | null {
+  if (!g || g === '') {
+    return null;
+  }
+
+  return g.split(':').map(x => (x !== '' ? parseInt(x, 10) : null));
+}
+
 /**
  * Return talentPointsArray (array representation of current talent state)
  * @param t encoded talent url param
@@ -163,11 +171,19 @@ export function decodeTalentUrlParam(t: string): number[] | null {
 }
 
 /**
- * Return an encoded talent url param
- * @param pointsArray talentPointsArray (array representation of current talent state)
+ * Return an encoded glyph url param
+ * @param glyphsArray array representation of current glyph state
  */
-export function getTalentUrlParam(pointsArray: number[]): string {
-  const t = pointsArray.join('');
+export function getGlyphUrlParam(glyphsArray: number[]): string {
+  return glyphsArray.join(':');
+}
+
+/**
+ * Return an encoded talent url param
+ * @param talentPointsArray array representation of current talent state
+ */
+export function getTalentUrlParam(talentPointsArray: number[]): string {
+  const t = talentPointsArray.join('');
   let result = '';
 
   for (let i = 0; i < t.length; i += 2) {

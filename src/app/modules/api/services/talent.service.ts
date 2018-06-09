@@ -49,22 +49,35 @@ export class TalentService {
   getTalentTooltips(classId: number): Observable<any[]> {
     return this.http
       .get<any[]>(`./assets/data/talents/tooltips/${classId}.json`)
-      .pipe(map(data => data), publishReplay(1), refCount());
+      .pipe(
+        map(data => data),
+        publishReplay(1),
+        refCount()
+      );
+  }
+
+  /**
+   * Return object of glyphs for class with classId.
+   * @param classId class Id
+   */
+  getGlyphDetails(classId: number): Observable<any> {
+    return this.http.get<any>('./assets/data/talents/glyphs.json').pipe(
+      map(data => data[classId]),
+      // combine object
+      map(data => Object.assign({}, data['1'], data['2']))
+    );
   }
 
   /**
    * Return array of glyphs for class with classId.
    * @param classId class Id
+   * @param type major or minor
    */
-  getGlyphDetails(classId: number, type: number): Observable<Glyph[]> {
-    return this.http
-      .get<Glyph[]>('./assets/data/talents/glyphs.json')
-      .pipe(
-        map(data => data),
-        publishReplay(1),
-        refCount(),
-        map(data => data[classId][type]),
-        map(glyphs => Object.keys(glyphs).map(g => glyphs[g]))
-      );
+  getGlyphDetailsByType(classId: number, type: number): Observable<Glyph[]> {
+    return this.http.get<any>('./assets/data/talents/glyphs.json').pipe(
+      map(data => data[classId][type]),
+      // turn to array
+      map((glyphs: Glyph[]) => Object.keys(glyphs).map(g => glyphs[g]))
+    );
   }
 }

@@ -68,10 +68,16 @@ export function talentCalculatorReducer(
       );
 
     case TalentCalculatorActionTypes.ADD_GLYPH_SUCCESS:
-      return Object.assign({}, state, { glyphs: action.payload });
+      return Object.assign({}, state, {
+        glyphs: action.payload[0],
+        meta: action.payload[1]
+      });
 
     case TalentCalculatorActionTypes.REMOVE_GLYPH_SUCCESS:
-      return Object.assign({}, state, { glyphs: action.payload });
+      return Object.assign({}, state, {
+        glyphs: action.payload[0],
+        meta: action.payload[1]
+      });
 
     case TalentCalculatorActionTypes.TALENT_ERROR:
       return state;

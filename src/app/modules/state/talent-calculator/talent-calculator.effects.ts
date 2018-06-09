@@ -42,13 +42,18 @@ export class TalentCalculatorEffects {
               )
             )
           ),
-          map(talents =>
-            // get talent calculator state
-            this.talentCalculatorService.getTalentStateFromUrl(
-              talents,
-              classId,
-              talentUrlParam,
-              glyphUrlParam
+          concatMap(talents =>
+            this.talentService.getGlyphDetails(classId).pipe(
+              map(glyphs =>
+                // get talent calculator state
+                this.talentCalculatorService.getTalentStateFromUrl(
+                  talents,
+                  classId,
+                  talentUrlParam,
+                  glyphUrlParam,
+                  glyphs
+                )
+              )
             )
           ),
           map(
@@ -123,7 +128,15 @@ export class TalentCalculatorEffects {
           index = payload[1];
         if (this.talentCalculatorService.canAddGlyph(glyph, index)) {
           const newGlyphs = this.talentCalculatorService.addGlyph(glyph, index);
-          return new TalentCalculatorActions.AddGlyphSuccess(newGlyphs);
+          const newMeta = this.talentCalculatorService.getUpdatedGlyphMetaInfo(
+            index,
+            glyph,
+            true
+          );
+          return new TalentCalculatorActions.AddGlyphSuccess([
+            newGlyphs,
+            newMeta
+          ]);
         } else {
           return new TalentCalculatorActions.TalentError(
             `Cannot add glyph ${glyph.name}.`
@@ -141,7 +154,13 @@ export class TalentCalculatorEffects {
       map(action => action.payload),
       map(index => {
         const newGlyphs = this.talentCalculatorService.removeGlyph(index);
-        return new TalentCalculatorActions.RemoveGlyphSuccess(newGlyphs);
+        const newMeta = this.talentCalculatorService.getUpdatedGlyphMetaInfo(
+          index
+        );
+        return new TalentCalculatorActions.RemoveGlyphSuccess([
+          newGlyphs,
+          newMeta
+        ]);
       })
     );
 

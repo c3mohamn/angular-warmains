@@ -69,7 +69,7 @@ export namespace TalentCalculatorActions {
   export class AddGlyphSuccess implements Action {
     readonly type = TalentCalculatorActionTypes.ADD_GLYPH_SUCCESS;
 
-    constructor(public payload: Glyph[]) {}
+    constructor(public payload: [Glyph[], TalentMetaInfo]) {}
   }
 
   export class RemoveGlyph implements Action {
@@ -81,7 +81,7 @@ export namespace TalentCalculatorActions {
   export class RemoveGlyphSuccess implements Action {
     readonly type = TalentCalculatorActionTypes.REMOVE_GLYPH_SUCCESS;
 
-    constructor(public payload: Glyph[]) {}
+    constructor(public payload: [Glyph[], TalentMetaInfo]) {}
   }
 
   export class ResetTalentPoints implements Action {

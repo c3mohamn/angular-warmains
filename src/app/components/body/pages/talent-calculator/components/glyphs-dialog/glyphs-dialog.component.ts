@@ -29,7 +29,7 @@ export class GlyphsDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.talentService
-      .getGlyphDetails(this.classId, this.type)
+      .getGlyphDetailsByType(this.classId, this.type)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         glyphs => {

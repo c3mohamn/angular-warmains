@@ -14,7 +14,6 @@ import * as talentHelper from './talent-calculator.helper';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 
-
 @Injectable()
 export class TalentCalculatorService implements OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
@@ -78,12 +77,14 @@ export class TalentCalculatorService implements OnDestroy {
    * @param classId current class Id in url param
    * @param talentUrlParam encoded talent url queryParam
    * @param glyphUrlParam encoded glyph url queryParam
+   * @param glyphs object of glyphs for class with classId
    */
   getTalentStateFromUrl(
     talents: Talent[],
     classId: number,
     talentUrlParam: string,
-    glyphUrlParam: string
+    glyphUrlParam: string,
+    glyphs: any
   ): TalentCalculatorState {
     const state: TalentCalculatorState = {
       talents: [],
@@ -106,15 +107,28 @@ export class TalentCalculatorService implements OnDestroy {
       }
     };
 
-    const pointsFromUrl = talentHelper.decodeTalentUrlParam(talentUrlParam);
+    // update glyph and talents from urlParams
+
+    const talentsFromUrl = talentHelper.decodeTalentUrlParam(talentUrlParam);
+    const glyphsFromUrl = talentHelper.decodeGlyphUrlParam(glyphUrlParam);
+
+    if (glyphsFromUrl) {
+      glyphsFromUrl.forEach((uid, index) => {
+        if (!state.meta.glyphsArray[index]) {
+          const glyph = glyphs[uid];
+          state.meta.glyphsArray[index] = uid;
+          state.glyphs[index] = glyph;
+        }
+      });
+    }
 
     Object.keys(talents).forEach(i => {
-      const p = (pointsFromUrl && pointsFromUrl[i]) || 0;
+      const p = (talentsFromUrl && talentsFromUrl[i]) || 0;
       const talent = talents[i];
       state.meta.talentPointsArray.push(0);
 
       if (p > 0) {
-        this.updateMetaInfo(state.meta, talent, p);
+        this.updateTalentMetaInfo(state.meta, talent, p);
       }
 
       talent.curRank = p;
@@ -176,6 +190,25 @@ export class TalentCalculatorService implements OnDestroy {
   }
 
   /**
+   * Return the updated talent meta information after glyph is added/removed.
+   * @param index index where glyph is being added/removed from
+   * @param glyph Glyph
+   * @param adding true iff glyph is being added
+   */
+  getUpdatedGlyphMetaInfo(
+    index: number,
+    glyph?: Glyph,
+    adding?: boolean
+  ): TalentMetaInfo {
+    const meta = Object.assign({}, this.state.meta);
+
+    this.updateGlyphMetaInfo(meta, index, glyph, adding);
+    this.updateUrlParams(meta.classId, meta.talentUrlParam, meta.glyphUrlParam);
+
+    return meta;
+  }
+
+  /**
    * Return the updated talent meta information after points are added to talent.
    * @param talent Talent
    * @param points amount of points to be added to talent
@@ -183,10 +216,27 @@ export class TalentCalculatorService implements OnDestroy {
   getUpdatedTalentMetaInfo(talent: Talent, points: number): TalentMetaInfo {
     const meta = Object.assign({}, this.state.meta);
 
-    this.updateMetaInfo(meta, talent, points);
+    this.updateTalentMetaInfo(meta, talent, points);
     this.updateUrlParams(meta.classId, meta.talentUrlParam, meta.glyphUrlParam);
 
     return meta;
+  }
+
+  /**
+   * Updates the meta information after glyph is added/removed.
+   * @param meta Talent Meta information
+   * @param index index where glyph is being added/removed from
+   * @param glyph Glyph
+   * @param adding true iff glyph is being added
+   */
+  private updateGlyphMetaInfo(
+    meta: TalentMetaInfo,
+    index: number,
+    glyph?: Glyph,
+    adding?: boolean
+  ): void {
+    meta.glyphsArray[index] = adding ? glyph.uid : null;
+    meta.glyphUrlParam = talentHelper.getGlyphUrlParam(meta.glyphsArray);
   }
 
   /**
@@ -195,7 +245,7 @@ export class TalentCalculatorService implements OnDestroy {
    * @param talent Talent
    * @param points Points being added to talent
    */
-  private updateMetaInfo(
+  private updateTalentMetaInfo(
     meta: TalentMetaInfo,
     talent: Talent,
     points: number
