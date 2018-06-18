@@ -1,10 +1,28 @@
+@import '~assets/scss/core';
+
 .talent-tree-container {
-  padding: 4rem 0 2rem 0;
+  padding: 1.5rem 0.5rem 2.5rem 0.5rem;
 
   .tree {
-    background-size: 192px 500px;
+    position: relative;
+    background-size: rem-calc(192px) rem-calc(500px);
     background-repeat: no-repeat;
     margin: 0.25rem;
-    padding-top: 4px;
+    padding-top: rem-calc(4px);
+
+    .tree-meta {
+      position: absolute;
+      color: $wm-primary-light;
+      bottom: 100%;
+      left: 0;
+      width: 100%;
+      text-transform: capitalize;
+    }
+
+    .tree-reset {
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
   }
 }

@@ -77,6 +77,16 @@ export class TalentCalculatorFacade {
   }
 
   /**
+   * Resets talents for tree with treeId, or all talents if treeId is null.
+   * @param treeId talent tree Id
+   */
+  resetTalentPoints(treeId?: number): void {
+    return this.store.dispatch(
+      new TalentCalculatorActions.ResetTalentPoints(treeId)
+    );
+  }
+
+  /**
    * Returns current Talent Meta Information.
    */
   getTalentMetaInfo(): Observable<TalentMetaInfo> {

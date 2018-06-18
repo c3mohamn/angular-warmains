@@ -223,6 +223,40 @@ export class TalentCalculatorService implements OnDestroy {
   }
 
   /**
+   * Return a new talent state after talents are reset for treeId.
+   * If no treeId is specified, resets whole talent state.
+   * @param treeId id of spec
+   */
+  resetTalentPoints(treeId?: number): TalentCalculatorState {
+    const state = Object.assign({}, this.state);
+
+    // Reset talent points
+    state.talents.forEach((talent, index) => {
+      if (talent.tree === treeId) {
+        talent.curRank = 0;
+        state.meta.talentPointsArray[index] = 0;
+      }
+    });
+
+    // Reset meta information
+    state.meta.preview[treeId] = 0;
+    state.meta.treeRows[treeId].forEach(value => 0);
+    state.meta.spec = '';
+    state.meta.lastActiveRow[treeId] = 0;
+    state.meta.talentUrlParam = talentHelper.getTalentUrlParam(
+      state.meta.talentPointsArray
+    );
+
+    this.updateUrlParams(
+      state.meta.classId,
+      state.meta.talentUrlParam,
+      state.meta.glyphUrlParam
+    );
+
+    return state;
+  }
+
+  /**
    * Updates the meta information after glyph is added/removed.
    * @param meta Talent Meta information
    * @param index index where glyph is being added/removed from

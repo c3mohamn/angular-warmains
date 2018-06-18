@@ -68,11 +68,17 @@ export class TalentTreeComponent implements OnInit, OnDestroy {
     return [talent, requiredTalent || null];
   }
 
+  resetTalents(treeId: number): void {
+    console.log(`Reset ${this.getSpec(treeId)}`);
+    this.talentCalculatorFacade.resetTalentPoints(treeId);
+  }
+
+  getSpec(treeId: number): string {
+    return this.talentCalculatorService.getClassSpec(treeId, this.classId);
+  }
+
   getSpecBg(treeId: number): string {
-    const spec = this.talentCalculatorService.getClassSpec(
-      treeId,
-      this.classId
-    );
+    const spec = this.getSpec(treeId);
 
     return `url(assets/images/talent-icons/${
       this.classId

@@ -57,14 +57,14 @@ export class TooltipDirective {
   @HostListener('mouseenter', ['$event'])
   private onMouseEnter(event: any): void {
     this.leaving = false;
-    setTimeout(() => this.buildTooltip(event));
+    requestAnimationFrame(() => this.buildTooltip(event));
   }
 
   @HostListener('click', ['$event'])
   @HostListener('mousewheel', ['$event'])
   @HostListener('contextmenu', ['$event'])
   private onPointChange(event: any): void {
-    setTimeout(() => this.buildTooltip(event));
+    requestAnimationFrame(() => this.buildTooltip(event));
   }
 
   public hideTooltip() {

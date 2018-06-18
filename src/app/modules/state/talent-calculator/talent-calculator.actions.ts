@@ -19,7 +19,8 @@ export enum TalentCalculatorActionTypes {
   ADD_GLYPH_SUCCESS = '[TalentCalculator] glyph added',
   REMOVE_GLPYH = '[TalentCalculator] removing glyph',
   REMOVE_GLYPH_SUCCESS = '[TalentCalculator] glyph removed',
-  RESET_TALENT_POINTS = '[TalentCalculator] reset talents',
+  RESET_TALENT_POINTS = '[TalentCalculator] reseting talents',
+  RESET_TALENT_POINTS_SUCCESS = '[TalentCalculator] reset talents',
   TALENT_ERROR = '[TalentCalculator] error'
 }
 
@@ -87,7 +88,13 @@ export namespace TalentCalculatorActions {
   export class ResetTalentPoints implements Action {
     readonly type = TalentCalculatorActionTypes.RESET_TALENT_POINTS;
 
-    constructor(public payload: any) {}
+    constructor(public payload: number) {}
+  }
+
+  export class ResetTalentPointsSuccess implements Action {
+    readonly type = TalentCalculatorActionTypes.RESET_TALENT_POINTS_SUCCESS;
+
+    constructor(public payload: TalentCalculatorState) {}
   }
 
   export class TalentError implements Action {
@@ -103,4 +110,5 @@ export type TalentCalculatorActionsUnion =
   | TalentCalculatorActions.RemoveTalentPointSuccess
   | TalentCalculatorActions.AddGlyphSuccess
   | TalentCalculatorActions.RemoveGlyphSuccess
+  | TalentCalculatorActions.ResetTalentPointsSuccess
   | TalentCalculatorActions.TalentError;

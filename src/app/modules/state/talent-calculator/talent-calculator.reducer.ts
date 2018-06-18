@@ -79,6 +79,9 @@ export function talentCalculatorReducer(
         meta: action.payload[1]
       });
 
+    case TalentCalculatorActionTypes.RESET_TALENT_POINTS_SUCCESS:
+      return Object.assign({}, state, action.payload);
+
     case TalentCalculatorActionTypes.TALENT_ERROR:
       return state;
 

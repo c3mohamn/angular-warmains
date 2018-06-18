@@ -164,6 +164,17 @@ export class TalentCalculatorEffects {
       })
     );
 
+  @Effect()
+  resetTalents$: Observable<Action> = this.actions$
+    .ofType<TalentCalculatorActions.ResetTalentPoints>(
+      TalentCalculatorActionTypes.RESET_TALENT_POINTS
+    )
+    .pipe(
+      map(action => action.payload),
+      map(treeId => this.talentCalculatorService.resetTalentPoints(treeId)),
+      map(newState => new TalentCalculatorActions.ResetTalentPointsSuccess(newState))
+    );
+
   constructor(
     private actions$: Actions,
     private talentService: TalentService,

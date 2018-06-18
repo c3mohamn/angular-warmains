@@ -29,40 +29,40 @@ export class HoveredContentComponent implements AfterViewInit {
 
     switch (this.options.position) {
       case 'top':
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           this.options.x -= tWidth / 2;
           this.options.y -= tHeight;
         });
         break;
       case 'top-left':
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           this.options.x -= tWidth;
           this.options.y -= tHeight;
         });
         break;
       case 'top-right':
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           this.options.x += tWidth;
           this.options.y -= tHeight;
         });
         break;
       case 'right':
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           this.options.x += 50;
           this.options.y -= tHeight / 2;
         });
         break;
       case 'left':
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           this.options.x -= tWidth;
           this.options.y -= tHeight / 2;
         });
         break;
       case 'bottom':
-        setTimeout(() => (this.options.x -= tWidth / 2));
+        requestAnimationFrame(() => (this.options.x -= tWidth / 2));
         break;
       case 'bottom-left':
-        setTimeout(() => (this.options.x -= tWidth));
+        requestAnimationFrame(() => (this.options.x -= tWidth));
         break;
       default:
         // bottom-right
