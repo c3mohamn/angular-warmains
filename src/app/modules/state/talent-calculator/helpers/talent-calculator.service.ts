@@ -239,6 +239,7 @@ export class TalentCalculatorService implements OnDestroy {
     });
 
     // Reset meta information
+    state.meta.totalPoints -= state.meta.preview[treeId];
     state.meta.preview[treeId] = 0;
     state.meta.treeRows[treeId].forEach(value => 0);
     state.meta.spec = '';

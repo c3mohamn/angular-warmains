@@ -1,8 +1,8 @@
-@import '~assets/scss/variables';
+@import '~assets/scss/core';
 
 .mat-dialog-container {
   background-color: $wm-secondary-dark;
-  color: white;
+  color: $wm-white;
 }
 
 .glyph {
@@ -17,13 +17,14 @@
   .description {
     font-size: 12px;
     margin: 0;
+    color: $wm-gray;
   }
 
   &:hover {
     .description,
     .name,
     .icon {
-      color: $wm-black;
+      color: $wm-white;
       opacity: 1;
     }
   }

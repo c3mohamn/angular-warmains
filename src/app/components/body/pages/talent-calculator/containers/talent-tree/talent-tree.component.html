@@ -1,10 +1,13 @@
-<div class="talent-tree-container grid-x align-middle align-center">
+<div class="talent-tree-container dark-container grid-x align-middle align-center">
   <div *ngFor="let tree of trees" [style.background-image]="getSpecBg(tree)" class="cell shrink tree">
-    <div class="tree-meta" [style.opacity]="0.5 + meta.preview[tree] / 100">
-      {{getSpec(tree)}} {{meta.preview[tree]}}
-    </div>
-    <div class="tree-reset">
-      <button class="button small alert dark-bg hollow" (click)="resetTalents(tree)">Reset</button>
+    <div class="tree-meta grid-x align-middle" [style.opacity]="0.5 + meta.preview[tree] / 100">
+      <div class="cell shrink tree-meta-spec">
+        {{getSpec(tree)}} {{meta.preview[tree]}}
+      </div>
+      <div class="cell auto"></div>
+      <div class="cell shrink">
+        <button class="button button-reset small alert clear" (click)="resetTalents(tree)">Reset</button>
+      </div>
     </div>
     <div *ngFor="let row of rows" class="talent-row grid-x align-middle align-center">
       <div *ngFor="let col of cols" class="col-row">

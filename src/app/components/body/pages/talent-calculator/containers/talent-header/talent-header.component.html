@@ -1,4 +1,4 @@
-<div class="talent-header-container">
+<div class="talent-header-container dark-container">
   <div class="grid-x align-middle align-center">
     <div class="cell shrink">
       <h4 [style.color]="getClassColor()" class="current-class-name">{{ getClassName() }}</h4>
@@ -14,7 +14,7 @@
   </div>
   <div class="cell small-12 grid-x">
     <div class="cell shrink">
-      <h6 class="talent-remaining">Remaining: {{ remaining }}</h6>
+      <h6 class="talent-remaining">Remaining: {{ getRemainingPoints() }}</h6>
     </div>
     <div class="cell auto"></div>
   </div>

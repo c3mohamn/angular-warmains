@@ -1,7 +1,8 @@
-@import '~assets/scss/variables';
+@import '~assets/scss/core';
 
 .talent-header-container {
   padding: 1rem;
+  @include wm-mixin-border(2px, $wm-white);
 
   h3,
   h4,

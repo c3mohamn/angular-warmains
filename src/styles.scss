@@ -8,5 +8,9 @@ body {
   padding: 0;
   overflow: auto;
   position: relative;
-  background-image: url('/assets/images/wm-bg.jpg');
+  background-image: url('/assets/images/wm-bg.png');
+}
+
+.mat-dialog-container {
+  background: $wm-secondary-dark;
 }

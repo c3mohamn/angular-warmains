@@ -1,0 +1,5 @@
+@import '~foundation-sites/scss/foundation';
+
+@mixin wm-mixin-border($size, $color) {
+    border: solid rem-calc($size) $color;
+}

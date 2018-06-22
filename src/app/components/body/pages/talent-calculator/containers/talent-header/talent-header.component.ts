@@ -16,6 +16,7 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
   classId = 1;
   preview = [0, 0, 0];
   remaining = 71;
+  totalPoints = 0;
 
   constructor(
     private router: Router,
@@ -28,7 +29,9 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
       .getTalentMetaInfo()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {
-        this.remaining = 71 - data.totalPoints;
+        // TODO: TotalPoints does not change on reset, but preview does... ?
+        console.log('change', data.totalPoints);
+        this.totalPoints = data.totalPoints;
         this.preview = data.preview;
         this.classId = data.classId;
       });
@@ -38,6 +41,10 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
     if (this.classId !== classId) {
       this.router.navigate(['/talent/' + classId]);
     }
+  }
+
+  getRemainingPoints(): number {
+    return 71 - this.totalPoints;
   }
 
   getTalentPreview(): string {
