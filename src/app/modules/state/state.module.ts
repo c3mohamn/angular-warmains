@@ -9,8 +9,14 @@ import { UserStateModule } from './user/user-state.module';
 import { UserState, userReducer } from './user/user.reducer';
 import { RouterReducerState, routerReducer } from '@ngrx/router-store';
 import { RouterStateUrl } from './router/router.reducer';
-import { TalentCalculatorState, talentCalculatorReducer } from './talent-calculator/talent-calculator.reducer';
+import {
+  TalentCalculatorState,
+  talentCalculatorReducer
+} from './talent-calculator/talent-calculator.reducer';
 import { TalentCalculatorStateModule } from './talent-calculator/talent-calculator-state.module';
+import { MatDialogModule } from '@angular/material';
+// tslint:disable-next-line:max-line-length
+import { SaveTalentDialogComponent } from '../../components/body/pages/talent-calculator/components/save-talent-dialog/save-talent-dialog.component';
 
 export interface State {
   user: UserState;
@@ -36,8 +42,11 @@ Object.assign(REDUCERS_TOKEN, reducers);
     StoreDevtoolsModule.instrument({ maxAge: 25, name: 'Warmains' }),
     UserStateModule,
     RouterStateModule,
-    TalentCalculatorStateModule
+    TalentCalculatorStateModule,
+    MatDialogModule
   ],
+  declarations: [SaveTalentDialogComponent],
+  entryComponents: [SaveTalentDialogComponent],
   providers: [{ provide: REDUCERS_TOKEN, useValue: reducers }]
 })
 export class AppStateModule {}

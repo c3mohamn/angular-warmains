@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
-import { TalentCalculatorService } from './services/talent-calculator.service';
 import { TalentCalculatorFacade } from '../../../../modules/state/talent-calculator/talent-calculator.facade';
 import { RouterFacade } from '../../../../modules/state/router/router.facade';
 import { takeUntil } from 'rxjs/operators';
@@ -17,7 +16,6 @@ export class TalentCalculatorComponent implements OnInit, OnDestroy {
   classId = 1;
 
   constructor(
-    private talentService: TalentCalculatorService,
     private talentCalculatorFacade: TalentCalculatorFacade,
     private router: Router,
     private routerFacade: RouterFacade,

@@ -1,8 +1,9 @@
 import { User } from '../../../models/user.model';
 import { UserActionTypes, UserActionsUnion } from './user.actions';
+import { Talent } from '../../../models/talent.model';
 
 export interface UserState extends User {
-  talents: any[];
+  talents: Talent[];
   error: string;
   success: string;
 }
@@ -38,6 +39,24 @@ export function userReducer(
 
     case UserActionTypes.USER_LOGOUT:
       return Object.assign({}, state, initialState, {});
+
+    case UserActionTypes.GET_USER_TALENTS_SUCCESS:
+      return Object.assign({}, state, { talents: action.payload });
+
+    case UserActionTypes.ADD_TALENT:
+      let newTalents = state.talents;
+      newTalents.push(action.payload);
+
+      return Object.assign({}, state, { talents: newTalents });
+
+    case UserActionTypes.REMOVE_TALENT:
+      newTalents = state.talents;
+      newTalents = newTalents.filter(talent => talent.name !== action.payload);
+
+      return Object.assign({}, state, { talents: newTalents });
+
+    case UserActionTypes.DIALOG_CLOSED:
+      return state;
 
     default:
       return state;

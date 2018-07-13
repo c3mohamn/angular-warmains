@@ -1,9 +1,12 @@
-export interface Talent {
+export interface Talent extends NewTalent {
   id: string;
-  user_name: string;
-  name: string;
   created: Date;
-  class_id: number;
+}
+
+export interface NewTalent {
+  username: string;
+  name: string;
+  class_id: string;
   talent_param: string;
   glyph_param: string;
   preview: number[];

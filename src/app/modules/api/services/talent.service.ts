@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Talent } from '../../../models/talent.model';
+import { Talent, NewTalent } from '../../../models/talent.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, publishReplay, refCount } from 'rxjs/operators';
@@ -8,24 +8,60 @@ import { Glyph } from '../../../components/body/pages/talent-calculator/models/t
 
 @Injectable()
 export class TalentService {
+  talentApi = '/api/talent';
+
   constructor(private http: HttpClient) {}
 
-  getTalents(): Observable<Talent[]> {
-    return this.http.get<Talent[]>('/api/talent/getAll');
+  getAllTalents(): Observable<Talent[]> {
+    return this.http.get<Talent[]>(`${this.talentApi}/getAll`);
+  }
+
+  /**
+   * Return all talents for user with username.
+   * @param username user's unique username
+   */
+  getTalents(username: string): Observable<Talent[]> {
+    return this.http.get<Talent[]>(this.talentApi, {
+      params: { username: username }
+    });
   }
 
   /**
    * Save talent for user with user id in db.
    * @param meta talent meta information
-   * @param userId user id
+   * @param username user's unique username
+   * @param name talent name
+   * @param description talent description
    */
-  saveTalent(meta: TalentMetaInfo, userId: string): void {}
+  saveTalent(
+    meta: TalentMetaInfo,
+    username: string,
+    name: string,
+    description: string
+  ): Observable<Talent> {
+    const talent: NewTalent = {
+      username: username,
+      name: name,
+      class_id: meta.classId.toString(),
+      talent_param: meta.talentUrlParam,
+      glyph_param: meta.glyphUrlParam,
+      preview: meta.preview,
+      spec: meta.spec,
+      description: description
+    };
+
+    return this.http.post<Talent>(this.talentApi, talent);
+  }
 
   /**
    * Delete talent with talentId in db.
    * @param talentId talent id
    */
-  deleteTalent(talentId: string): void {}
+  deleteTalent(talentId: string): Observable<void> {
+    return this.http.delete<void>(this.talentApi, {
+      params: { id: talentId }
+    });
+  }
 
   /**
    * Return array talent details for class with classId.

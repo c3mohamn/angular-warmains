@@ -2,8 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TalentCalculatorService } from '../../services/talent-calculator.service';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, catchError } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
+import { TalentMetaInfo } from '../../../../../../modules/state/talent-calculator/talent-calculator.reducer';
+import { TalentService } from '../../../../../../modules/api/services/talent.service';
+import { UserFacade } from '../../../../../../modules/state/user/user.facade';
 
 @Component({
   selector: 'app-talent-header',
@@ -17,11 +20,15 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
   preview = [0, 0, 0];
   remaining = 71;
   totalPoints = 0;
+  meta: TalentMetaInfo; // TODO: Change this to correct type
+  username = '';
 
   constructor(
     private router: Router,
     private talentCalculatorService: TalentCalculatorService,
-    private talentCaluclatorFacade: TalentCalculatorFacade
+    private talentCaluclatorFacade: TalentCalculatorFacade,
+    private talentService: TalentService,
+    private userFacade: UserFacade
   ) {}
 
   ngOnInit() {
@@ -30,11 +37,32 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => {
         // TODO: TotalPoints does not change on reset, but preview does... ?
-        console.log('change', data.totalPoints);
+        this.meta = data;
         this.totalPoints = data.totalPoints;
         this.preview = data.preview;
         this.classId = data.classId;
       });
+
+    this.userFacade
+      .getUserName()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(data => (this.username = data));
+  }
+
+  saveTalent(): void {
+    // this.talentService
+    //   .saveTalent(this.meta, this.username, 'talentName2', 'description')
+    //   .pipe(takeUntil(this.ngUnsubscribe))
+    //   .subscribe(
+    //     data => {
+    //       console.log(data);
+    //       this.userFacade.addTalent(data);
+    //     },
+    //     error => {
+    //       console.log(error.error);
+    //     }
+    //   );
+    this.userFacade.openSaveTalentDialog();
   }
 
   changeClass(classId: number) {

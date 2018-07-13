@@ -7,6 +7,7 @@ import { UserActions } from './user.actions';
 import { UserState } from './user.reducer';
 import { UserQuery } from './user.selector';
 import { UserForm } from '../../../models/user.model';
+import { Talent } from '../../../models/talent.model';
 
 @Injectable()
 export class UserFacade {
@@ -41,6 +42,29 @@ export class UserFacade {
    */
   getUserNotLoggedIn(): Observable<boolean> {
     return this.store.select(UserQuery.isNotLoggedIn);
+  }
+
+  /**
+   * Opens dialog for saving talents.
+   */
+  openSaveTalentDialog() {
+    return this.store.dispatch(new UserActions.OpenSaveTalentDialog());
+  }
+
+  // /**
+  //  * Adds talent to list of user's saved talents.
+  //  * @param talent Talent to be added
+  //  */
+  // addTalent(talent: Talent) {
+  //   return this.store.dispatch(new UserActions.AddTalent(talent));
+  // }
+
+  /**
+   * Removes Talent with talentName from list of user's saved talents.
+   * @param talentName Talent name to be removed
+   */
+  removeTalent(talentName: string) {
+    return this.store.dispatch(new UserActions.RemoveTalent(talentName));
   }
 
   /**
