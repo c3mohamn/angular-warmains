@@ -8,6 +8,7 @@ import { UserState } from './user.reducer';
 import { UserQuery } from './user.selector';
 import { UserForm } from '../../../models/user.model';
 import { Talent } from '../../../models/talent.model';
+import { TalentMetaInfo } from '../talent-calculator/talent-calculator.reducer';
 
 @Injectable()
 export class UserFacade {
@@ -47,17 +48,9 @@ export class UserFacade {
   /**
    * Opens dialog for saving talents.
    */
-  openSaveTalentDialog() {
-    return this.store.dispatch(new UserActions.OpenSaveTalentDialog());
+  openSaveTalentDialog(meta: TalentMetaInfo, username: string) {
+    return this.store.dispatch(new UserActions.OpenSaveTalentDialog([meta, username]));
   }
-
-  // /**
-  //  * Adds talent to list of user's saved talents.
-  //  * @param talent Talent to be added
-  //  */
-  // addTalent(talent: Talent) {
-  //   return this.store.dispatch(new UserActions.AddTalent(talent));
-  // }
 
   /**
    * Removes Talent with talentName from list of user's saved talents.

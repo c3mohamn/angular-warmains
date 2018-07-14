@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TalentCalculatorService } from '../../services/talent-calculator.service';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
-import { takeUntil, catchError } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { TalentMetaInfo } from '../../../../../../modules/state/talent-calculator/talent-calculator.reducer';
 import { TalentService } from '../../../../../../modules/api/services/talent.service';
@@ -50,19 +50,7 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
   }
 
   saveTalent(): void {
-    // this.talentService
-    //   .saveTalent(this.meta, this.username, 'talentName2', 'description')
-    //   .pipe(takeUntil(this.ngUnsubscribe))
-    //   .subscribe(
-    //     data => {
-    //       console.log(data);
-    //       this.userFacade.addTalent(data);
-    //     },
-    //     error => {
-    //       console.log(error.error);
-    //     }
-    //   );
-    this.userFacade.openSaveTalentDialog();
+    this.userFacade.openSaveTalentDialog(this.meta, this.username);
   }
 
   changeClass(classId: number) {
@@ -71,7 +59,7 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  getRemainingPoints(): number {
+  getRemainingTalentPoints(): number {
     return 71 - this.totalPoints;
   }
 

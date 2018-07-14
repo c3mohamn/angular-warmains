@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { User, UserForm } from '../../../models/user.model';
-import { Talent } from '../../../models/talent.model';
+import { Talent, NewTalent } from '../../../models/talent.model';
+import { TalentMetaInfo } from '../talent-calculator/talent-calculator.reducer';
 
 export enum UserActionTypes {
   GET_USER = '[User] GET me',
@@ -14,7 +15,9 @@ export enum UserActionTypes {
   GET_USER_TALENTS_SUCCESS = '[User] got talents',
   GET_USER_CHARS = '[User] GET characters',
   GET_USER_CHARS_SUCCESS = '[User] got characters',
-  ADD_TALENT = '[User] add talent',
+  SAVE_TALENT = '[User] saving talent',
+  SAVE_TALENT_SUCCESS = '[User] saved talent',
+  SAVE_TALENT_ERROR = '[User] could not save talent',
   REMOVE_TALENT = '[User] remove talent'
 }
 
@@ -62,7 +65,7 @@ export namespace UserActions {
   export class OpenSaveTalentDialog implements Action {
     readonly type = UserActionTypes.OPEN_SAVE_TALENT_DIALOG;
 
-    constructor() {}
+    constructor(public payload: [TalentMetaInfo, string]) {}
   }
 
   export class DialogClosed implements Action {
@@ -71,10 +74,22 @@ export namespace UserActions {
     constructor() {}
   }
 
-  export class AddTalent implements Action {
-    readonly type = UserActionTypes.ADD_TALENT;
+  export class SaveTalent implements Action {
+    readonly type = UserActionTypes.SAVE_TALENT;
+
+    constructor(public payload: NewTalent) {}
+  }
+
+  export class SaveTalentSuccess implements Action {
+    readonly type = UserActionTypes.SAVE_TALENT_SUCCESS;
 
     constructor(public payload: Talent) {}
+  }
+
+  export class SaveTalentError implements Action {
+    readonly type = UserActionTypes.SAVE_TALENT_ERROR;
+
+    constructor(public payload: any) {}
   }
 
   export class RemoveTalent implements Action {
@@ -89,6 +104,7 @@ export type UserActionsUnion =
   | UserActions.UserLogout
   | UserActions.UserError
   | UserActions.GetUserTalentsSuccesss
-  | UserActions.AddTalent
+  | UserActions.SaveTalentSuccess
+  | UserActions.SaveTalentError
   | UserActions.RemoveTalent
   | UserActions.DialogClosed;

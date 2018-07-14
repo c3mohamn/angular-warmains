@@ -7,7 +7,6 @@ import {
   map,
   switchMap,
   mergeMap,
-  concat,
   concatMap,
   exhaustMap
 } from 'rxjs/operators';
@@ -58,23 +57,22 @@ export class UserEffects {
               new UserActions.GetUserTalents(data.username)
             ];
           }),
-          catchError(error => {
-            return of(new UserActions.UserError(error));
-          })
+          catchError(error => of(new UserActions.UserError(error)))
         )
       )
     );
 
   @Effect()
-  logout$: Observable<Action> = this.actions$.pipe(
-    ofType(UserActionTypes.USER_LOGOUT),
-    switchMap(action => {
-      localStorage.removeItem('token');
-      this.router.navigate(['login']);
-      // this.userService.removeUserToken()
-      return of();
-    })
-  );
+  logout$: Observable<Action> = this.actions$
+    .ofType(UserActionTypes.USER_LOGOUT)
+    .pipe(
+      switchMap(action => {
+        localStorage.removeItem('token');
+        this.router.navigate(['login']);
+        // this.userService.removeUserToken()
+        return of();
+      })
+    );
 
   @Effect()
   getTalents$: Observable<Action> = this.actions$
@@ -84,31 +82,52 @@ export class UserEffects {
       concatMap(username =>
         this.talentService.getTalents(username).pipe(
           map(talents => new UserActions.GetUserTalentsSuccesss(talents)),
-          catchError(error => {
-            return of(new UserActions.UserError(error));
-          })
+          catchError(error => of(new UserActions.UserError(error)))
         )
       )
     );
 
   @Effect()
-  openSaveTalentDialog$ = this.actions$.pipe(
-    ofType<UserActions.OpenSaveTalentDialog>(
+  openSaveTalentDialog$ = this.actions$
+    .ofType<UserActions.OpenSaveTalentDialog>(
       UserActionTypes.OPEN_SAVE_TALENT_DIALOG
-    ),
-    exhaustMap(_ => {
-      const dialogRef = this.dialog.open(SaveTalentDialogComponent);
-      return dialogRef.afterClosed();
-    }),
-    map(result => {
-      console.log(result);
-      if (result) {
-        return new UserActions.AddTalent(result);
-      }
+    )
+    .pipe(
+      map(action => action.payload),
+      exhaustMap(payload => {
+        const meta = payload[0],
+          username = payload[1];
+        const dialogRef = this.dialog.open(SaveTalentDialogComponent, {
+          width: '80%',
+          minWidth: '300px',
+          maxWidth: '1000px',
+          maxHeight: '600px',
+          data: { meta: meta, username: username }
+        });
+        return dialogRef.afterClosed();
+      }),
+      map(result => {
+        console.log(result);
+        if (result) {
+          return new UserActions.SaveTalent(result);
+        }
 
-      return new UserActions.DialogClosed();
-    })
-  );
+        return new UserActions.DialogClosed();
+      })
+    );
+
+  @Effect()
+  saveTalent$ = this.actions$
+    .ofType<UserActions.SaveTalent>(UserActionTypes.SAVE_TALENT)
+    .pipe(
+      map(action => action.payload),
+      map(newTalent =>
+        this.talentService.saveTalent(newTalent).pipe(
+          map(talent => new UserActions.SaveTalentSuccess(talent)),
+          catchError(error => of(new UserActions.SaveTalentError(error)))
+        )
+      )
+    );
 
   constructor(
     private actions$: Actions,

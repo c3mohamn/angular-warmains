@@ -28,28 +28,9 @@ export class TalentService {
 
   /**
    * Save talent for user with user id in db.
-   * @param meta talent meta information
-   * @param username user's unique username
-   * @param name talent name
-   * @param description talent description
+   * @param talent NewTalent
    */
-  saveTalent(
-    meta: TalentMetaInfo,
-    username: string,
-    name: string,
-    description: string
-  ): Observable<Talent> {
-    const talent: NewTalent = {
-      username: username,
-      name: name,
-      class_id: meta.classId.toString(),
-      talent_param: meta.talentUrlParam,
-      glyph_param: meta.glyphUrlParam,
-      preview: meta.preview,
-      spec: meta.spec,
-      description: description
-    };
-
+  saveTalent(talent: NewTalent): Observable<Talent> {
     return this.http.post<Talent>(this.talentApi, talent);
   }
 

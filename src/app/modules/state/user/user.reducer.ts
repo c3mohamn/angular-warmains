@@ -25,16 +25,15 @@ export function userReducer(
 ): UserState {
   switch (action.type) {
     case UserActionTypes.GET_USER_SUCCESS:
-      const newState = Object.assign({}, state, action.payload, {
+      return Object.assign({}, state, action.payload, {
         error: '',
         success: 'Successfully logged in.'
       });
 
-      return newState;
-
     case UserActionTypes.USER_ERROR:
       return Object.assign({}, state, initialState, {
-        error: action.payload.error
+        error: action.payload.error,
+        success: ''
       });
 
     case UserActionTypes.USER_LOGOUT:
@@ -43,11 +42,21 @@ export function userReducer(
     case UserActionTypes.GET_USER_TALENTS_SUCCESS:
       return Object.assign({}, state, { talents: action.payload });
 
-    case UserActionTypes.ADD_TALENT:
+    case UserActionTypes.SAVE_TALENT_SUCCESS:
       let newTalents = state.talents;
       newTalents.push(action.payload);
 
-      return Object.assign({}, state, { talents: newTalents });
+      return Object.assign({}, state, {
+        talents: newTalents,
+        error: '',
+        success: `Successfully saved talent ${action.payload.name}`
+      });
+
+    case UserActionTypes.SAVE_TALENT_ERROR:
+      return Object.assign({}, state, {
+        error: action.payload.error,
+        success: ''
+      });
 
     case UserActionTypes.REMOVE_TALENT:
       newTalents = state.talents;
