@@ -1,5 +1,10 @@
 # AngularWarmains
 
+I have been too busy to revamp and work on this project latley.
+You can access the website here: app-wm.herokuapp.com.
+
+Older versions are: warmain.herokuapp.com, warmains.herokuapp.com. 
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.0.
 
 ## Development server
