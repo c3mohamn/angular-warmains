@@ -1,9 +1,29 @@
 # AngularWarmains
 
+A character development tool for World of Warcraft that allows to you to theorycraft your heart out.
+
+Built with Angular 6, Nodejs, Ngrx, Mongodb, Foundation, Angular Material.
+
+## Features
+
+- Talent Calcluator. (WIP)
+- Raid comp (not done)
+- Character Development (not done)
+- Create a free account and login to save your builds.
+
 I have been too busy to revamp and work on this project latley.
 You can access the website here: [app-wm.herokuapp.com](http://app-wm.herokuapp.com/home).
 
-Older versions are: [warmain](http://warmain.herokuapp.com/home), [warmains](http://warmains.herokuapp.com/home). 
+Older versions are: 
+- [warmains2](http://warmain.herokuapp.com/home)
+  - Built with AngularJS.
+  - Has Talents working
+  - Built much better than previous iteration.
+- [warmains1](https://warmains.herokuapp.com/). 
+  - Built with AngularJS. 
+  - Has characters working
+  - My first website, so it is not amazingly built.
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.0.
 
