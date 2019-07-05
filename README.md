@@ -2,8 +2,6 @@
 
 A character development tool for World of Warcraft that allows to you to theorycraft your heart out.
 
-Built with Angular 6, Nodejs, Ngrx, Mongodb, Foundation, Angular Material.
-
 ## Features
 
 - Talent Calcluator. (WIP)
