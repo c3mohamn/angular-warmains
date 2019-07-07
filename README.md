@@ -13,11 +13,11 @@ I have been too busy to revamp and work on this project latley.
 You can access the website here: [app-wm.herokuapp.com](http://app-wm.herokuapp.com/home).
 
 Older versions are: 
-- [warmains2](http://warmain.herokuapp.com/home)
+- [warmains2](http://warmain.herokuapp.com/planner/talent/7?talents=&glyphs=)
   - Built with AngularJS.
   - Has Talents working
   - Built much better than previous iteration.
-- [warmains1](https://warmains.herokuapp.com/). 
+- [warmains1](https://warmains.herokuapp.com/character/profile/muus/intrestosham). 
   - Built with AngularJS. 
   - Has characters working
   - My first website, so it is not amazingly built.
