@@ -1,6 +1,6 @@
 # AngularWarmains
 
-A character development tool for World of Warcraft that allows to you to theorycraft your heart out.
+A character, talent, raid planning tool for World of Warcraft.
 
 ## Features
 
