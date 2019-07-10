@@ -14,7 +14,7 @@ import {
   talentCalculatorReducer
 } from './talent-calculator/talent-calculator.reducer';
 import { TalentCalculatorStateModule } from './talent-calculator/talent-calculator-state.module';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
 // tslint:disable-next-line:max-line-length
 import { SaveTalentDialogComponent } from '../../components/body/pages/talent-calculator/components/save-talent-dialog/save-talent-dialog.component';
 

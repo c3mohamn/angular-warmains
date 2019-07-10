@@ -4,7 +4,7 @@ import { Meta } from '@angular/platform-browser';
 import { TalentCalculatorFacade } from '../../../../modules/state/talent-calculator/talent-calculator.facade';
 import { RouterFacade } from '../../../../modules/state/router/router.facade';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-talent-calculator',

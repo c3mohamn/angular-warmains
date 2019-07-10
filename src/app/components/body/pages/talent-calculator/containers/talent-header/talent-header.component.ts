@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TalentCalculatorService } from '../../services/talent-calculator.service';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { TalentMetaInfo } from '../../../../../../modules/state/talent-calculator/talent-calculator.reducer';
 import { TalentService } from '../../../../../../modules/api/services/talent.service';
 import { UserFacade } from '../../../../../../modules/state/user/user.facade';

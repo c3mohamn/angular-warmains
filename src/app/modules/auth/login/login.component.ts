@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { UserForm } from '../../../models/user.model';
 import { UserFacade } from '../../state/user/user.facade';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-login',

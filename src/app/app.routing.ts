@@ -11,30 +11,30 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: './components/body/pages/home/home.module#HomeModule',
+    loadChildren: () => import('./components/body/pages/home/home.module').then(m => m.HomeModule),
     data: { title: 'Home' }
   },
   {
     path: 'about',
-    loadChildren: './components/body/pages/about/about.module#AboutModule',
+    loadChildren: () => import('./components/body/pages/about/about.module').then(m => m.AboutModule),
     data: { title: 'About' }
   },
   {
     path: 'login',
-    loadChildren: './modules/auth/login/login.module#LoginModule',
+    loadChildren: () => import('./modules/auth/login/login.module').then(m => m.LoginModule),
     data: { title: 'Login' },
     canActivate: [LoggedInGuard]
   },
   {
     path: 'register',
-    loadChildren: './modules/auth/register/register.module#RegisterModule',
+    loadChildren: () => import('./modules/auth/register/register.module').then(m => m.RegisterModule),
     data: { title: 'Register' },
     canActivate: [LoggedInGuard]
   },
   {
     path: 'talent/:classId',
     loadChildren:
-      './components/body/pages/talent-calculator/talent-calculator.module#TalentCalculatorModule',
+      () => import('./components/body/pages/talent-calculator/talent-calculator.module').then(m => m.TalentCalculatorModule),
     data: { title: 'Talents' }
   },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }

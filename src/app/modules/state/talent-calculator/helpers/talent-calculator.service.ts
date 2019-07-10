@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 import { TalentCalculatorQuery } from '../talent-calculator.selector';
 import * as talentHelper from './talent-calculator.helper';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class TalentCalculatorService implements OnDestroy {

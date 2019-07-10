@@ -6,7 +6,7 @@ import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-c
 import { TalentMetaInfo } from '../../../../../../modules/state/talent-calculator/talent-calculator.reducer';
 import { talentIdMap } from '../../models/talent-id.map';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-talent-tree',

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { UserForm } from '../../../models/user.model';
 import { UserService } from '../../api/services/user.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-register',

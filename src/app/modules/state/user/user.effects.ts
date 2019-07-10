@@ -16,118 +16,112 @@ import { UserActionTypes, UserActions } from './user.actions';
 import { TalentService } from '../../api/services/talent.service';
 // tslint:disable-next-line:max-line-length
 import { SaveTalentDialogComponent } from '../../../components/body/pages/talent-calculator/components/save-talent-dialog/save-talent-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class UserEffects {
   @Effect()
-  validate$: Observable<Action> = this.actions$
-    .ofType<UserActions.GetUser>(UserActionTypes.GET_USER)
-    .pipe(
-      map(action => action.payload),
-      switchMap(token =>
-        this.userService.validateToken(token).pipe(
-          mergeMap(data => {
-            localStorage.setItem('token', data.token);
-            return [
-              new UserActions.GetUserSuccess(data),
-              new UserActions.GetUserTalents(data.username)
-            ];
-          }),
-          catchError(error => {
-            localStorage.removeItem('token');
-            return of(new UserActions.UserError(error));
-          })
-        )
+  validate$: Observable<Action> = this.actions$.pipe(
+    ofType<UserActions.GetUser>(UserActionTypes.GET_USER),
+    map(action => action.payload),
+    switchMap(token =>
+      this.userService.validateToken(token).pipe(
+        mergeMap(data => {
+          localStorage.setItem('token', data.token);
+          return [
+            new UserActions.GetUserSuccess(data),
+            new UserActions.GetUserTalents(data.username)
+          ];
+        }),
+        catchError(error => {
+          localStorage.removeItem('token');
+          return of(new UserActions.UserError(error));
+        })
       )
-    );
-
-  @Effect()
-  login$: Observable<Action> = this.actions$
-    .ofType<UserActions.Userlogin>(UserActionTypes.USER_LOGIN)
-    .pipe(
-      map(action => action.payload),
-      switchMap(user =>
-        this.userService.loginUser(user).pipe(
-          mergeMap(data => {
-            localStorage.setItem('token', data.token);
-            this.router.navigate(['home']);
-            return [
-              new UserActions.GetUserSuccess(data),
-              new UserActions.GetUserTalents(data.username)
-            ];
-          }),
-          catchError(error => of(new UserActions.UserError(error)))
-        )
-      )
-    );
-
-  @Effect()
-  logout$: Observable<Action> = this.actions$
-    .ofType(UserActionTypes.USER_LOGOUT)
-    .pipe(
-      switchMap(action => {
-        localStorage.removeItem('token');
-        this.router.navigate(['login']);
-        // this.userService.removeUserToken()
-        return of();
-      })
-    );
-
-  @Effect()
-  getTalents$: Observable<Action> = this.actions$
-    .ofType<UserActions.GetUserTalents>(UserActionTypes.GET_USER_TALENTS)
-    .pipe(
-      map(action => action.payload),
-      concatMap(username =>
-        this.talentService.getTalents(username).pipe(
-          map(talents => new UserActions.GetUserTalentsSuccesss(talents)),
-          catchError(error => of(new UserActions.UserError(error)))
-        )
-      )
-    );
-
-  @Effect()
-  openSaveTalentDialog$ = this.actions$
-    .ofType<UserActions.OpenSaveTalentDialog>(
-      UserActionTypes.OPEN_SAVE_TALENT_DIALOG
     )
-    .pipe(
-      map(action => action.payload),
-      exhaustMap(payload => {
-        const meta = payload[0],
-          username = payload[1];
-        const dialogRef = this.dialog.open(SaveTalentDialogComponent, {
-          width: '80%',
-          minWidth: '300px',
-          maxWidth: '1000px',
-          maxHeight: '600px',
-          data: { meta: meta, username: username }
-        });
-        return dialogRef.afterClosed();
-      }),
-      map(result => {
-        console.log(result);
-        if (result) {
-          return new UserActions.SaveTalent(result);
-        }
-
-        return new UserActions.DialogClosed();
-      })
-    );
+  );
 
   @Effect()
-  saveTalent$ = this.actions$
-    .ofType<UserActions.SaveTalent>(UserActionTypes.SAVE_TALENT)
-    .pipe(
-      map(action => action.payload),
-      map(newTalent =>
-        this.talentService.saveTalent(newTalent).pipe(
-          map(talent => new UserActions.SaveTalentSuccess(talent)),
-          catchError(error => of(new UserActions.SaveTalentError(error)))
-        )
+  login$: Observable<Action> = this.actions$.pipe(
+    ofType<UserActions.Userlogin>(UserActionTypes.USER_LOGIN),
+    map(action => action.payload),
+    switchMap(user =>
+      this.userService.loginUser(user).pipe(
+        mergeMap(data => {
+          localStorage.setItem('token', data.token);
+          this.router.navigate(['home']);
+          return [
+            new UserActions.GetUserSuccess(data),
+            new UserActions.GetUserTalents(data.username)
+          ];
+        }),
+        catchError(error => of(new UserActions.UserError(error)))
       )
-    );
+    )
+  );
+
+  @Effect()
+  logout$: Observable<Action> = this.actions$.pipe(
+    ofType(UserActionTypes.USER_LOGOUT),
+    switchMap(action => {
+      localStorage.removeItem('token');
+      this.router.navigate(['login']);
+      // this.userService.removeUserToken()
+      return of(action);
+    })
+  );
+
+  @Effect()
+  getTalents$: Observable<Action> = this.actions$.pipe(
+    ofType<UserActions.GetUserTalents>(UserActionTypes.GET_USER_TALENTS),
+    map(action => action.payload),
+    concatMap(username =>
+      this.talentService.getTalents(username).pipe(
+        map(talents => new UserActions.GetUserTalentsSuccesss(talents)),
+        catchError(error => of(new UserActions.UserError(error)))
+      )
+    )
+  );
+
+  @Effect()
+  openSaveTalentDialog$ = this.actions$.pipe(
+    ofType<UserActions.OpenSaveTalentDialog>(
+      UserActionTypes.OPEN_SAVE_TALENT_DIALOG
+    ),
+    map(action => action.payload),
+    exhaustMap(payload => {
+      const meta = payload[0],
+        username = payload[1];
+      const dialogRef = this.dialog.open(SaveTalentDialogComponent, {
+        width: '80%',
+        minWidth: '300px',
+        maxWidth: '1000px',
+        maxHeight: '600px',
+        data: { meta: meta, username: username }
+      });
+      return dialogRef.afterClosed();
+    }),
+    map(result => {
+      console.log(result);
+      if (result) {
+        return new UserActions.SaveTalent(result);
+      }
+
+      return new UserActions.DialogClosed();
+    })
+  );
+
+  @Effect()
+  saveTalent$ = this.actions$.pipe(
+    ofType<UserActions.SaveTalent>(UserActionTypes.SAVE_TALENT),
+    map(action => action.payload),
+    map(newTalent =>
+      this.talentService.saveTalent(newTalent).pipe(
+        map(talent => new UserActions.SaveTalentSuccess(talent)),
+        catchError(error => of(new UserActions.SaveTalentError(error)))
+      )
+    )
+  );
 
   constructor(
     private actions$: Actions,

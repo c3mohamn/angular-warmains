@@ -3,8 +3,8 @@ import { Glyph } from '../../models/talents.model';
 import { TalentCalculatorFacade } from '../../../../../../modules/state/talent-calculator/talent-calculator.facade';
 import { GlyphsDialogComponent } from '../../components/glyphs-dialog/glyphs-dialog.component';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
-import { MatDialog } from '@angular/material';
+import { Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-talent-glyphs',

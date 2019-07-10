@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserFacade } from '../../modules/state/user/user.facade';
 import { RouterFacade } from '../../modules/state/router/router.facade';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-header',
