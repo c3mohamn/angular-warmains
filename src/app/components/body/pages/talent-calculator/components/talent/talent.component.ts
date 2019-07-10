@@ -35,9 +35,7 @@ export class TalentComponent implements OnChanges {
     this.requires = this.talents[1];
 
     if (talents && talents.currentValue[0]) {
-      this.iconUrl = `url(./assets/images/talent-icons/${
-        this.talent.iconPath
-      }.jpg)`;
+      this.iconUrl = `url(./assets/images/talent-icons/${this.talent.iconPath}.jpg)`;
       this.tooltipContent = this.getTooltip(this.talent);
     }
   }
@@ -79,9 +77,7 @@ export class TalentComponent implements OnChanges {
   private getTooltip(talent: Talent): string {
     const name = `<h5>${talent.name}</h5>`;
     const rank = `<h5>${talent.curRank}/${talent.maxRank}</h5>`;
-    const icon = `<img class="icon" src="assets/images/talent-icons/${
-      talent.iconPath
-    }.jpg"/>`;
+    const icon = `<img class="icon" src="assets/images/talent-icons/${talent.iconPath}.jpg"/>`;
     let currentRankDescription = '';
     let nextRankDescription = '';
     let clickTo = '';

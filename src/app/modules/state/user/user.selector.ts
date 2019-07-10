@@ -4,7 +4,10 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 const getUserState = createFeatureSelector<UserState>('user');
 
 export namespace UserQuery {
-  export const getCurrentUser = createSelector(getUserState, state => state);
+  export const getCurrentUser = createSelector(
+    getUserState,
+    state => state
+  );
 
   export const isLoggedIn = createSelector(
     getUserState,

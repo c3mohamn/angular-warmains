@@ -11,7 +11,7 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
-import { DOCUMENT } from "@angular/common";
+import { DOCUMENT } from '@angular/common';
 import { WINDOW } from '../../services/window.service';
 
 @Directive({

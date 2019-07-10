@@ -80,9 +80,7 @@ export class TalentTreeComponent implements OnInit, OnDestroy {
   getSpecBg(treeId: number): string {
     const spec = this.getSpec(treeId);
 
-    return `url(assets/images/talent-icons/${
-      this.classId
-    }/${spec}/background.jpg)`;
+    return `url(assets/images/talent-icons/${this.classId}/${spec}/background.jpg)`;
   }
 
   ngOnDestroy() {

@@ -49,7 +49,9 @@ export class UserFacade {
    * Opens dialog for saving talents.
    */
   openSaveTalentDialog(meta: TalentMetaInfo, username: string) {
-    return this.store.dispatch(new UserActions.OpenSaveTalentDialog([meta, username]));
+    return this.store.dispatch(
+      new UserActions.OpenSaveTalentDialog([meta, username])
+    );
   }
 
   /**

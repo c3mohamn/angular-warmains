@@ -72,9 +72,7 @@ export function canAddPoint(
       state.talents[talent.requires].maxRank
   ) {
     console.log(
-      `This talent requires max points in talent ${
-        state.talents[talent.requires].name
-      }`
+      `This talent requires max points in talent ${state.talents[talent.requires].name}`
     );
     canAdd = false;
   }

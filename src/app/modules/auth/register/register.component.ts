@@ -75,12 +75,12 @@ export class RegisterComponent implements OnDestroy {
     return input.hasError('required')
       ? 'You must enter a value'
       : input.hasError('email')
-        ? 'Not a valid email'
-        : input.hasError('minLength')
-          ? 'Username be greater than 2 characters'
-          : input.hasError('maxlength')
-            ? 'You must enter a value'
-            : '';
+      ? 'Not a valid email'
+      : input.hasError('minLength')
+      ? 'Username be greater than 2 characters'
+      : input.hasError('maxlength')
+      ? 'You must enter a value'
+      : '';
   }
 
   ngOnDestroy() {

@@ -11,30 +11,42 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./components/body/pages/home/home.module').then(m => m.HomeModule),
+    loadChildren: () =>
+      import('./components/body/pages/home/home.module').then(
+        m => m.HomeModule
+      ),
     data: { title: 'Home' }
   },
   {
     path: 'about',
-    loadChildren: () => import('./components/body/pages/about/about.module').then(m => m.AboutModule),
+    loadChildren: () =>
+      import('./components/body/pages/about/about.module').then(
+        m => m.AboutModule
+      ),
     data: { title: 'About' }
   },
   {
     path: 'login',
-    loadChildren: () => import('./modules/auth/login/login.module').then(m => m.LoginModule),
+    loadChildren: () =>
+      import('./modules/auth/login/login.module').then(m => m.LoginModule),
     data: { title: 'Login' },
     canActivate: [LoggedInGuard]
   },
   {
     path: 'register',
-    loadChildren: () => import('./modules/auth/register/register.module').then(m => m.RegisterModule),
+    loadChildren: () =>
+      import('./modules/auth/register/register.module').then(
+        m => m.RegisterModule
+      ),
     data: { title: 'Register' },
     canActivate: [LoggedInGuard]
   },
   {
     path: 'talent/:classId',
-    loadChildren:
-      () => import('./components/body/pages/talent-calculator/talent-calculator.module').then(m => m.TalentCalculatorModule),
+    loadChildren: () =>
+      import(
+        './components/body/pages/talent-calculator/talent-calculator.module'
+      ).then(m => m.TalentCalculatorModule),
     data: { title: 'Talents' }
   },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
