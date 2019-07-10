@@ -163,9 +163,7 @@
     "Increases the damage caused by your Windfury Weapon effect by 27% increases the spell damage on your Flametongue Weapon by 20% and increases the bonus healing on your Earthliving Weapon by 20%.",
     "Increases the damage caused by your Windfury Weapon effect by 40% increases the spell damage on your Flametongue Weapon by 30% and increases the bonus healing on your Earthliving Weapon by 30%."
   ],
-  "33": [
-    "Reduces the mana cost of your Shock spells by 45%."
-  ],
+  "33": ["Reduces the mana cost of your Shock spells by 45%."],
   "34": [
     "Increases your chance to dodge by an additional 1%, and reduces the duration of all Disarm effects used against you by 16%. This does not stack with other Disarm duration reducing effects.",
     "Increases your chance to dodge by an additional 2%, and reduces the duration of all Disarm effects used against you by 25%. This does not stack with other Disarm duration reducing effects.",

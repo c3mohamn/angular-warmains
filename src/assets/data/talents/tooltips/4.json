@@ -29,9 +29,7 @@
     "Increases the critical strike chance of your Backstab ability by 20%, and the critical strike chance of your Mutilate ability by 10%.",
     "Increases the critical strike chance of your Backstab ability by 30%, and the critical strike chance of your Mutilate ability by 15%."
   ],
-  "6": [
-    "Increases your maximum Energy by 10."
-  ],
+  "6": ["Increases your maximum Energy by 10."],
   "7": [
     "Reduces the energy cost of your Expose Armor ability by 5.",
     "Reduces the energy cost of your Expose Armor ability by 10."
@@ -210,10 +208,7 @@
     "Gives you a 4% chance to get an extra attack on the same target after hitting your target with your Sword or Axe.",
     "Gives you a 5% chance to get an extra attack on the same target after hitting your target with your Sword or Axe."
   ],
-  "43": [
-    "Increases your expertise by 5.",
-    "Increases your expertise by 10."
-  ],
+  "43": ["Increases your expertise by 5.", "Increases your expertise by 10."],
   "44": [
     "Increases the damage dealt by Sinister Strike and Backstab by 5% and your damaging melee attacks have a 10% chance to Daze the target for 4 sec.",
     "Increases the damage dealt by Sinister Strike and Backstab by 10% and your damaging melee attacks have a 10% chance to Daze the target for 8 sec."

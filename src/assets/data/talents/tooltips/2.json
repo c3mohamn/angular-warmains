@@ -29,9 +29,7 @@
     "Reduces the duration of all Fear and Disorient effects by 15%.",
     "Reduces the duration of all Fear and Disorient effects by 30%."
   ],
-  "5": [
-    "Increases the radius of your Auras to 40 yards."
-  ],
+  "5": ["Increases the radius of your Auras to 40 yards."],
   "6": [
     "After getting a critical effect from your Flash of Light, Holy Light, or Holy Shock heal spell, gives you a 20% chance to gain Mana equal to 60% of the base cost of your spell.",
     "After getting a critical effect from your Flash of Light, Holy Light, or Holy Shock heal spell, gives you a 40% chance to gain Mana equal to 60% of the base cost of your spell.",

@@ -33,9 +33,7 @@
     "Increases the critical strike chance of your Overpower ability by 25%.",
     "Increases the critical strike chance of your Overpower ability by 50%."
   ],
-  "7": [
-    "Generates 1 rage per 3 seconds."
-  ],
+  "7": ["Generates 1 rage per 3 seconds."],
   "8": [
     "Increases the critical strike damage bonus of your abilities by 10%.",
     "Increases the critical strike damage bonus of your abilities by 20%."
@@ -124,9 +122,7 @@
     "Your melee critical hits have a 6% chance of allowing the use of Execute regardless of the target's health state. In addition, you keep 7 rage after using Execute.",
     "Your melee critical hits have a 9% chance of allowing the use of Execute regardless of the target's health state.  In addition, you keep 10 rage after using Execute."
   ],
-  "27": [
-    "You generate 25% more rage from damage dealt."
-  ],
+  "27": ["You generate 25% more rage from damage dealt."],
   "28": [
     "Increases your attack speed by 5%. In addition your Rend and Deep Wound abilities also increase all physical damage caused to that target by 2%.",
     "Increases your attack speed by 10%. In addition your Rend and Deep Wound abilities also increase all physical damage caused to that target by 4%."

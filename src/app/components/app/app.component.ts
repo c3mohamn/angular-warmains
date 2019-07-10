@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserFacade } from '../../modules/state/user/user.facade';
+import { UserFacade } from '../../state/user/user.facade';
 
 @Component({
   selector: 'app-root',

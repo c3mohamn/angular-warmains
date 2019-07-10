@@ -40,9 +40,7 @@
     "Reduces the pushback suffered from damaging attacks, while casting Drain Life, Drain Mana, Drain Soul, Unstable Affliction and Haunt by 46%.",
     "Reduces the pushback suffered from damaging attacks, while casting Drain Life, Drain Mana, Drain Soul, Unstable Affliction and Haunt by 70%."
   ],
-  "9": [
-    "Reduces the global cooldown of your Curses by 0.5 sec."
-  ],
+  "9": ["Reduces the global cooldown of your Curses by 0.5 sec."],
   "10": [
     "Increases the range of your Affliction spells by 10%.",
     "Increases the range of your Affliction spells by 20%."
