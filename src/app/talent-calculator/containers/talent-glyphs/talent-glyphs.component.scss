@@ -1,0 +1,10 @@
+@import '~assets/scss/core';
+
+.glyphs-container {
+  padding: 0.5rem;
+  @include wm-mixin-border(2px, $wm-white);
+
+  .glyphs-header {
+    padding: 0 0.5rem;
+  }
+}

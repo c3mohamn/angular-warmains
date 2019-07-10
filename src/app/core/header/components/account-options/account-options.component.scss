@@ -1,0 +1,29 @@
+@import '~assets/scss/core';
+
+.account-options {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: $wm-secondary-dark;
+  box-shadow: $wm-boxshadow-black-2;
+
+  .option {
+    width: 100%;
+    padding: 0.5rem 2rem;
+    text-align: center;
+    color: $wm-secondary-verylight;
+
+    &.static {
+      background: lighten($wm-secondary-dark, 10);
+
+      &:hover {
+        color: $wm-secondary-verylight;
+      }
+    }
+
+    &:hover {
+      color: $wm-primary-light;
+      background: lighten($wm-secondary-dark, 10);
+    }
+  }
+}

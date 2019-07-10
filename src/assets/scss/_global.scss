@@ -17,10 +17,6 @@
   padding-right: 0;
 }
 
-.no-margin {
-  margin: 0;
-}
-
 .inactive {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
@@ -134,6 +130,7 @@
 .button {
   padding: 0.8rem 1.5rem;
   box-shadow: $wm-boxshadow-2;
+  transition: $wm-transition-fast;
   margin: 0 0.5rem;
 
   &.clear {

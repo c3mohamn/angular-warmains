@@ -1,0 +1,12 @@
+@import '~assets/scss/core';
+
+.ng-tool-tip-content {
+  z-index: 20;
+  padding: 0.5rem;
+  max-width: 20rem;
+  border: 1px solid #ddd;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: $wm-boxshadow-black-2;
+  position: absolute;
+}

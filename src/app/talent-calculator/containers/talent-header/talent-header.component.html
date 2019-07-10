@@ -1,0 +1,27 @@
+<div class="talent-header-container dark-container">
+  <div class="grid-x align-middle align-center">
+    <div class="cell shrink">
+      <h4 [style.color]="getClassColor()" class="current-class-name">{{ getClassName() }}</h4>
+    </div>
+    <div class="cell shrink">
+      <h5 class="talent-preview">{{ getTalentPreview() }}</h5>
+    </div>
+    <div class="cell auto"></div>
+    <div class="cell shrink">
+      <img *ngFor="let classId of classIds" (click)="changeClass(classId)" [ngClass]="{selected: classId === curClassId}" title="{{ getClassName(classId) }}"
+        class="class-icons" src="assets/images/class-icons/{{classId}}.png" alt="">
+    </div>
+  </div>
+  <div class="cell small-12 grid-x align-middle">
+    <div class="cell shrink">
+      <h6 class="talent-remaining">Remaining: {{ getRemainingTalentPoints() }}</h6>
+    </div>
+    <div class="cell auto"></div>
+    <div *ngIf="username" class="cell shrink">
+      <button class="button clear primary" (click)="saveTalent()">Save</button>
+    </div>
+    <div class="cell shrink">
+      <button class="button alert clear disabled">Reset all</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+@import '~assets/scss/core';
+
+.talent-saved-container {
+  height:100%;
+  padding: 0.5rem;
+  @include wm-mixin-border(2px, $wm-white);
+
+  .saved-header {
+    padding: 0 0.5rem;
+  }
+}

@@ -1,0 +1,17 @@
+<div class="glyphs-dialog-container">
+  <div class="grid-x grid-margin-x">
+    <div *ngFor="let glyph of glyphs" class="small-12 medium-6 grid-x glyph" (click)="addGlyph(glyph)">
+      <div class="cell shrink">
+        <img class="icon" src="http://wow.zamimg.com/images/wow/icons/medium/{{glyph.icon.toLowerCase()}}.jpg" alt="">
+      </div>
+      <div class="cell auto grid-y">
+        <div class="cell">
+          <h6 class="name">{{glyph.name}}</h6>
+        </div>
+        <div class="cell">
+          <p class="description">{{glyph.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,7 +27,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` to start api server. Accessible through `http://localhost:3000/`.
+Run `npm run-script serve`, which will start the front-end server && hookup to the api server.
+
+The app will automatically reload if you change any of the source files.
+
+Changes to the back-end/api server will require a restart.
 
 ## Code scaffolding
 

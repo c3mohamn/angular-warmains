@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 //char Schema
 var TalentSchema = mongoose.Schema({
-    user_name: {type: String, required: true},
+    username: {type: String, required: true},
     name: {type: String, required: true},
     class_id: {type: Number, required: true},
     talent_param: {type: String, required: true},
