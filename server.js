@@ -1,7 +1,6 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
-  path = require('path'),
-  expressValidator = require('express-validator');
+  path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,26 +12,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist')));
-
-// Express validator
-app.use(
-  expressValidator({
-    errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.'),
-        root = namespace.shift(),
-        formParam = root;
-
-      while (namespace.length) {
-        formParam += '[' + namespace.shift() + ']';
-      }
-      return {
-        param: formParam,
-        msg: msg,
-        value: value
-      };
-    }
-  })
-);
 
 // API location
 app.use('/api', api);
