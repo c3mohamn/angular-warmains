@@ -1,12 +1,12 @@
-# AngularWarmains
+# Warmains
 
 A character, talent, raid planning tool for World of Warcraft.
 
 ## Features
 
-- Talent Calcluator. (WIP)
-- Raid comp (not done)
-- Character Development (not done)
+- Talent Calcluator. (95% complete)
+- Raid comp (WIP)
+- Character Development (WIP)
 - Create a free account and login to save your builds.
 
 I have been too busy to revamp and work on this project latley.
