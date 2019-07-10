@@ -6,18 +6,19 @@
   "license": "MIT",
   "engines": {
     "node": "11.x",
-    "npm": "6.x"
+    "npm": "6.9.0"
   },
   "main": "server.js",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
     "serve": "ng serve --proxy-config proxy.config.json",
-    "build": "ng build --prod",
+    "build": "ng build",
+    "build:prod": "ng build --aot --prod --build-optimizer",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "heroku-postbuild": "ng build --aot --prod --build-optimizer",
+    "heroku-postbuild": "npm run build:prod",
     "prettier:format": "prettier --print-width 80 --single-quote --trailing-comma none --write **/*.ts"
   },
   "private": true,
