@@ -2,6 +2,8 @@
 
 A character, talent, raid planning tool for World of Warcraft.
 
+![](https://i.imgur.com/nqwwG1a.png)
+
 ## Features
 
 - Talent Calcluator. (95% complete)
