@@ -27,18 +27,11 @@ router.post('', (req, res) => {
   });
 
   // Error checking talent fields
-  req
-    .checkBody('name', 'Name must be between 2 and 20 characters long.')
-    .isLength({ min: 2, max: 20 });
+  req.checkBody('name', 'Name must be between 2 and 20 characters long.').isLength({ min: 2, max: 20 });
   req.checkBody('class_id', 'Invalid class Id.').isInt();
   req.checkBody('talent_param', 'Invalid talents.').isLength({ max: 50 });
   req.checkBody('glyph_param', 'Invalid talents.').isLength({ max: 50 });
-  req
-    .checkBody(
-      'description',
-      'Talent description cannot exceed 100 characters.'
-    )
-    .isLength({ min: 0, max: 100 });
+  req.checkBody('description', 'Talent description cannot exceed 100 characters.').isLength({ min: 0, max: 100 });
 
   var errors = req.validationErrors();
 
@@ -47,26 +40,23 @@ router.post('', (req, res) => {
     res.statusMessage = 'Invalid input.';
     res.status(400).send(errors);
   } else {
-    Talent.find(
-      { username: talent.username, name: talent.name },
-      (err, result) => {
-        if (err) throw err;
+    Talent.find({ username: talent.username, name: talent.name }, (err, result) => {
+      if (err) throw err;
 
-        // Talent already exists
-        if (result.length > 0) {
-          res.status(400).send(`Talent ${talent.name} already exists`);
-        } else {
-          Talent.saveTalent(talent, (err, talent) => {
-            if (err) {
-              console.log(err);
-              res.status(500).send();
-            }
-            console.log(talent);
-            res.status(200).send(talent);
-          });
-        }
+      // Talent already exists
+      if (result.length > 0) {
+        res.status(400).send(`Talent ${talent.name} already exists`);
+      } else {
+        Talent.saveTalent(talent, (err, talent) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send();
+          }
+          console.log(talent);
+          res.status(200).send(talent);
+        });
       }
-    );
+    });
   }
 });
 

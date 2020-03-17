@@ -5,7 +5,6 @@ import { TalentCalculatorFacade } from '../../../state/talent-calculator/talent-
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TalentMetaInfo } from '../../../state/talent-calculator/talent-calculator.reducer';
-import { TalentService } from '../../services/talent-api.service';
 import { UserFacade } from '../../../state/user/user.facade';
 
 @Component({
@@ -27,7 +26,6 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private talentCalculatorService: TalentCalculatorService,
     private talentCaluclatorFacade: TalentCalculatorFacade,
-    private talentService: TalentService,
     private userFacade: UserFacade
   ) {}
 
