@@ -3,27 +3,17 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppStateModule } from './state/state.module';
-import { RoutingModule } from './app-routing.module';
-import { FooterModule } from './core/footer/footer.module';
+import { LoggedInGuard } from './guards/logged-in.guard';
 
-import { LoggedInGuard } from './auth/guards/logged-in.guard';
+import { AppComponent } from './app.component';
 
-import { AppComponent } from './components/app/app.component';
-import { BodyComponent } from './components/body/body.component';
-import { HeaderModule } from './core/header/header.module';
+import { CoreModule } from './modules/core/core.module';
+import { AppStateModule } from './modules/state/state.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [AppComponent, BodyComponent],
-  imports: [
-    BrowserModule,
-    RoutingModule,
-    BrowserAnimationsModule,
-    HeaderModule,
-    FooterModule,
-    HttpClientModule,
-    AppStateModule
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, CoreModule, HttpClientModule, AppStateModule],
   providers: [LoggedInGuard],
   bootstrap: [AppComponent]
 })

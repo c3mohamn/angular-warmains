@@ -194,10 +194,7 @@
     "Increases the damage done by your offhand weapon by 20%.",
     "Increases the damage done by your offhand weapon by 25%."
   ],
-  "41": [
-    "Reduces the rage cost of your Execute ability by 2.",
-    "Reduces the rage cost of your Execute ability by 5."
-  ],
+  "41": ["Reduces the rage cost of your Execute ability by 2.", "Reduces the rage cost of your Execute ability by 5."],
   "42": [
     "Gives you a 30% chance to receive a 2% damage bonus for 12 sec after being the victim of a damaging attack.",
     "Gives you a 30% chance to receive a 4% damage bonus for 12 sec after being the victim of a damaging attack.",
@@ -254,9 +251,7 @@
   "53": [
     "<span style=text-align:left;float:left;>Instant</span><span style=text-align:right;float:right;>45 sec cooldown</span><br>Removes any Immobilization effects and refreshes the cooldown of your Intercept ability."
   ],
-  "54": [
-    "Increases ranged and melee critical hit chance of all party and raid members within 100 yards by 5%."
-  ],
+  "54": ["Increases ranged and melee critical hit chance of all party and raid members within 100 yards by 5%."],
   "55": [
     "Your Heroic Strike, Bloodthirst, and Whirlwind hits have a 7% chance of making your next Slam instant for 5 seconds.",
     "Your Heroic Strike, Bloodthirst, and Whirlwind hits have a 13% chance of making your next Slam instant for 5 seconds.",
