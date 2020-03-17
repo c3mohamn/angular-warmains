@@ -10,10 +10,20 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './modules/core/core.module';
 import { AppStateModule } from './modules/state/state.module';
 import { AppRoutingModule } from './app-routing.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, CoreModule, HttpClientModule, AppStateModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    CoreModule,
+    HttpClientModule,
+    AppStateModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+  ],
   providers: [LoggedInGuard],
   bootstrap: [AppComponent]
 })
