@@ -57,7 +57,7 @@ export class TalentCalculatorService implements OnDestroy {
    * @param tooltips array of Talent tooltips
    */
   getTalentTooltips(talents: Talent[], tooltips: any): Talent[] {
-    talents.forEach((talent, index) => (talent.tooltip = tooltips[index]));
+    talents.forEach(talent => (talent.tooltip = tooltips[talent.id]));
 
     return talents;
   }
@@ -113,9 +113,8 @@ export class TalentCalculatorService implements OnDestroy {
       });
     }
 
-    Object.keys(talents).forEach(i => {
-      const p = (talentsFromUrl && talentsFromUrl[i]) || 0;
-      const talent = talents[i];
+    talents.forEach(talent => {
+      const p = (talentsFromUrl && talentsFromUrl[talent.id]) || 0;
       state.meta.talentPointsArray.push(0);
 
       if (p > 0) {
@@ -187,7 +186,7 @@ export class TalentCalculatorService implements OnDestroy {
    * @param adding true iff glyph is being added
    */
   getUpdatedGlyphMetaInfo(index: number, glyph?: Glyph, adding?: boolean): TalentMetaInfo {
-    const meta = Object.assign({}, this.state.meta);
+    const meta = { ...this.state.meta };
 
     this.updateGlyphMetaInfo(meta, index, glyph, adding);
     this.updateUrlParams(meta.classId, meta.talentUrlParam, meta.glyphUrlParam);
@@ -201,7 +200,7 @@ export class TalentCalculatorService implements OnDestroy {
    * @param points amount of points to be added to talent
    */
   getUpdatedTalentMetaInfo(talent: Talent, points: number): TalentMetaInfo {
-    const meta = Object.assign({}, this.state.meta);
+    const meta = { ...this.state.meta };
 
     this.updateTalentMetaInfo(meta, talent, points);
     this.updateUrlParams(meta.classId, meta.talentUrlParam, meta.glyphUrlParam);
@@ -215,7 +214,7 @@ export class TalentCalculatorService implements OnDestroy {
    * @param treeId id of spec
    */
   resetTalentPoints(treeId?: number): TalentCalculatorState {
-    const state = Object.assign({}, this.state);
+    const state = { ...this.state };
 
     // Reset talent points
     state.talents.forEach((talent, index) => {
@@ -257,6 +256,7 @@ export class TalentCalculatorService implements OnDestroy {
    * @param points Points being added to talent
    */
   private updateTalentMetaInfo(meta: TalentMetaInfo, talent: Talent, points: number): void {
+    console.log(meta, talent, points);
     meta.talentPointsArray[talent.id] += points;
     meta.totalPoints += points;
     meta.preview[talent.tree] += points;

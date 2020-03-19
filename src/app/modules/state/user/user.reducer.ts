@@ -22,44 +22,30 @@ export const initialState: UserState = {
 export function userReducer(state = initialState, action: UserActionsUnion): UserState {
   switch (action.type) {
     case UserActionTypes.GET_USER_SUCCESS:
-      return Object.assign({}, state, action.payload, {
-        error: '',
-        success: 'Successfully logged in.'
-      });
+      return { ...state, ...action.payload, error: '', success: 'Successfully logged in.' };
 
     case UserActionTypes.USER_ERROR:
-      return Object.assign({}, state, initialState, {
-        error: action.payload.error,
-        success: ''
-      });
+      return { ...state, ...initialState, error: action.payload.error, success: '' };
 
     case UserActionTypes.USER_LOGOUT:
-      return Object.assign({}, state, initialState, {});
+      return { ...state, ...initialState };
 
     case UserActionTypes.GET_USER_TALENTS_SUCCESS:
-      return Object.assign({}, state, { talents: action.payload });
+      return { ...state, talents: action.payload };
 
     case UserActionTypes.SAVE_TALENT_SUCCESS:
-      let newTalents = state.talents;
-      newTalents.push(action.payload);
-
-      return Object.assign({}, state, {
-        talents: newTalents,
+      return {
+        ...state,
+        talents: state.talents.concat(action.payload),
         error: '',
         success: `Successfully saved talent ${action.payload.name}`
-      });
+      };
 
     case UserActionTypes.SAVE_TALENT_ERROR:
-      return Object.assign({}, state, {
-        error: action.payload.error,
-        success: ''
-      });
+      return { ...state, error: action.payload.error, success: '' };
 
     case UserActionTypes.REMOVE_TALENT:
-      newTalents = state.talents;
-      newTalents = newTalents.filter(talent => talent.name !== action.payload);
-
-      return Object.assign({}, state, { talents: newTalents });
+      return { ...state, talents: state.talents.filter(talent => talent.name !== action.payload) };
 
     case UserActionTypes.DIALOG_CLOSED:
       return state;

@@ -43,7 +43,7 @@ export function talentCalculatorReducer(
 ): TalentCalculatorState {
   switch (action.type) {
     case TalentCalculatorActionTypes.LOAD_TALENTS_SUCCESS:
-      return Object.assign({}, state, action.payload);
+      return { ...state, ...action.payload };
 
     case TalentCalculatorActionTypes.ADD_TALENT_POINT_SUCCESS:
       return Object.assign({}, state, { meta: action.payload[1] }, action.payload[0].curRank++);
@@ -52,19 +52,13 @@ export function talentCalculatorReducer(
       return Object.assign({}, state, { meta: action.payload[1] }, action.payload[0].curRank--);
 
     case TalentCalculatorActionTypes.ADD_GLYPH_SUCCESS:
-      return Object.assign({}, state, {
-        glyphs: action.payload[0],
-        meta: action.payload[1]
-      });
+      return { ...state, glyphs: action.payload[0], meta: action.payload[1] };
 
     case TalentCalculatorActionTypes.REMOVE_GLYPH_SUCCESS:
-      return Object.assign({}, state, {
-        glyphs: action.payload[0],
-        meta: action.payload[1]
-      });
+      return { ...state, glyphs: action.payload[0], meta: action.payload[1] };
 
     case TalentCalculatorActionTypes.RESET_TALENT_POINTS_SUCCESS:
-      return Object.assign({}, state, action.payload);
+      return { ...state, ...action.payload };
 
     case TalentCalculatorActionTypes.TALENT_ERROR:
       return state;

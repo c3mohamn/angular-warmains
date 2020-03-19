@@ -1,4 +1,3 @@
-import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { NgModule, InjectionToken } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { ActionReducerMap, StoreModule } from '@ngrx/store';
@@ -12,7 +11,6 @@ import { RouterStateUrl } from './router/router.reducer';
 import { TalentCalculatorState, talentCalculatorReducer } from './talent-calculator/talent-calculator.reducer';
 import { TalentCalculatorStateModule } from './talent-calculator/talent-calculator-state.module';
 import { MatDialogModule } from '@angular/material/dialog';
-// tslint:disable-next-line:max-line-length
 import { SaveTalentDialogComponent } from '../talent-calculator/components/save-talent-dialog/save-talent-dialog.component';
 import { UserService } from '../auth/services/user.service';
 import { TalentService } from '../talent-calculator/services/talent-api.service';

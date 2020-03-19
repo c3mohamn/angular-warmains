@@ -4,7 +4,8 @@ import { StoreModule } from '@ngrx/store';
 import {
   StoreRouterConnectingModule,
   RouterStateSerializer,
-  routerReducer, DefaultRouterStateSerializer
+  routerReducer,
+  DefaultRouterStateSerializer
 } from '@ngrx/router-store';
 
 import { RouterFacade } from './router.facade';
@@ -14,13 +15,8 @@ import { CustomSerializer } from './router.reducer';
   imports: [
     StoreModule.forFeature('router', routerReducer),
     RouterModule,
-    StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer,
-      stateKey: 'router'
-    })
+    StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer, stateKey: 'router' })
   ],
-  providers: [
-    RouterFacade,
-    { provide: RouterStateSerializer, useClass: CustomSerializer }
-  ]
+  providers: [RouterFacade, { provide: RouterStateSerializer, useClass: CustomSerializer }]
 })
 export class RouterStateModule {}

@@ -4,16 +4,12 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 const options = {
-  reconnectInterval: 500,
-  reconnectTries: 5,
   useNewUrlParser: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useUnifiedTopology: true
 };
 
-mongoose.connect(
-  'mongodb://admin:password@ds239968.mlab.com:39968/angular-warmains-test',
-  options
-);
+mongoose.connect('mongodb://admin:password@ds239968.mlab.com:39968/angular-warmains-test', options);
 
 const talent = require('./talent'),
   user = require('./user');

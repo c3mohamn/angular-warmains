@@ -9,25 +9,13 @@ export interface RouterState {
 const getRouterState = createFeatureSelector<RouterState>('router');
 
 export namespace RouterQuery {
-  export const getState = createSelector(
-    getRouterState,
-    state => state && state.state
-  );
+  export const getState = createSelector(getRouterState, state => state && state.state);
 
-  export const getCurrentUrl = createSelector(
-    getRouterState,
-    state => state && state.state && state.state.url
-  );
+  export const getCurrentUrl = createSelector(getRouterState, state => state && state.state && state.state.url);
 
-  export const getCurrentPageTitle = createSelector(
-    getRouterState,
-    state => state && state.state && state.state.title
-  );
+  export const getCurrentPageTitle = createSelector(getRouterState, state => state && state.state && state.state.title);
 
-  export const getCurrentParams = createSelector(
-    getRouterState,
-    state => state && state.state && state.state.params
-  );
+  export const getCurrentParams = createSelector(getRouterState, state => state && state.state && state.state.params);
 
   export const getCurrentQueryParams = createSelector(
     getRouterState,

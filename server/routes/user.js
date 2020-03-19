@@ -37,9 +37,7 @@ router.post('/register', (req, res) => {
         // Username or email already in use
         if (user.username === username) {
           console.log(username, ' already taken.');
-          res
-            .status(400)
-            .send('Username ' + username + ' is already being used.');
+          res.status(400).send('Username ' + username + ' is already being used.');
         } else if (user.email === email) {
           console.log(email, ' is already being used.');
           res.status(400).send('Email ' + email + ' is already being used.');
@@ -73,23 +71,21 @@ router.post('/login', function(req, res, next) {
   var email = req.body.email.toLowerCase();
   var password = req.body.password.toLowerCase();
 
+  console.log(username, email, password);
+
   User.getUserByEmailOrUsername(username, email, (err, user) => {
     if (err) throw err;
     if (!user) {
-      res.status(400).send('This username or email does not exist.');
+      res.status(404).send('This username or email does not exist.');
     } else {
       User.comparePassword(password, user.password, (err, isMatch) => {
         if (err) throw err;
         if (isMatch) {
           console.log('Logging in as ' + user.username + '.');
           // Get a access token for user & send to front-end
-          var token = jwt.sign(
-            { username: user.username, role: user.role },
-            jwtSecret,
-            {
-              expiresIn: 60 * 60 * 24 * 7
-            }
-          );
+          var token = jwt.sign({ username: user.username, role: user.role }, jwtSecret, {
+            expiresIn: 60 * 60 * 24 * 7
+          });
 
           // Save token in db
           user.token = token;
@@ -116,9 +112,7 @@ router.post('/removeToken', function(req, res, next) {
   User.getUserByUsername(username, (err, user) => {
     if (err) throw err;
     if (!user) {
-      res
-        .status(400)
-        .send(`Could not find user with username ${username} in db.`);
+      res.status(400).send(`Could not find user with username ${username} in db.`);
     } else {
       user.token = '';
       user.last_seen = new Date();
