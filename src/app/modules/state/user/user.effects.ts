@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -7,9 +7,9 @@ import { of, Observable } from 'rxjs';
 import { UserService } from '../../auth/services/user.service';
 import { UserActionTypes, UserActions } from './user.actions';
 import { TalentService } from '../../talent-calculator/services/talent-api.service';
-// tslint:disable-next-line:max-line-length
 import { SaveTalentDialogComponent } from '../../talent-calculator/components/save-talent-dialog/save-talent-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class UserEffects {
@@ -20,11 +20,15 @@ export class UserEffects {
     switchMap(token =>
       this.userService.validateToken(token).pipe(
         mergeMap(data => {
-          localStorage.setItem('token', data.token);
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('token', data.token);
+          }
           return [new UserActions.GetUserSuccess(data), new UserActions.GetUserTalents(data.username)];
         }),
         catchError(error => {
-          localStorage.removeItem('token');
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.removeItem('token');
+          }
           return of(new UserActions.UserError(error));
         })
       )
@@ -38,7 +42,9 @@ export class UserEffects {
     switchMap(user =>
       this.userService.loginUser(user).pipe(
         mergeMap(data => {
-          localStorage.setItem('token', data.token);
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('token', data.token);
+          }
           this.router.navigate(['home']);
           return [new UserActions.GetUserSuccess(data), new UserActions.GetUserTalents(data.username)];
         }),
@@ -51,7 +57,9 @@ export class UserEffects {
   logout$: Observable<Action> = this.actions$.pipe(
     ofType(UserActionTypes.USER_LOGOUT),
     switchMap(action => {
-      localStorage.removeItem('token');
+      if (isPlatformBrowser(this.platformId)) {
+        localStorage.removeItem('token');
+      }
       this.router.navigate(['login']);
       // this.userService.removeUserToken()
       return of(action);
@@ -113,6 +121,7 @@ export class UserEffects {
     private router: Router,
     private userService: UserService,
     private talentService: TalentService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {}
 }

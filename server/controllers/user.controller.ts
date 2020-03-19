@@ -1,14 +1,15 @@
-const express = require('express'),
-  router = express.Router(),
-  User = require('../models/user'),
-  jwt = require('jsonwebtoken'),
-  jwtSecret = 'butts';
+import * as express from 'express';
+import { User } from '../models/user.model';
+import * as jwt from 'jsonwebtoken';
+import { check, validationResult } from 'express-validator';
 
-const { check, validationResult } = require('express-validator');
+const jwtSecret = 'butts';
+
+const router = express.Router();
 
 // Register User
 router.post('/register', (req, res) => {
-  var username = req.body.username.toLowerCase(),
+  const username = req.body.username.toLowerCase(),
     password = req.body.password.toLowerCase(),
     email = req.body.email.toLowerCase();
 
@@ -32,7 +33,9 @@ router.post('/register', (req, res) => {
     console.log('no errors');
     // Check if username or email taken already
     User.getUserByEmailOrUsername(username, email, function(err, user) {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       if (user) {
         // Username or email already in use
         if (user.username === username) {
@@ -44,8 +47,8 @@ router.post('/register', (req, res) => {
         }
       } else {
         console.log('creating new user: ');
-        //Creating a new user with given input.
-        var newUser = new User({
+        // Creating a new user with given input.
+        const newUser = new User({
           username: username,
           password: password,
           email: email,
@@ -55,7 +58,9 @@ router.post('/register', (req, res) => {
         });
 
         newUser.save(err => {
-          if (err) throw err;
+          if (err) {
+            throw err;
+          }
           console.log(newUser);
         });
 
@@ -67,31 +72,37 @@ router.post('/register', (req, res) => {
 
 // Login User
 router.post('/login', function(req, res, next) {
-  var username = req.body.username.toLowerCase();
-  var email = req.body.email.toLowerCase();
-  var password = req.body.password.toLowerCase();
+  const username = req.body.username.toLowerCase();
+  const email = req.body.email.toLowerCase();
+  const password = req.body.password.toLowerCase();
 
   console.log(username, email, password);
 
   User.getUserByEmailOrUsername(username, email, (err, user) => {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
     if (!user) {
       res.status(404).send('This username or email does not exist.');
     } else {
       User.comparePassword(password, user.password, (err, isMatch) => {
-        if (err) throw err;
+        if (err) {
+          throw err;
+        }
         if (isMatch) {
           console.log('Logging in as ' + user.username + '.');
           // Get a access token for user & send to front-end
-          var token = jwt.sign({ username: user.username, role: user.role }, jwtSecret, {
+          const token = jwt.sign({ username: user.username, role: user.role }, jwtSecret, {
             expiresIn: 60 * 60 * 24 * 7
           });
 
           // Save token in db
           user.token = token;
           user.last_seen = new Date();
-          user.save(err => {
-            if (err) throw err;
+          user.save(saveError => {
+            if (saveError) {
+              throw saveError;
+            }
             console.log(user);
           });
 
@@ -107,17 +118,21 @@ router.post('/login', function(req, res, next) {
 
 // remove users token (logout)
 router.post('/removeToken', function(req, res, next) {
-  var username = req.body.username;
+  const username = req.body.username;
 
   User.getUserByUsername(username, (err, user) => {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
     if (!user) {
       res.status(400).send(`Could not find user with username ${username} in db.`);
     } else {
       user.token = '';
       user.last_seen = new Date();
-      user.save(err => {
-        if (err) throw err;
+      user.save(saveError => {
+        if (saveError) {
+          throw saveError;
+        }
         console.log(`Removed token from ${username}.`);
       });
       res.status(200).send(userViewModel(user));
@@ -127,7 +142,7 @@ router.post('/removeToken', function(req, res, next) {
 
 // validates current Token
 router.post('/validateToken', function(req, res, next) {
-  var token = req.body.token;
+  const token = req.body.token;
 
   if (token) {
     jwt.verify(token, jwtSecret, function(err, decoded) {
@@ -137,14 +152,16 @@ router.post('/validateToken', function(req, res, next) {
         console.log(decoded);
         // Check if token username exists.
         User.findOne({ username: decoded.username }, function(err, user) {
-          if (err) throw err;
+          if (err) {
+            throw err;
+          }
           if (!user) {
             res.status(400).send('This username does not exist.');
-          } else if (user.token != token) {
+          } else if (user.token !== token) {
             res.status(401).send('Token does not match token in db');
           } else {
             // Give user new token
-            var newToken = jwt.sign(
+            const newToken = jwt.sign(
               {
                 username: user.username,
                 role: user.role
@@ -158,7 +175,9 @@ router.post('/validateToken', function(req, res, next) {
             user.token = newToken;
             user.last_seen = new Date();
             user.save(err => {
-              if (err) throw err;
+              if (err) {
+                throw err;
+              }
               console.log('saved new token to user');
             });
 
@@ -172,7 +191,7 @@ router.post('/validateToken', function(req, res, next) {
   }
 });
 
-function userViewModel(user) {
+function userViewModel(user: any) {
   return {
     id: user._id,
     email: user.email,
@@ -182,4 +201,4 @@ function userViewModel(user) {
   };
 }
 
-module.exports = router;
+export default router;

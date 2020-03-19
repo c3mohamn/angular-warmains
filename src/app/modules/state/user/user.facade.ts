@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs';
@@ -9,13 +9,14 @@ import { UserQuery } from './user.selector';
 import { UserForm } from '../../../models/user.model';
 import { Talent } from '../../../models/talent.model';
 import { TalentMetaInfo } from '../talent-calculator/talent-calculator.reducer';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class UserFacade {
   user$ = this.store.select(UserQuery.getCurrentUser);
   isLoggedIn$ = this.store.select(UserQuery.isLoggedIn);
 
-  constructor(private actions$: Actions, private store: Store<UserState>) {}
+  constructor(private store: Store<UserState>, @Inject(PLATFORM_ID) private platformId: any) {}
 
   /**
    * Return current user state.
@@ -64,7 +65,12 @@ export class UserFacade {
    * Iff token exists in local storage, validate and log user in iff is still valid.
    */
   validateUser() {
-    const token = localStorage.getItem('token');
+    let token: string;
+
+    if (isPlatformBrowser(this.platformId)) {
+      token = localStorage.getItem('token');
+    }
+
     if (token) {
       this.store.dispatch(new UserActions.GetUser(token));
     }

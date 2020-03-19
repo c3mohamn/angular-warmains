@@ -1,6 +1,8 @@
-const express = require('express'),
-  router = express.Router(),
-  Talent = require('../models/talent');
+import * as express from 'express';
+import { Talent } from '../models/talent.model';
+import { check, validationResult } from 'express-validator';
+
+const router = express.Router();
 
 // Get all Talents
 router.get('/getAll', (req, res) => {
@@ -14,10 +16,10 @@ router.get('/getAll', (req, res) => {
 });
 
 router.post('', (req, res) => {
-  var talent = new Talent({
+  const talent = new Talent({
     username: req.body.username || null,
     name: req.body.name || null,
-    class_id: parseInt(req.body.class_id) || 0,
+    class_id: parseInt(req.body.class_id, 10) || 0,
     talent_param: req.body.talent_param || null,
     glyph_param: req.body.glyph_param || null,
     preview: req.body.preview || null,
@@ -27,13 +29,13 @@ router.post('', (req, res) => {
   });
 
   // Error checking talent fields
-  req.checkBody('name', 'Name must be between 2 and 20 characters long.').isLength({ min: 2, max: 20 });
-  req.checkBody('class_id', 'Invalid class Id.').isInt();
-  req.checkBody('talent_param', 'Invalid talents.').isLength({ max: 50 });
-  req.checkBody('glyph_param', 'Invalid talents.').isLength({ max: 50 });
-  req.checkBody('description', 'Talent description cannot exceed 100 characters.').isLength({ min: 0, max: 100 });
+  check('name', 'Name must be between 2 and 20 characters long.').isLength({ min: 2, max: 20 });
+  check('class_id', 'Invalid class Id.').isInt();
+  check('talent_param', 'Invalid talents.').isLength({ max: 50 });
+  check('glyph_param', 'Invalid talents.').isLength({ max: 50 });
+  check('description', 'Talent description cannot exceed 100 characters.').isLength({ min: 0, max: 100 });
 
-  var errors = req.validationErrors();
+  const errors = validationResult(req);
 
   if (errors) {
     console.log(errors);
@@ -41,7 +43,9 @@ router.post('', (req, res) => {
     res.status(400).send(errors);
   } else {
     Talent.find({ username: talent.username, name: talent.name }, (err, result) => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
 
       // Talent already exists
       if (result.length > 0) {
@@ -95,4 +99,4 @@ router.delete('', function(req, res) {
   });
 });
 
-module.exports = router;
+export default router;
