@@ -51,9 +51,9 @@ router.post('', (req, res) => {
       if (result.length > 0) {
         res.status(400).send(`Talent ${talent.name} already exists`);
       } else {
-        Talent.saveTalent(talent, (err, talent) => {
-          if (err) {
-            console.log(err);
+        talent.save((saveError: any) => {
+          if (saveError) {
+            console.log(saveError);
             res.status(500).send();
           }
           console.log(talent);

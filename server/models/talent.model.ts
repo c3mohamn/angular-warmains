@@ -1,7 +1,18 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
 
-// char Schema
-const TalentSchema = mongoose.Schema({
+export interface ITalent extends mongoose.Document {
+  username: string;
+  name: string;
+  classId: string;
+  talentParam: string;
+  glyphParam: string;
+  preview: number[];
+  spec: string;
+  description: string;
+  created: Date;
+}
+
+const TalentSchema = new mongoose.Schema({
   username: { type: String, required: true },
   name: { type: String, required: true },
   class_id: { type: Number, required: true },
@@ -10,46 +21,7 @@ const TalentSchema = mongoose.Schema({
   preview: { type: Array, required: false },
   spec: { type: String, required: false },
   description: { type: String, required: false },
-  created: { type: Date }
+  created: { type: Date, default: Date.now() }
 });
 
-export const Talent = mongoose.model('Talent', TalentSchema);
-
-module.exports.saveTalent = function(newTalent, callback) {
-  newTalent.save(callback);
-};
-
-// import { Typegoose, prop } from 'typegoose';
-
-// class TalentModel extends Typegoose {
-//   @prop({ required: true })
-//   username: string;
-
-//   @prop({ required: true })
-//   name: string;
-
-//   @prop({ required: true })
-//   class_id: number;
-
-//   @prop({ required: true })
-//   talent_param: string;
-
-//   @prop({ required: false })
-//   glyph_param: string;
-
-//   @prop({ required: false })
-//   preview: number[];
-
-//   @prop({ required: false })
-//   spec: string;
-
-//   @prop({ required: false })
-//   description: string;
-
-//   @prop({ default: Date.now() })
-//   created: Date;
-// }
-
-// export const Talent = new TalentModel().getModelForClass(TalentModel, {
-//   schemaOptions: { versionKey: false }
-// });
+export const Talent = mongoose.model<ITalent>('Talent', TalentSchema);

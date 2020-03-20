@@ -2,6 +2,7 @@ import 'zone.js/dist/zone-node';
 
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
+import * as bodyParser from 'body-parser';
 import { join } from 'path';
 
 import { AppServerModule } from './src/main.server';
@@ -27,6 +28,11 @@ export function app() {
       bootstrap: AppServerModule
     })
   );
+
+  // tslint:disable-next-line: deprecation
+  server.use(bodyParser.json());
+  // tslint:disable-next-line: deprecation
+  server.use(bodyParser.urlencoded({ extended: false }));
 
   // API Routes
   server.use('/api', routes);

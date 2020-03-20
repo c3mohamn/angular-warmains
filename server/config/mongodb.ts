@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
 
+// TODO: Get from environment variable
 const MONGODB_URI = 'mongodb://admin:password@ds239968.mlab.com:39968/angular-warmains-test';
 
 const options: mongoose.ConnectionOptions = {

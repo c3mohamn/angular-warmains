@@ -1,7 +1,7 @@
 import * as express from 'express';
-import { User } from '../models/user.model';
 import * as jwt from 'jsonwebtoken';
 import { check, validationResult } from 'express-validator';
+import { User, UserQuery } from '../models/user.model';
 
 const jwtSecret = 'butts';
 
@@ -24,15 +24,14 @@ router.post('/register', (req, res) => {
   });
   check('email', 'Invalid Email.').isEmail();
 
-  const errors = validationResult(req);
+  const errors = validationResult(req).array();
 
-  if (errors) {
-    console.log(errors);
+  if (errors.length) {
     res.status(400).send(errors);
   } else {
     console.log('no errors');
     // Check if username or email taken already
-    User.getUserByEmailOrUsername(username, email, function(err, user) {
+    UserQuery.getUserByEmailOrUsername(username, email, function(err: any, user: { username: any; email: any }) {
       if (err) {
         throw err;
       }
@@ -53,13 +52,13 @@ router.post('/register', (req, res) => {
           password: password,
           email: email,
           created: new Date(),
-          last_seen: new Date(),
+          lastSeen: new Date(),
           role: 1
         });
 
-        newUser.save(err => {
-          if (err) {
-            throw err;
+        newUser.save((saveError: any) => {
+          if (saveError) {
+            throw saveError;
           }
           console.log(newUser);
         });
@@ -76,68 +75,83 @@ router.post('/login', function(req, res, next) {
   const email = req.body.email.toLowerCase();
   const password = req.body.password.toLowerCase();
 
-  console.log(username, email, password);
+  UserQuery.getUserByEmailOrUsername(
+    username,
+    email,
+    (
+      err: any,
+      user: {
+        password: string;
+        username: string;
+        role: any;
+        token: string;
+        lastSeen: Date;
+        save: (arg0: (saveError: any) => void) => void;
+      }
+    ) => {
+      if (err) {
+        throw err;
+      }
+      if (!user) {
+        res.status(404).send('This username or email does not exist.');
+      } else {
+        UserQuery.comparePassword(password, user.password, (comparePassError: any, isMatch: any) => {
+          if (comparePassError) {
+            throw comparePassError;
+          }
+          if (isMatch) {
+            console.log('Logging in as ' + user.username + '.');
+            // Get a access token for user & send to front-end
+            const token = jwt.sign({ username: user.username, role: user.role }, jwtSecret, {
+              expiresIn: 60 * 60 * 24 * 7
+            });
 
-  User.getUserByEmailOrUsername(username, email, (err, user) => {
-    if (err) {
-      throw err;
+            // Save token in db
+            user.token = token;
+            user.lastSeen = new Date();
+            user.save((saveError: any) => {
+              if (saveError) {
+                throw saveError;
+              }
+              console.log(user);
+            });
+
+            res.status(200).send(userViewModel(user));
+          } else {
+            console.log('Invalid Password');
+            res.status(400).send('Incorrect password.');
+          }
+        });
+      }
     }
-    if (!user) {
-      res.status(404).send('This username or email does not exist.');
-    } else {
-      User.comparePassword(password, user.password, (err, isMatch) => {
-        if (err) {
-          throw err;
-        }
-        if (isMatch) {
-          console.log('Logging in as ' + user.username + '.');
-          // Get a access token for user & send to front-end
-          const token = jwt.sign({ username: user.username, role: user.role }, jwtSecret, {
-            expiresIn: 60 * 60 * 24 * 7
-          });
-
-          // Save token in db
-          user.token = token;
-          user.last_seen = new Date();
-          user.save(saveError => {
-            if (saveError) {
-              throw saveError;
-            }
-            console.log(user);
-          });
-
-          res.status(200).send(userViewModel(user));
-        } else {
-          console.log('Invalid Password');
-          res.status(400).send('Incorrect password.');
-        }
-      });
-    }
-  });
+  );
 });
 
 // remove users token (logout)
 router.post('/removeToken', function(req, res, next) {
   const username = req.body.username;
 
-  User.getUserByUsername(username, (err, user) => {
-    if (err) {
-      throw err;
+  UserQuery.getUserByUsername(
+    username,
+    (err: any, user: { token: string; lastSeen: Date; save: (arg0: (saveError: any) => void) => void }) => {
+      if (err) {
+        throw err;
+      }
+      if (!user) {
+        res.status(400).send(`Could not find user with username ${username} in db.`);
+      } else {
+        user.token = '';
+        user.lastSeen = new Date();
+        user.save((saveError: any) => {
+          if (saveError) {
+            throw saveError;
+          }
+          console.log(`Removed token from ${username}.`);
+        });
+        res.status(200).send(userViewModel(user));
+      }
     }
-    if (!user) {
-      res.status(400).send(`Could not find user with username ${username} in db.`);
-    } else {
-      user.token = '';
-      user.last_seen = new Date();
-      user.save(saveError => {
-        if (saveError) {
-          throw saveError;
-        }
-        console.log(`Removed token from ${username}.`);
-      });
-      res.status(200).send(userViewModel(user));
-    }
-  });
+  );
 });
 
 // validates current Token
@@ -145,15 +159,15 @@ router.post('/validateToken', function(req, res, next) {
   const token = req.body.token;
 
   if (token) {
-    jwt.verify(token, jwtSecret, function(err, decoded) {
-      if (err) {
+    jwt.verify(token, jwtSecret, function(jwtError: any, decoded: { username: any }) {
+      if (jwtError) {
         res.status(401).send('Token expired.');
       } else {
         console.log(decoded);
         // Check if token username exists.
-        User.findOne({ username: decoded.username }, function(err, user) {
-          if (err) {
-            throw err;
+        User.findOne({ username: decoded.username }, function(userNameError, user) {
+          if (userNameError) {
+            throw userNameError;
           }
           if (!user) {
             res.status(400).send('This username does not exist.');
@@ -173,10 +187,10 @@ router.post('/validateToken', function(req, res, next) {
             );
 
             user.token = newToken;
-            user.last_seen = new Date();
-            user.save(err => {
-              if (err) {
-                throw err;
+            user.lastSeen = new Date();
+            user.save(userSaveError => {
+              if (userSaveError) {
+                throw userSaveError;
               }
               console.log('saved new token to user');
             });

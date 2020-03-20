@@ -50,11 +50,11 @@
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.5",
+    "mongodb-client-encryption": "^1.0.1",
     "mongoose": "^5.9.5",
     "ng4-click-outside": "^1.0.1",
     "rxjs": "^6.5.4",
     "tslib": "^1.10.0",
-    "typegoose": "^5.9.1",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -64,6 +64,7 @@
     "@angular/language-service": "9.0.7",
     "@ngrx/schematics": "^9.0.0",
     "@nguniversal/builders": "^9.0.2",
+    "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.0",
     "@types/jasmine": "^3.5.9",
     "@types/jasminewd2": "^2.0.8",

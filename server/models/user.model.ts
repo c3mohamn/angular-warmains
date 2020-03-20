@@ -1,20 +1,31 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+import * as mongoose from 'mongoose';
+import * as bcrypt from 'bcryptjs';
 
-// User Schema
-const UserSchema = mongoose.Schema({
+export interface IUser extends mongoose.Document {
+  username: string;
+  password: string;
+  email: string;
+  token: string;
+  role: number;
+  created: Date;
+  lastSeen: Date;
+}
+
+export const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   email: { type: String, unique: true },
   token: { type: String },
   role: { type: Number },
   created: { type: Date },
-  last_seen: { type: Date }
+  lastSeen: { type: Date }
 });
 
-UserSchema.pre('save', function(next) {
+// Setup password hash
+UserSchema.pre<IUser>('save', function(next) {
   const user = this;
   const SALT_FACTOR = 10;
+
   // hashes password if it was modified.
   if (!user.isModified('password')) {
     return next();
@@ -31,32 +42,34 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-export const User = mongoose.model('User', UserSchema);
+export const User = mongoose.model<IUser>('User', UserSchema);
 
-module.exports.getUserByUsername = function(username, callback) {
-  const query = { username: username };
-  User.findOne(query, callback);
-};
+export namespace UserQuery {
+  export const getUserByUsername = (username: string, callback: any) => {
+    const query = { username: username };
+    User.findOne(query, callback);
+  };
 
-module.exports.getUserByEmail = function(email, callback) {
-  const query = { email: email };
-  User.findOne(query, callback);
-};
+  export const getUserByEmail = function(email: string, callback: any) {
+    const query = { email: email };
+    User.findOne(query, callback);
+  };
 
-module.exports.getUserByEmailOrUsername = function(username, email, callback) {
-  const query = { $or: [{ username: username }, { email: email }] };
-  User.findOne({ $or: [{ username: username }, { email: email }] }, callback);
-};
+  export const getUserByEmailOrUsername = function(username: string, email: string, callback: any) {
+    const query = { $or: [{ username: username }, { email: email }] };
+    User.findOne(query, callback);
+  };
 
-module.exports.getUserById = function(id, callback) {
-  User.findById(id, callback);
-};
+  export const getUserById = function(id: string, callback: any) {
+    User.findById(id, callback);
+  };
 
-module.exports.comparePassword = function(candidatePassword, hash, callback) {
-  bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-    if (err) {
-      throw err;
-    }
-    callback(null, isMatch);
-  });
-};
+  export const comparePassword = (givenPassword: string, hashedPassword: string, callback: any) => {
+    bcrypt.compare(givenPassword, hashedPassword, function(err, isMatch) {
+      if (err) {
+        throw err;
+      }
+      callback(null, isMatch);
+    });
+  };
+}
