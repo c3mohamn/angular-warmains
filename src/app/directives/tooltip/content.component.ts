@@ -20,9 +20,7 @@ export class HoveredContentComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const tooltipBounds = this.elRef.nativeElement
-      .querySelector('div.ng-tool-tip-content')
-      .getBoundingClientRect();
+    const tooltipBounds = this.elRef.nativeElement.querySelector('div.ng-tool-tip-content').getBoundingClientRect();
 
     const tWidth = tooltipBounds.width,
       tHeight = tooltipBounds.height;

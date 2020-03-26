@@ -1,4 +1,4 @@
-export enum Classes {
+export enum ClassNames {
   Warrior = 1,
   Paladin,
   Hunter,
@@ -12,7 +12,7 @@ export enum Classes {
   Druid
 }
 
-export enum ClassesColors {
+export enum ClassColors {
   Warrior = '#C79C6E',
   Paladin = '#F58CBA',
   Hunter = '#ABD473',
@@ -27,7 +27,7 @@ export enum ClassesColors {
   Demonhunter = '#A330C9'
 }
 
-export const ClassesSpecs = {
+export const ClassSpecs = {
   Warrior: ['arms', 'fury', 'protection'],
   Paladin: ['holy', 'protection', 'retribution'],
   Hunter: ['beastmastery', 'marksmanship', 'survival'],

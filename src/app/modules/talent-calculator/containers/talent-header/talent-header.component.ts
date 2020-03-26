@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TalentCalculatorService } from '../../services/talent-calculator.service';
 import { TalentCalculatorFacade } from '../../../state/talent-calculator/talent-calculator.facade';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TalentMetaInfo } from '../../../state/talent-calculator/talent-calculator.reducer';
 import { UserFacade } from '../../../state/user/user.facade';
+import { ClassUtil } from '../../../../utils/class.util';
 
 @Component({
   selector: 'app-talent-header',
@@ -24,7 +24,6 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private talentCalculatorService: TalentCalculatorService,
     private talentCaluclatorFacade: TalentCalculatorFacade,
     private userFacade: UserFacade
   ) {}
@@ -66,11 +65,11 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
   }
 
   getClassColor(classId: number = this.currentClassId): string {
-    return this.talentCalculatorService.getClassColor(classId);
+    return ClassUtil.getClassColor(classId);
   }
 
   getClassName(classId: number = this.currentClassId): string {
-    return this.talentCalculatorService.getClassName(classId);
+    return ClassUtil.getClassName(classId);
   }
 
   ngOnDestroy() {

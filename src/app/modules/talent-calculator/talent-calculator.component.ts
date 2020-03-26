@@ -5,7 +5,7 @@ import { TalentCalculatorFacade } from '../state/talent-calculator/talent-calcul
 import { RouterFacade } from '../state/router/router.facade';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { TalentCalculatorService } from './services/talent-calculator.service';
+import { ClassUtil } from '../../utils/class.util';
 
 @Component({
   selector: 'app-talent-calculator',
@@ -18,7 +18,6 @@ export class TalentCalculatorComponent implements OnInit, OnDestroy {
   classTalentTreeSpecNames: string[];
 
   constructor(
-    private talentCalculatorService: TalentCalculatorService,
     private title: Title,
     private talentCalculatorFacade: TalentCalculatorFacade,
     private router: Router,
@@ -34,8 +33,8 @@ export class TalentCalculatorComponent implements OnInit, OnDestroy {
         this.classId = data.params.classId;
         this.isValidClassId(this.classId);
         this.talentCalculatorFacade.loadTalents(this.classId, data.queryParams.talents, data.queryParams.glyphs);
-        this.title.setTitle(`Talents | ${this.talentCalculatorService.getClassName(this.classId)}`);
-        this.classTalentTreeSpecNames = this.talentCalculatorService.getClassTalentTreeSpecNames(this.classId);
+        this.title.setTitle(`Talents | ${ClassUtil.getClassName(this.classId)}`);
+        this.classTalentTreeSpecNames = ClassUtil.getClassTalentTreeSpecNames(this.classId);
       });
 
     this.addMetaTags();

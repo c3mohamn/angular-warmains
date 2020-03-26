@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { RouterQuery, RouterState } from './router.selector';
 import { RouterStateUrl } from './router.reducer';
 
 @Injectable()
 export class RouterFacade {
-  constructor(private actions$: Actions, private store: Store<RouterState>) {}
+  constructor(private store: Store<RouterState>) {}
 
   /**
    * Returns current router state.

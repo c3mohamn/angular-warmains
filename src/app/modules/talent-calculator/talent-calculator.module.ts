@@ -10,7 +10,6 @@ import { TalentSavedComponent } from './containers/talent-saved/talent-saved.com
 import { GlyphComponent } from './components/glyph/glyph.component';
 import { TalentComponent } from './components/talent/talent.component';
 
-import { TalentCalculatorService } from './services/talent-calculator.service';
 import { MouseWheelDirective } from '../../directives/mousewheel/mousewheel.directive';
 import { TooltipModule } from '../../directives/tooltip/tooltip.module';
 import { WINDOW_PROVIDERS } from '../../services/window.service';
@@ -30,6 +29,6 @@ import { GlyphsDialogComponent } from './components/glyphs-dialog/glyphs-dialog.
     MouseWheelDirective
   ],
   entryComponents: [GlyphsDialogComponent],
-  providers: [TalentCalculatorService, WINDOW_PROVIDERS]
+  providers: [WINDOW_PROVIDERS]
 })
 export class TalentCalculatorModule {}
