@@ -8,8 +8,10 @@
     </div>
     <div class="cell auto"></div>
     <div class="cell shrink">
-      <img *ngFor="let classId of classIds" (click)="changeClass(classId)" [ngClass]="{selected: classId === classId}"
-        title="{{ getClassName(classId) }}" class="class-icons" src="assets/images/class-icons/{{classId}}.png" alt="">
+      <ng-container *ngFor="let id of classIds">
+        <div class="bg-class-{{id}} class-icons" [ngClass]="{'selected': id == currentClassId}"
+          (click)="changeClass(id)" title="{{ getClassName(id) }}" alt=""></div>
+      </ng-container>
     </div>
   </div>
   <div class="cell small-12 grid-x align-middle">

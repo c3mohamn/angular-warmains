@@ -8,6 +8,7 @@ export class TalentCalculatorService {
 
   /**
    * Return class name of currently selected class.
+   *
    * @param classId current class Id
    */
   getClassName(classId: number): string {
@@ -16,6 +17,7 @@ export class TalentCalculatorService {
 
   /**
    * Return class color of currently selected class.
+   *
    * @param classId current class Id
    */
   getClassColor(classId: number): string {
@@ -24,11 +26,20 @@ export class TalentCalculatorService {
 
   /**
    * Return specialization name of tree with id treeId & of class with classId.
+   *
    * @param treeId id of TalentTree tree
    * @param classId current class id
    */
-  getClassSpec(treeId: number, classId: number): string {
-    const specs = new ClassesSpecs();
-    return specs.getClassSpec(classId, treeId);
+  getClassTalentTreeSpecName(treeId: number, classId: number): string {
+    return ClassesSpecs[this.getClassName(classId)][treeId];
+  }
+
+  /**
+   * Returns a list of talent tree specilization names.
+   *
+   * @param classId current class id
+   */
+  getClassTalentTreeSpecNames(classId: number): string[] {
+    return ClassesSpecs[this.getClassName(classId)];
   }
 }

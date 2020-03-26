@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { TalentCalculatorService } from '../../services/talent-calculator.service';
 import { Talent } from '../../models/talents.model';
-import { Title } from '@angular/platform-browser';
 import { TalentCalculatorFacade } from '../../../state/talent-calculator/talent-calculator.facade';
 import { TalentMetaInfo } from '../../../state/talent-calculator/talent-calculator.reducer';
 import { talentIdMap } from '../../models/talent-id.map';
@@ -14,20 +12,16 @@ import { Subject } from 'rxjs';
   styleUrls: ['./talent-tree.component.scss']
 })
 export class TalentTreeComponent implements OnInit, OnDestroy {
+  @Input() classId = 1;
+  @Input() talentTreeSpecs = ['arms', 'fury', 'protection'];
+
   private ngUnsubscribe: Subject<any> = new Subject();
-  trees = [0, 1, 2];
   rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   cols = [0, 1, 2, 3];
   meta: TalentMetaInfo;
   talents: Talent[] = [];
 
-  @Input() classId = 1;
-
-  constructor(
-    private talentCalculatorService: TalentCalculatorService,
-    private title: Title,
-    private talentCalculatorFacade: TalentCalculatorFacade
-  ) {}
+  constructor(private talentCalculatorFacade: TalentCalculatorFacade) {}
 
   ngOnInit() {
     this.talentCalculatorFacade
@@ -38,8 +32,6 @@ export class TalentTreeComponent implements OnInit, OnDestroy {
       .getTalentMetaInfo()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => (this.meta = data));
-
-    this.title.setTitle(`Talents | ${this.talentCalculatorService.getClassName(this.classId)}`);
   }
 
   addTalentPoint(talent: Talent) {
@@ -66,18 +58,8 @@ export class TalentTreeComponent implements OnInit, OnDestroy {
   }
 
   resetTalents(treeId: number): void {
-    console.log(`Reset ${this.getSpec(treeId)}`);
+    console.log(`Reset ${this.talentTreeSpecs[treeId]}`);
     this.talentCalculatorFacade.resetTalentPoints(treeId);
-  }
-
-  getSpec(treeId: number): string {
-    return this.talentCalculatorService.getClassSpec(treeId, this.classId);
-  }
-
-  getSpecBg(treeId: number): string {
-    const spec = this.getSpec(treeId);
-
-    return `url(assets/images/talent-icons/${this.classId}/${spec}/background.jpg)`;
   }
 
   ngOnDestroy() {

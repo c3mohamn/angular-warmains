@@ -15,7 +15,7 @@ import { UserFacade } from '../../../state/user/user.facade';
 export class TalentHeaderComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
   classIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11];
-  classId = 1;
+  currentClassId = 1;
   preview = [0, 0, 0];
   remaining = 71;
   totalPoints = 0;
@@ -38,7 +38,7 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
         this.meta = data;
         this.totalPoints = data.totalPoints;
         this.preview = data.preview;
-        this.classId = data.classId;
+        this.currentClassId = data.classId;
       });
 
     this.userFacade
@@ -52,7 +52,7 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
   }
 
   changeClass(classId: number) {
-    if (this.classId !== classId) {
+    if (this.currentClassId !== classId) {
       this.router.navigate(['/talent/' + classId]);
     }
   }
@@ -65,11 +65,11 @@ export class TalentHeaderComponent implements OnInit, OnDestroy {
     return `(${this.preview[0]} / ${this.preview[1]} / ${this.preview[2]})`;
   }
 
-  getClassColor(classId: number = this.classId): string {
+  getClassColor(classId: number = this.currentClassId): string {
     return this.talentCalculatorService.getClassColor(classId);
   }
 
-  getClassName(classId: number = this.classId): string {
+  getClassName(classId: number = this.currentClassId): string {
     return this.talentCalculatorService.getClassName(classId);
   }
 

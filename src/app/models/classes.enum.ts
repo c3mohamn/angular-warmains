@@ -27,21 +27,15 @@ export enum ClassesColors {
   Demonhunter = '#A330C9'
 }
 
-export class ClassesSpecs {
-  Warrior: string[] = ['arms', 'fury', 'protection'];
-  Paladin: string[] = ['holy', 'protection', 'retribution'];
-  Hunter: string[] = ['beastmastery', 'marksmanship', 'survival'];
-  Rogue: string[] = ['assassination', 'combat', 'subtlety'];
-  Priest: string[] = ['discipline', 'holy', 'shadow'];
-  Deathknight: string[] = ['blood', 'frost', 'unholy'];
-  Shaman: string[] = ['elemental', 'enhancement', 'restoration'];
-  Mage: string[] = ['arcane', 'fire', 'frost'];
-  Warlock: string[] = ['affliction', 'demonology', 'destruction'];
-  Druid: string[] = ['balance', 'feral', 'restoration'];
-
-  constructor() {}
-
-  public getClassSpec(classId: number, treeId: number) {
-    return this[Classes[classId]][treeId];
-  }
-}
+export const ClassesSpecs = {
+  Warrior: ['arms', 'fury', 'protection'],
+  Paladin: ['holy', 'protection', 'retribution'],
+  Hunter: ['beastmastery', 'marksmanship', 'survival'],
+  Rogue: ['assassination', 'combat', 'subtlety'],
+  Priest: ['discipline', 'holy', 'shadow'],
+  Deathknight: ['blood', 'frost', 'unholy'],
+  Shaman: ['elemental', 'enhancement', 'restoration'],
+  Mage: ['arcane', 'fire', 'frost'],
+  Warlock: ['affliction', 'demonology', 'destruction'],
+  Druid: ['balance', 'feral', 'restoration']
+};

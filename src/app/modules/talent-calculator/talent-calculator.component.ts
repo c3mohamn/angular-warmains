@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Meta } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { TalentCalculatorFacade } from '../state/talent-calculator/talent-calculator.facade';
 import { RouterFacade } from '../state/router/router.facade';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { TalentCalculatorService } from './services/talent-calculator.service';
 
 @Component({
   selector: 'app-talent-calculator',
@@ -14,8 +15,11 @@ import { Subject } from 'rxjs';
 export class TalentCalculatorComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject();
   classId = 1;
+  classTalentTreeSpecNames: string[];
 
   constructor(
+    private talentCalculatorService: TalentCalculatorService,
+    private title: Title,
     private talentCalculatorFacade: TalentCalculatorFacade,
     private router: Router,
     private routerFacade: RouterFacade,
@@ -30,6 +34,8 @@ export class TalentCalculatorComponent implements OnInit, OnDestroy {
         this.classId = data.params.classId;
         this.isValidClassId(this.classId);
         this.talentCalculatorFacade.loadTalents(this.classId, data.queryParams.talents, data.queryParams.glyphs);
+        this.title.setTitle(`Talents | ${this.talentCalculatorService.getClassName(this.classId)}`);
+        this.classTalentTreeSpecNames = this.talentCalculatorService.getClassTalentTreeSpecNames(this.classId);
       });
 
     this.addMetaTags();
