@@ -1,6 +1,6 @@
-import { TalentCalculatorState } from '../talent-calculator.reducer';
-import { Talent, Glyph } from '../../../talent-calculator/models/talents.model';
-import { urlMap } from './talent-url.map';
+import { TalentCalculatorState } from './talent-calculator.reducer';
+import { Talent, Glyph } from '../../talent-calculator/models/talents.model';
+import { urlMap } from './talent-url-map.constant';
 
 /**
  * Return true iff glyph can be added to glyphState at index.

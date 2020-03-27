@@ -1,10 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { Talent, Glyph } from '../../../talent-calculator/models/talents.model';
-import { TalentCalculatorState, TalentMetaInfo } from '../talent-calculator.reducer';
+import { Talent, Glyph } from '../../talent-calculator/models/talents.model';
+import { TalentCalculatorState, TalentMetaInfo } from './talent-calculator.reducer';
 import { Store } from '@ngrx/store';
-import { TalentCalculatorQuery } from '../talent-calculator.selector';
-import * as talentHelper from './talent-calculator.helper';
+import { TalentCalculatorQuery } from './talent-calculator.selector';
+import * as talentHelper from './talent-calculator.util';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -14,7 +14,7 @@ export class TalentCalculatorService implements OnDestroy {
   state: TalentCalculatorState;
 
   constructor(private store$: Store<TalentCalculatorState>, private location: Location) {
-    store$
+    this.store$
       .select(TalentCalculatorQuery.getState)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(data => (this.state = data));

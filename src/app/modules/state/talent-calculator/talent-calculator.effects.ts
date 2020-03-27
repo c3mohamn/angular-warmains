@@ -4,7 +4,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { TalentCalculatorActions, TalentCalculatorActionTypes } from './talent-calculator.actions';
-import { TalentCalculatorService } from './helpers/talent-calculator.service';
+import { TalentCalculatorService } from './talent-calculator.service';
 import { TalentService } from '../../talent-calculator/services/talent-api.service';
 
 @Injectable()
