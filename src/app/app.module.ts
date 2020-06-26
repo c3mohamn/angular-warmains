@@ -3,26 +3,26 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppStateModule } from './state/state.module';
-import { RoutingModule } from './app-routing.module';
-import { FooterModule } from './core/footer/footer.module';
+import { LoggedInGuard } from './guards/logged-in.guard';
 
-import { LoggedInGuard } from './auth/guards/logged-in.guard';
+import { AppComponent } from './app.component';
 
-import { AppComponent } from './components/app/app.component';
-import { BodyComponent } from './components/body/body.component';
-import { HeaderModule } from './core/header/header.module';
+import { CoreModule } from './modules/core/core.module';
+import { AppStateModule } from './modules/state/state.module';
+import { AppRoutingModule } from './app-routing.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
-  declarations: [AppComponent, BodyComponent],
+  declarations: [AppComponent],
   imports: [
-    BrowserModule,
-    RoutingModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    AppRoutingModule,
     BrowserAnimationsModule,
-    HeaderModule,
-    FooterModule,
+    CoreModule,
     HttpClientModule,
-    AppStateModule
+    AppStateModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [LoggedInGuard],
   bootstrap: [AppComponent]

@@ -1,0 +1,36 @@
+@import '~assets/scss/core';
+
+.talent-header-container {
+  padding: 1rem;
+  @include wm-mixin-border(2px, $wm-white);
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0 0 0 1rem;
+  }
+
+  .button {
+    margin: 0;
+  }
+
+  .talent-remaining {
+    color: $wm-primary-light;
+  }
+
+  .class-icons {
+    display: inline-block;
+    margin: 0.25rem;
+    cursor: pointer;
+    transition: all 0.1 ease;
+    filter: grayscale(100);
+    opacity: 0.6;
+
+    &:hover,
+    &.selected {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+  }
+}

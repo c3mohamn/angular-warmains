@@ -1,0 +1,20 @@
+<div class="talent-tree-container dark-container grid-x">
+  <div *ngFor="let treeIndex of [0, 1, 2]" class="cell shrink tree spec-bg-{{classId}}-{{talentTreeSpecs[treeIndex]}}">
+    <div class="tree-meta grid-x align-middle" [style.opacity]="0.5 + meta.preview[treeIndex] / 100">
+      <div class="cell shrink tree-meta-spec">
+        {{talentTreeSpecs[treeIndex]}} {{meta.preview[treeIndex]}}
+      </div>
+      <div class="cell auto"></div>
+      <div class="cell shrink">
+        <button class="button button-reset small alert clear" (click)="resetTalents(treeIndex)">Reset</button>
+      </div>
+    </div>
+    <div *ngFor="let row of rows" class="talent-row grid-x align-middle align-center">
+      <div *ngFor="let col of cols" class="col-row">
+        <app-talent [talents]="getTalents(treeIndex, row, col)" [preview]="meta.preview"
+          [totalPoints]="meta.totalPoints" (addPoint)="addTalentPoint($event)"
+          (removePoint)="removeTalentPoint($event)"></app-talent>
+      </div>
+    </div>
+  </div>
+</div>

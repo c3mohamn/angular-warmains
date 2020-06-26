@@ -1,0 +1,35 @@
+<div class="login-container grid-x align-center align-middle">
+  <div class="auth-container grid-y align-center">
+    <h3 class="login-header">Login</h3>
+    <form (ngSubmit)="loginUser(userForm)" [formGroup]="userForm">
+      <div class="cell shrink form-container">
+        <!-- Username -->
+        <mat-form-field>
+          <input matInput placeholder="Username" formControlName="username" required>
+          <mat-error *ngIf="userForm.get('username').invalid">{{getErrorMessage('username')}}</mat-error>
+        </mat-form-field>
+        <!-- Password -->
+        <mat-form-field>
+          <input matInput placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password" required>
+          <mat-icon class="mat-icon-hide-password" matSuffix (click)="hidePassword = !hidePassword">
+            {{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+          <mat-error *ngIf="userForm.get('password').invalid">{{getErrorMessage('password')}}</mat-error>
+        </mat-form-field>
+      </div>
+      <!-- Button -->
+      <div class="cell shrink grid-x">
+        <div class="cell shrink login-error-msg">
+          <p>{{ errorMsg }}</p>
+        </div>
+        <div class="cell shrink login-success-msg">
+          <p>{{ successMsg }}</p>
+        </div>
+        <div class="cell auto"></div>
+        <div class="cell shrink">
+          <button type="submit" class="button success">Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

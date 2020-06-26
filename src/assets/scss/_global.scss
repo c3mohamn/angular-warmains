@@ -62,31 +62,6 @@
   }
 }
 
-// Class Icons
-.class-icons,
-.spec-icons {
-  width: 48px;
-  height: 48px;
-
-  &.small {
-    width: 32px;
-    height: 32px;
-  }
-
-  &.large {
-    width: 64px;
-    height: 64px;
-  }
-
-  &.hoverable {
-    cursor: pointer;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-}
-
 // Custom scroll bar
 .wm-scrollbar {
   overflow: auto;

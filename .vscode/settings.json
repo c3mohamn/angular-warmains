@@ -8,21 +8,5 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "prettier.jsxSingleQuote": true,
   "prettier.jsxBracketSameLine": true,
-  "editor.formatOnSave": true,
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "html.format.endWithNewline": true,
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  "editor.formatOnSave": true
 }
